@@ -1,0 +1,5 @@
+build/*.js
+src/static
+src/wxcomponents
+public
+dist
