@@ -31,17 +31,27 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       data: data,
       header: header,
       dataType: 'json'
-    }).then((response) => {
+    }).then(([error, res]) => {
       setTimeout(() => {
         uni.hideLoading()
       }, 200)
-      const [error, res] = response
-      if (error) {
-        console.error(error)
+      const { data } = res
+      if (data.status === 200) {
+        return resolve(data)
       }
-      resolve(res.data)
+      if (data.status === 401) {
+        uni.navigateTo({
+          url: '/pages/auth/login'
+        })
+      }
+      // const [error, res] = response
+      // debugger
+      // if (error) {
+      //   console.error(error)
+      // }
     }).catch(error => {
       const [err, res] = error
+      debugger
       console.error(res)
       reject(err)
     })

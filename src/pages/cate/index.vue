@@ -32,7 +32,7 @@
               v-for="(child, categoryIndex) in item.children"
               :key="categoryIndex"
               class="item acea-row row-column row-middle"
-              @click="$router.push({path: '/pages/shop/GoodsList/main',query: { id: child.id, title: child.cateName }})"
+              @click="onProduct(child)"
             >
               <view class="picture">
                 <image :src="child.pic" />
@@ -69,6 +69,13 @@ export default {
     },
     onAsideTap(index) {
       this.active = index
+    },
+    onProduct(item) {
+      // $router.push({path: '/pages/shop/GoodsList/main',query: { id: child.id, title: child.cateName }})
+      const url = '/pages/shop/product/index?id=' + item.id + '&title=' + item.cateName
+      uni.navigateTo({
+        url: url
+      })
     }
   }
 }

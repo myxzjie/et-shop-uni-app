@@ -16,6 +16,7 @@ yarn-error.log*
 .project
 .idea
 .vscode
+.history
 *.suo
 *.ntvs*
 *.njsproj

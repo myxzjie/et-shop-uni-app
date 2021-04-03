@@ -79,8 +79,8 @@ page {
   position: absolute;
   left: 0.07rem;
   top: 0.07rem;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50%;
 }
 
@@ -214,8 +214,8 @@ page {
 }
 
 .recommend .title {
-  height: 1.35rem;
-  font-size: 0.28rem;
+  height: 2rem;
+  font-size: 0.8rem;
   color: #282828;
 }
 
@@ -255,18 +255,18 @@ page {
 }
 
 .recommend .recommendList .item .name {
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   color: #282828;
   margin-top: 0.2rem;
 }
 
 .recommend .recommendList .item .money {
-  font-size: 0.2rem;
+  font-size: 0.7rem;
   margin-top: 0.03rem;
 }
 
 .recommend .recommendList .item .money .num {
-  font-size: 0.28rem;
+  font-size: 0.8rem;
 }
 
 .noCommodity {
@@ -286,11 +286,11 @@ page {
 
 /*产品详情轮播*/
 .product-bg {
-  height: 7.5rem;
+  height: 18rem;
 }
 
 .product-bg swiper {
-  height: 7.5rem;
+  height: 18rem;
 
 }
 
@@ -308,7 +308,7 @@ page {
   right: 0.3rem;
   bottom: 0.3rem;
   line-height: 0.34rem;
-  font-size: 0.24rem;
+  font-size: 0.6rem;
   color: #050505;
   z-index: 9;
 }
@@ -530,7 +530,7 @@ page {
   background-color: #fff;
   z-index: 88;
   border-radius: 0.16rem 0.16rem 0 0;
-  padding-bottom: 1.4rem;
+  padding-bottom: 5rem;
   transform: translate3d(0, 100%, 0);
   transition: all .3s cubic-bezier(.25, .5, .5, .9);
 }
@@ -540,14 +540,14 @@ page {
 }
 
 .product-window .textpic {
-  padding: 0 1.3rem 0 0.3rem;
-  margin-top: 0.29rem;
+  padding: 0 1.8rem 0 0.8rem;
+  margin-top: 0.8rem;
   position: relative;
 }
 
 .product-window .textpic .pictrue {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 4rem;
+  height: 4rem;
 }
 
 .product-window .textpic .pictrue .image {
@@ -557,30 +557,30 @@ page {
 }
 
 .product-window .textpic .text {
-  width: 4.1rem;
-  font-size: 0.32rem;
+  width: calc(100% - 4.5rem);
+  font-size: 0.8rem;
   color: #202020;
 }
 
 .product-window .textpic .text .money {
-  font-size: 0.24rem;
-  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  margin-top: 0.8rem;
 }
 
 .product-window .textpic .text .money .num {
-  font-size: 0.36rem;
+  font-size: 1rem;
 }
 
 .product-window .textpic .text .money .stock {
   color: #999;
-  margin-left: 0.18rem;
+  margin-left: 0.8rem;
 }
 
 .product-window .textpic .iconfont {
   position: absolute;
   right: 0.3rem;
   top: -0.05rem;
-  font-size: 0.35rem;
+  font-size: 0.8rem;
   color: #8a8a8a;
 }
 
@@ -595,7 +595,7 @@ page {
 }
 
 .product-window .productWinList .item .title {
-  font-size: 0.3rem;
+  font-size: 0.8rem;
   color: #999;
   padding: 0 0.3rem;
 }
@@ -606,9 +606,9 @@ page {
 
 .product-window .productWinList .item .listn .itemn {
   border: 1px solid #bbb;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #282828;
-  padding: 0.07rem 0.33rem;
+  padding: 0.2rem 0.7rem;
   border-radius: 0.06rem;
   margin: 0.14rem 0 0 0.14rem;
 }
@@ -625,29 +625,29 @@ page {
 }
 
 .product-window .cart .title {
-  font-size: 0.3rem;
+  font-size: 0.8rem;
   color: #999;
 }
 
 .product-window .cart .carnum {
-  height: 0.54rem;
+  height: 1.2rem;
   margin-top: 0.24rem;
 }
 
 .product-window .cart .carnum .item {
   border: 1px solid #a4a4a4;
-  width: 0.84rem;
+  width: 2rem;
   text-align: center;
   height: 100%;
-  line-height: 0.54rem;
+  line-height: 1.1rem;
   color: #a4a4a4;
-  font-size: 0.45rem;
+  font-size: 0.8rem;
 }
 
 .product-window .cart .carnum .reduce {
   border-right: 0;
   border-radius: 0.06rem 0 0 0.06rem;
-  line-height: 0.48rem;
+  line-height: 0.9rem;
 }
 
 .product-window .cart .carnum .reduce.on {
@@ -658,7 +658,7 @@ page {
 .product-window .cart .carnum .plus {
   border-left: 0;
   border-radius: 0 0.06rem 0.06rem 0;
-  line-height: 0.46rem;
+  line-height: 0.9rem;
 }
 
 .product-window .cart .carnum .plus.on {
@@ -668,7 +668,7 @@ page {
 
 .product-window .cart .carnum .num {
   color: #282828;
-  font-size: 0.28rem;
+  font-size: 0.8rem;
 }
 
 /*产品详情的分享红包*/
@@ -1621,7 +1621,7 @@ page {
   height: 6.8rem;
 }
 
-.index .wrapper .newProducts .swiper-slide .img-box img {
+.index .wrapper .newProducts .swiper-slide .img-box image {
   width: 100%;
   height: 100%;
   border-radius: 0.12rem 0.12rem 0 0;
@@ -1644,8 +1644,8 @@ page {
 /*商品列表*/
 .productList .search {
   width: 100%;
-  height: 0.86rem;
-  padding-left: 0.23rem;
+  height: 2.5rem;
+  padding-left: 0.5rem;
   position: fixed;
   left: 0;
   top: 0;
@@ -1653,17 +1653,17 @@ page {
 }
 
 .productList .search .input {
-  width: 6.4rem;
-  height: 0.6rem;
+  width: calc(100% - 1.8rem);
+  height: 1.8rem;
   background-color: #fff;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   padding: 0 0.2rem;
 }
 
 .productList .search .input input {
-  width: 5.48rem;
+  width: calc(100% - 1.4rem);
   height: 100%;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
 }
 
 .productList .search .input input::placeholder {
@@ -1671,7 +1671,7 @@ page {
 }
 
 .productList .search .input .iconfont {
-  font-size: 0.35rem;
+  font-size: 1rem;
   color: #555;
 }
 
@@ -1679,21 +1679,22 @@ page {
 .productList .search .icon-tupianpailie {
   margin: 0 auto;
   color: #fff;
-  width: 0.4rem;
-  font-size: 0.4rem;
-  height: 0.86rem;
-  line-height: 0.86rem;
+  width: 1.8rem;
+  font-size: 1.2rem;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  text-align: center;
 }
 
 .productList .nav {
-  height: 0.86rem;
+  height: 2.3rem;
   color: #454545;
   position: fixed;
   left: 0;
   width: 100%;
-  font-size: 0.28rem;
+  font-size: 0.8rem;
   background-color: #fff;
-  top: 0.86rem;
+  top: 2.5rem;
   z-index: 5;
 }
 
@@ -1706,15 +1707,15 @@ page {
   font-weight: bold;
 }
 
-.productList .nav .item img {
-  width: 0.15rem;
-  height: 0.19rem;
+.productList .nav .item image {
+  width: 0.8rem;
+  height: 0.8rem;
   margin-left: 0.1rem;
 }
 
 .productList .list {
-  padding: 0 0.2rem;
-  margin-top: 1.72rem;
+  padding: 0 0.5rem;
+  margin-top: 5rem;
 }
 
 .productList .list.on {
@@ -1723,10 +1724,10 @@ page {
 }
 
 .productList .list .item {
-  width: 3.45rem;
+  width: 8rem;
   margin-top: 0.2rem;
   background-color: #fff;
-  border-radius: 0.1rem;
+  border-radius: 0.3rem;
 }
 
 .productList .list .item.on {
@@ -1739,62 +1740,62 @@ page {
 
 .productList .list .item .pictrue {
   width: 100%;
-  height: 3.45rem;
+  height: 8rem;
 }
 
 .productList .list .item .pictrue.on {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 5rem;
+  height: 5rem;
 }
 
-.productList .list .item .pictrue img {
+.productList .list .item .pictrue image {
   width: 100%;
   height: 100%;
   border-radius: 0.1rem 0.1rem 0 0;
 }
 
-.productList .list .item .pictrue img.on {
+.productList .list .item .pictrue image.on {
   border-radius: 0.06rem;
 }
 
 .productList .list .item .text {
   padding: 0.2rem 0.17rem 0.26rem 0.17rem;
-  font-size: 0.3rem;
+  font-size: 0.8rem;
   color: #222;
   text-align: left;
 }
 
 .productList .list .item .text.on {
-  width: 5.08rem;
-  padding: 0 0 0 0.22rem;
+  width: calc(100% -5rem);
+  padding: 0 0 0 0.5rem;
 }
 
 .productList .list .item .text .money {
-  font-size: 0.26rem;
+  font-size: 0.8rem;
   font-weight: bold;
   margin-top: 0.08rem;
 }
 
 .productList .list .item .text .money.on {
-  margin-top: 0.4rem;
+  margin-top: 0.8rem;
 }
 
 .productList .list .item .text .money .num {
-  font-size: 0.34rem;
+  font-size: 1rem;
 }
 
 .productList .list .item .text .vip {
-  font-size: 0.22rem;
+  font-size: 0.7rem;
   color: #aaa;
   margin-top: 0.07rem;
 }
 
 .productList .list .item .text .vip.on {
-  margin-top: 0.11rem;
+  margin-top: 0.3rem;
 }
 
 .productList .list .item .text .vip .vip-money {
-  font-size: 0.24rem;
+  font-size: 0.8rem;
   color: #282828;
   font-weight: bold;
   text-decoration: line-through;
@@ -1809,9 +1810,9 @@ page {
 /*购物车*/
 .shoppingCart .labelNav {
   box-sizing: border-box;
-  height: 0.76rem;
+  height: 2rem;
   padding: 0 0.3rem;
-  font-size: 0.22rem;
+  font-size: 0.7rem;
   color: #8c8c8c;
   position: fixed;
   left: 0;
@@ -1822,117 +1823,124 @@ page {
 }
 
 .shoppingCart .labelNav .item .iconfont {
-  font-size: 0.25rem;
+  font-size: 0.7rem;
   margin-right: 0.1rem;
 }
 
 .shoppingCart .nav {
   box-sizing: border-box;
   width: 100%;
-  height: 0.8rem;
+  height: 2rem;
   background-color: #fff;
   padding: 0 0.3rem;
-  font-size: 0.28rem;
+  font-size: 0.8rem;
   color: #282828;
   position: fixed;
   left: 0;
   z-index: 5;
-  top: 0.76rem;
+  top: 2rem;
   border-bottom: 1px solid #f5f5f5;
 }
 
 .shoppingCart .nav .administrate {
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #282828;
-  width: 1.1rem;
-  height: 0.46rem;
+  width: 3rem;
+  height: 1.5rem;
   border-radius: 0.06rem;
   border: 1px solid #868686;
 }
 
 .shoppingCart .noCart {
-  margin-top: 1.71rem;
+  margin-top: 4.5rem;
   background-color: #fff;
   padding: 0.78rem 0 0.56rem 0;
 }
 
 .shoppingCart .noCart .pictrue {
-  width: 4.14rem;
-  height: 3.36rem;
+  /* width: 4.14rem; */
+  /* height: 3.36rem; */
   margin: 0 auto;
 }
 
-.shoppingCart .noCart .pictrue img {
+/* .shoppingCart .noCart .pictrue img {
   width: 100%;
   height: 100%;
-}
+} */
 
 .shoppingCart .list {
-  margin-top: 1.71rem;
+  margin-top: 4.5rem;
 }
 
 .shoppingCart .list .item {
-  padding: 0.25rem 0.3rem;
+  padding: 0.5rem 0.5rem;
   background-color: #fff;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.5rem;
 }
 
+.shoppingCart .list .item .select-btn{
+  width: 2rem;
+}
 .shoppingCart .list .item .picTxt {
-  width: 6.27rem;
+  width: calc(100% - 2rem);
   position: relative;
 }
 
 .shoppingCart .list .item .picTxt .pictrue {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 4rem;
+  height: 4rem;
 }
 
-.shoppingCart .list .item .picTxt .pictrue img {
+.shoppingCart .list .item .picTxt .pictrue image {
   width: 100%;
   height: 100%;
   border-radius: 0.06rem;
 }
 
 .shoppingCart .list .item .picTxt .text {
-  width: 4.44rem;
-  font-size: 0.28rem;
+  width: calc(100% - 4rem);
+  font-size: 0.7rem;
   color: #282828;
   text-align: left;
+  padding: 0 0.3rem;
+  height: 4rem;
 }
 
 .shoppingCart .list .item .picTxt .text .infor {
-  font-size: 0.24rem;
+  font-size: 0.7rem;
   color: #868686;
   margin-top: 0.16rem;
 }
 
 .shoppingCart .list .item .picTxt .text .money {
-  font-size: 0.32rem;
+  font-size: 0.8rem;
   color: #282828;
-  margin-top: 0.26rem;
+  margin-top: 0.5rem;
 }
 
 .shoppingCart .list .item .picTxt .carnum {
-  height: 0.44rem;
+  height: 1.2rem;
   position: absolute;
   bottom: 0.07rem;
-  right: 0;
+  right: 0.8rem;
 }
 
-.shoppingCart .list .item .picTxt .carnum div {
+.shoppingCart .list .item .picTxt .carnum .reduce,
+.shoppingCart .list .item .picTxt .carnum .plus,
+.shoppingCart .list .item .picTxt .carnum .num {
   border: 1px solid #a4a4a4;
-  width: 0.66rem;
+  width: 1.5rem;
   text-align: center;
   height: 100%;
-  line-height: 0.44rem;
-  font-size: 0.28rem;
+  line-height: 1.2rem;
+  font-size: 0.8rem;
   color: #a4a4a4;
 }
 
 .shoppingCart .list .item .picTxt .carnum .reduce {
   border-right: 0;
   border-radius: 0.03rem 0 0 0.03rem;
-  line-height: 0.39rem;
+  line-height: 1.1rem;
 }
 
 .shoppingCart .list .item .picTxt .carnum .reduce.on {
@@ -1943,7 +1951,7 @@ page {
 .shoppingCart .list .item .picTxt .carnum .plus {
   border-left: 0;
   border-radius: 0 0.03rem 0.03rem 0;
-  line-height: 0.38rem;
+  line-height: 1.1rem;
 }
 
 .shoppingCart .list .item .picTxt .carnum .num {
@@ -2026,54 +2034,54 @@ page {
 .shoppingCart .footer {
   box-sizing: border-box;
   width: 100%;
-  height: 0.96rem;
+  height: 3rem;
   background-color: #fafafa;
   position: fixed;
-  bottom: 1rem;
-  padding: 0 0.3rem;
+  bottom: 0;
+  padding: 0 1rem 0 0.5rem;
   border-top: 1px solid #eee;
 }
 
 .shoppingCart .footer .checkAll {
-  font-size: 0.28rem;
+  font-size: 0.8rem;
   color: #282828;
   margin-left: 0.6rem;
 }
 
 .shoppingCart .footer .money {
-  font-size: 0.3rem;
+  font-size: 0.7rem;
 }
 
 .shoppingCart .footer .placeOrder {
   color: #fff;
-  font-size: 0.3rem;
-  width: 2.26rem;
-  height: 0.7rem;
-  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  width: 6rem;
+  height: 1.8rem;
+  border-radius: 1rem;
   text-align: center;
-  line-height: 0.7rem;
-  margin-left: 0.22rem;
+  line-height: 1.8rem;
+  margin-left: 0.5rem;
 }
 
 .shoppingCart .footer .button .bnt {
-  font-size: 0.28rem;
+  font-size: 0.8rem;
   color: #999;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   border: 1px solid #999;
-  width: 1.6rem;
-  height: 0.6rem;
+  width: 5rem;
+  height: 1.8rem;
   text-align: center;
-  line-height: 0.6rem;
+  line-height: 1.8rem;
 }
 
 .shoppingCart .footer .button .bnt~.bnt {
-  margin-left: 0.17rem;
+  margin-left: 0.5rem;
 }
 
 /*个人中心*/
 .user .header {
-  padding: 0 0.3rem;
-  height: 1.9rem;
+  padding: 0 0.6rem;
+  height: 5rem;
   position: relative;
 }
 
@@ -2091,8 +2099,8 @@ page {
 }
 
 .user .header .picTxt .pictrue {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .user .header .picTxt .pictrue img {
@@ -2103,37 +2111,37 @@ page {
 }
 
 .user .header .picTxt .text {
-  width: 4.34rem;
+  width: 5rem;
   color: rgba(255, 255, 255, 1);
   margin-left: 0.35rem;
   text-align: left;
 }
 
 .user .header .picTxt .text .name {
-  font-size: 0.32rem;
+  font-size: 0.7rem;
   max-width: 2.6rem;
   width: unset;
 }
 
 .user .header .picTxt .text .member {
-  padding: 0 0.1rem;
-  height: 0.36rem;
+  padding: 0 0.2rem;
+  /* height: 0.36rem;  */
   background-color: rgba(0, 0, 0, 0.2);
-  font-size: 0.2rem;
+  font-size: 0.5rem;
   border-radius: 0.3rem;
-  margin-left: 0.17rem;
+  margin-right: 0.17rem;
 }
 
-.user .header .picTxt .text .member img {
-  width: 0.28rem;
-  height: 0.28rem;
-  font-size: 0.2rem;
+.user .header .picTxt .text .member image {
+  width: 0.7rem;
+  height: 0.7rem;
+  font-size: 0.7rem;
   margin-right: 0.08rem;
 }
 
 .user .header .picTxt .text .id {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   margin-top: 0.15rem;
 }
 
@@ -2143,7 +2151,7 @@ page {
 }
 
 .user .header .icon-shezhi {
-  font-size: 0.36rem;
+  font-size: 1.5rem;
   color: #fff;
   margin-top: -0.52rem;
 }
@@ -2154,8 +2162,8 @@ page {
 
 .user .wrapper .nav {
   background-color: #fff;
-  border-radius: 0.06rem;
-  height: 1.4rem;
+  border-radius: 0.2rem;
+  height: 5rem;
 }
 
 .user .wrapper .nav .item {
@@ -2163,7 +2171,7 @@ page {
   -o-flex: 1;
   -ms-flex: 1;
   text-align: center;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #aaa;
   position: relative;
 }
@@ -2180,42 +2188,42 @@ page {
 }
 
 .user .wrapper .nav .item .num {
-  margin-top: 0.1rem;
-  font-size: 0.36rem;
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
   color: #282828;
 }
 
 .user .wrapper .myOrder {
   background-color: #fff;
   border-radius: 0.1rem;
-  margin-top: 0.15rem;
+  margin-top: 0.6rem;
 }
 
 .user .wrapper .myOrder .title,
 .user .wrapper .myService .title {
-  height: 0.88rem;
-  padding: 0 0.3rem;
+  height: 2rem;
+  padding: 0 0.6rem;
   border-bottom: 1px dashed #eee;
-  font-size: 0.3rem;
+  font-size: 0.8rem;
   color: #282828;
 }
 
 .user .wrapper .myOrder .title .allOrder {
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #666;
 }
 
 .user .wrapper .myOrder .title .allOrder .iconfont {
-  font-size: 0.25rem;
-  margin-left: 0.07rem;
+  font-size: 0.7rem;
+  margin-left: 0.2rem;
 }
 
 .user .wrapper .myOrder .orderState {
-  height: 1.6rem;
+  height: 5rem;
 }
 
 .user .wrapper .myOrder .orderState .item {
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #454545;
   flex: 1;
   -o-flex: 1;
@@ -2224,9 +2232,9 @@ page {
 }
 
 .user .wrapper .myOrder .orderState .item .pictrue {
-  width: 0.49rem;
-  height: 0.42rem;
-  margin: 0 auto 0.18rem auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 auto 0.3rem auto;
 }
 
 .user .wrapper .myOrder .orderState .item .pictrue img {
@@ -2247,15 +2255,15 @@ page {
 .user .wrapper .myService .serviceList .item {
   width: 25%;
   text-align: center;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #333;
   margin-top: 0.3rem;
 }
 
 .user .wrapper .myService .serviceList .item .pictrue {
-  width: 0.52rem;
-  height: 0.52rem;
-  margin: 0 auto 0.16rem auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 auto 0.3rem auto;
 }
 
 .user .wrapper .myService .serviceList .item .pictrue img {
@@ -2281,12 +2289,12 @@ page {
 }
 
 .product-con .wrapper .share .money {
-  font-size: 0.28rem;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
 .product-con .wrapper .share .money .num {
-  font-size: 0.48rem;
+  font-size: 1.1rem;
 }
 
 .product-con .wrapper .share .money .vip-money {
@@ -2312,14 +2320,14 @@ page {
 }
 
 .product-con .wrapper .introduce {
-  font-size: 0.32rem;
+  font-size: 0.8rem;
   font-weight: bold;
-  margin: 0.1rem 0.3rem 0 0.3rem;
+  margin: 0.3rem;
 }
 
 .product-con .wrapper .label {
-  margin: 0.22rem 0.3rem 0 0.3rem;
-  font-size: 0.24rem;
+  margin: 0.3rem;
+  font-size: 0.7rem;
   color: #82848f;
   padding-bottom: 0.25rem;
 }
@@ -2328,7 +2336,7 @@ page {
   padding: 0 0.3rem;
   border-top: 1px solid #f5f5f5;
   height: 0.8rem;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #82848f;
 }
 
@@ -2385,19 +2393,19 @@ page {
 .product-con .attribute {
   background-color: #fff;
   padding: 0 0.3rem;
-  font-size: 0.26rem;
+  font-size: 0.7rem;
   color: #82848f;
-  margin-top: 0.2rem;
-  height: 0.8rem;
+  margin-top: 0.4rem;
+  height: 1.8rem;
 }
 
 .product-con .attribute .atterTxt {
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   color: #282828;
 }
 
 .product-con .attribute .iconfont {
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   color: #7a7a7a;
 }
 
@@ -2407,22 +2415,22 @@ page {
 }
 
 .product-con .userEvaluation .title {
-  height: 0.86rem;
+  height: 1.8rem;
   border-bottom: 1px solid #eee;
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   color: #282828;
   margin-left: 0.3rem;
   padding-right: 0.3rem;
 }
 
 .product-con .userEvaluation .title .praise {
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   color: #808080;
 }
 
 .product-con .userEvaluation .title .praise .iconfont {
   color: #7a7a7a;
-  font-size: 0.28rem;
+  font-size: 0.7rem;
   vertical-align: 0.01rem;
   margin-left: 0.08rem;
 }
@@ -2432,13 +2440,13 @@ page {
 }
 
 .product-con .product-intro .title {
-  font-size: 0.3rem;
+  font-size: 0.8rem;
   color: #282828;
-  height: 0.86rem;
+  height: 2rem;
   width: 100%;
   background-color: #fff;
   text-align: center;
-  line-height: 0.86rem;
+  line-height: 2rem;
 }
 
 .product-con .product-intro .conter {
@@ -2453,27 +2461,30 @@ page {
 /*产品详情*/
 .product-con .footer {
   box-sizing: border-box;
-  padding: 0 0.2rem 0 0.3rem;
+  padding: 0.3rem;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 1rem;
+  height: 3rem;
   background-color: #fff;
   z-index: 99;
   border-top: 1px solid #f0f0f0;
 }
 
 .product-con .footer .item {
-  font-size: 0.18rem;
+  font-size: 0.6rem;
   color: #666;
   margin-top: 0.07rem;
 }
 
 .product-con .footer .item .iconfont {
   text-align: center;
-  font-size: 0.4rem;
-  height: 0.4rem;
-  line-height: 0.4rem;
+  font-size: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+.product-con .footer .item .name{
+  text-align: center;
 }
 
 .product-con .footer .item .iconfont.icon-gouwuche1 {
@@ -2483,37 +2494,37 @@ page {
 .product-con .footer .item .iconfont.icon-gouwuche1 .num {
   color: #fff;
   position: absolute;
-  font-size: 0.18rem;
-  border-radius: 2rem;
-  top: -0.1rem;
-  right: 0;
-  height: 0.3rem;
-  line-height: 0.3rem;
-  padding: 0 0.08rem;
-  min-width: 0.3rem;
+  font-size: 0.6rem;
+  border-radius: 50%;
+  top: -0.3rem;
+  right: -0.3rem;
+  height: 1rem;
+  line-height: 1rem;
+  width: 1rem;
 }
 
 .product-con .footer .bnt {
-  width: 4.44rem;
-  height: 0.76rem;
+  width: 12rem;
+  height: 2rem;
   color: #fff;
-  font-size: 0.28rem;
+  font-size: 0.8rem;
 }
 
-.product-con .footer .bnt>div {
-  width: 2.22rem;
+.product-con .footer .bnt > .joinCart,
+.product-con .footer .bnt > .buy {
+  width: 5rem;
   text-align: center;
-  line-height: 0.76rem;
+  line-height: 2rem;
 }
 
 .product-con .footer .bnt .joinCart {
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 1rem 0 0 1rem;
   background-image: linear-gradient(to right, #fea10f 0%, #fea10f 100%);
   background-image: -moz-linear-gradient(to right, #73CBB6 0%, #73CBB6 100%);
 }
 
 .product-con .footer .bnt .buy {
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0 1rem 1rem 0;
   background-image: linear-gradient(to right, #73CBB6 0%, #73CBB6 100%);
   background-image: -moz-linear-gradient(to right, #73CBB6 0%, #73CBB6 100%);
 }
@@ -4049,16 +4060,17 @@ page {
 
 /*金品推荐*/
 .quality-recommend .title {
-  height: 1.2rem;
-  font-size: 0.32rem;
+  height: 4rem;
+  font-size: 1rem;
   color: #282828;
   background-color: #f5f5f5;
 }
 
 .quality-recommend .title .line {
-  width: 2.3rem;
+  width: 7rem;
   height: 0.02rem;
-  background-color: #e9e9e9;
+  border-top: 1px solid #e9e9e9;
+  /* background-color: #e9e9e9; */
 }
 
 .quality-recommend .title .name {
@@ -4067,7 +4079,7 @@ page {
 
 .quality-recommend .title .name .iconfont {
   margin-right: 0.13rem;
-  font-size: 0.38rem;
+  font-size: 1rem;
   vertical-align: -0.04rem;
 }
 
@@ -7064,7 +7076,7 @@ page {
 }
 
 .newsDetail .list .item {
-  margin-left: 0.3rem;
+  margin-left: 0.8rem;
   font-size: 0.7rem;
   color: #999;
 }

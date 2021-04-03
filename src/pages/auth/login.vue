@@ -96,7 +96,6 @@ export default {
           this.setSessionKey(data.session_key)
           this.setOpenid(data.openid)
         }, err => {
-          debugger
           console.error(err)
         })
         // uni.request({

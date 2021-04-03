@@ -1,5 +1,5 @@
 <script>
-import auth from '@/utils/auth'
+// import auth from '@/utils/auth'
 import { mapState } from 'vuex'
 export default {
   globalData: {
@@ -79,8 +79,8 @@ export default {
   },
   onShow() {
     console.log('App Show')
-    const that = this
-    auth.openLoginDialog()
+    // const that = this
+    // auth.openLoginDialog()
   },
   onHide() {
     console.log('App Hide')

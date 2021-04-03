@@ -5,6 +5,7 @@ import http from '@/utils/http'
 import store from './store'
 // import TabBar from '@/components/tab-bar'
 import uniPop from '@/components/uni-pop'
+import { resURL } from '@/utils/config'
 
 Vue.component('uni-pop', uniPop)
 
@@ -13,6 +14,7 @@ Vue.use(uView)
 
 Vue.prototype.http = http
 Vue.prototype.$store = store
+Vue.prototype.resURL = resURL
 
 Vue.config.productionTip = false
 

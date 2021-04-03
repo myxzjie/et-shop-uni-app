@@ -40,7 +40,7 @@
     <!---->
     <view class="news acea-row row-between-wrapper">
       <view class="pictrue">
-        <image :src="noticeImage" show-menu-by-longpress />
+        <image :src="images.notice" show-menu-by-longpress />
       </view>
       <view class="swiper-no-swiping new-banner">
         <swiper v-if="roll.length > 0" class="swiper-wrapper" :indicator-dots="false" autoplay circular vertical>
@@ -48,7 +48,7 @@
             <swiper-item class="swiper-slide">
               <view
                 class="swiper-item acea-row row-between-wrapper"
-                @click="item.url?$router.push(item.url) : ''"
+                @click="onNotice(item)"
               >
                 <view class="text acea-row row-between-wrapper">
                   <view v-if="item.show === '是'" class="label">最新</view>
@@ -71,7 +71,7 @@
           </view>
           <view
             class="more"
-            @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:1} })"
+            @click="onShopMark(1)"
           >
             更多
             <text class="iconfont icon-jiantou" />
@@ -91,7 +91,7 @@
           </view>
           <view
             class="more"
-            @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:2} })"
+            @click="onShopMark(2)"
           >
             更多
             <text class="iconfont icon-jiantou" />
@@ -111,7 +111,7 @@
           </view>
           <view
             class="more"
-            @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:3} })"
+            @click="onShopMark(3)"
           >
             更多
             <text class="iconfont icon-jiantou" />
@@ -128,10 +128,10 @@
               <swiper-item class="swiper-slide">
                 <view
                   class="newProductsItem"
-                  @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.id} })"
+                  @click="onShopDetails(item)"
                 >
                   <view class="img-box">
-                    <img :src="item.image">
+                    <image :src="item.image" />
                   </view>
                   <view class="pro-info line1">{{ item.storeName }}</view>
                   <view class="money font-color-red">￥{{ item.price }}</view>
@@ -148,9 +148,9 @@
           <view class="text">
             <view class="name line1">促销单品</view>
           </view>
-          <view class="more" @click="$router.push('/pages/shop/GoodsPromotion/main')">
+          <view class="more" @click="onShopPromotion()">
             更多
-            <span class="iconfont icon-jiantou" />
+            <text class="iconfont icon-jiantou" />
           </view>
         </view>
         <promotion-list :list="promotion" />
@@ -158,15 +158,12 @@
 
       <view style="height:1.2rem;" />
     </view>
-    <!-- <tab-bar :current="tabIndex" :tabBar="tabbar" @click="onSwitchTab" /> -->
-
   </view>
 </template>
 
 <script>
 import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
 
-import { resURL } from '@/utils/config'
 import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
 import { getHomeData } from '@/api/public'
 import goodList from '@/components/shop/good-list'
@@ -177,32 +174,10 @@ export default {
   data() {
     return {
       tabInde: 0,
-      tabbar: [
-        {
-          'pagePath': '/pages/home/index',
-          'iconPath': '/static/tabBar/home.png',
-          'selectedIconPath': '/static/tabBar/home_col.png',
-          'text': '首页',
-          'fontIcon': 'icon-shouye'
-        },
-        // 这里是要动态切换的栏目，先隐藏，动态追加
-        // {
-        //     "pagePath": "/pages/tabBar/manage/manage",
-        //     "iconPath": "/static/tabBar/home.png",
-        //     "selectedIconPath": "/static/tabBar/home_col.png",
-        //     "text": "管理",
-        //     "fontIcon": "icon-guanli"
-        // },
-        {
-          'pagePath': '/pages/tabBar/person/person',
-          'iconPath': '/static/tabBar/person.png',
-          'selectedIconPath': '/static/tabBar/person_col.png',
-          'text': '我的',
-          'fontIcon': 'icon-wode'
-        }
-      ],
-      //
-      noticeImage: resURL + '/assets/images/notice.png',
+      images: {
+        notice: this.resURL + '/assets/images/notice.png'
+      },
+
       banner: [],
       navigations: [],
       roll: [],
@@ -258,6 +233,31 @@ export default {
       }
       uni.switchTab({
         url: url
+      })
+    },
+    onNotice(item) {
+      // open-type="switchTab"
+      debugger
+      uni.navigateTo({
+        url: item.url
+      })
+    },
+    onShopDetails(item) {
+      const url = '/pages/shop/details/index?id=' + item.id
+      uni.navigateTo({
+        url: url
+      })
+    },
+    onShopPromotion() {
+      // $router.push('/pages/shop/GoodsPromotion/main')
+      uni.navigateTo({
+        url: '/pages/shop/promotion/index'
+      })
+    },
+    onShopMark(type) {
+      // $router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:3} })
+      uni.navigateTo({
+        url: '/pages/shop/mark/index?type=' + type
       })
     }
   }

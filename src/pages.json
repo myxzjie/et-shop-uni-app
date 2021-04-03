@@ -7,17 +7,31 @@
 			}
 		},
 		{
-			"path":"pages/home/index"
+			"path": "pages/home/index"
 		},
 		{
-			"path":"pages/loading/index"
-		},
-		
-		{
-			"path":"pages/cate/index"
+			"path": "pages/loading/index"
 		},
 		{
 			"path": "pages/search/index"
+		},
+		{
+			"path": "pages/cate/index"
+		},
+		{
+			"path": "pages/shop/product/index"
+		},
+		{
+			"path": "pages/shop/mark/index"
+		},
+		{
+			"path": "pages/shop/promotion/index"
+		},
+		{
+			"path": "pages/shop/details/index"
+		},
+		{
+			"path": "pages/cart/index"
 		},
 		{
 			"path": "pages/auth/login"
@@ -27,6 +41,9 @@
 		},
 		{
 			"path": "pages/article/details/index"
+		},
+		{
+			"path": "pages/me/index"
 		}
 	],
 	"globalStyle": {
@@ -59,12 +76,12 @@
 			"selectedIconPath":"static/tabbar/tab-find-current.png",
 			"text":"发现"
 		},{
-			"pagePath":"pages/article/index",
+			"pagePath":"pages/cart/index",
 			"iconPath":"static/tabbar/tab-cart.png",
 			"selectedIconPath":"static/tabbar/tab-cart-current.png",
 			"text":"购物车"
 		},{
-			"pagePath":"pages/index/index",
+			"pagePath":"pages/me/index",
 			"iconPath":"static/tabbar/tab-me.png",
 			"selectedIconPath":"static/tabbar/tab-me-current.png",
 			"text":"我的"

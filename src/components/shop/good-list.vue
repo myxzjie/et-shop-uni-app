@@ -1,16 +1,16 @@
 <template>
   <view class="goodList">
     <view
-      v-for="(item, goodListIndex) in list"
-      :key="goodListIndex"
+      v-for="(item, index) in list"
+      :key="index"
       class="item acea-row row-between-wrapper"
-      @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.id} })"
+      @click="onShopDetails(item)"
     >
       <view class="pictrue">
-        <img :src="item.image" class="image">
-        <img v-if="isSort === true && goodListIndex === 0" :src="$VUE_APP_RES_URL+'/assets/images/one.png'" class="numPic">
-        <img v-if="isSort === true && goodListIndex === 1" :src="$VUE_APP_RES_URL+'/assets/images/two.png'" class="numPic">
-        <img v-if="isSort === true && goodListIndex === 2" :src="$VUE_APP_RES_URL+'/assets/images/three.png'" class="numPic">
+        <image :src="item.image" class="image" />
+        <image v-if="isSort === true && index === 0" :src="images.one" class="numPic" />
+        <image v-if="isSort === true && index === 1" :src="images.two" class="numPic" />
+        <image v-if="isSort === true && index === 2" :src="images.three" class="numPic" />
       </view>
       <view class="underline">
         <view class="text">
@@ -31,10 +31,8 @@
   </view>
 </template>
 <script>
-import { uniIcons } from '@dcloudio/uni-ui'
 export default {
   name: 'GoodList',
-  components: { uniIcons },
   props: {
     list: {
       type: Array,
@@ -46,7 +44,21 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      images: {
+        one: this.resURL + '/assets/images/one.png',
+        two: this.resURL + '/assets/images/two.png',
+        three: this.resURL + '/assets/images/three.png'
+      }
+    }
+  },
+  methods: {
+    onShopDetails(item) {
+      const url = '/pages/shop/details/index?id=' + item.id
+      uni.navigateTo({
+        url: url
+      })
+    }
   }
 }
 </script>

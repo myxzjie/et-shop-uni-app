@@ -18,7 +18,6 @@ const store = new Vuex.Store({
       state.sessionKey = sessionKey
     },
     login(state, provider) {
-      debugger
       state.hasLogin = true
       state.loginProvider = provider
     },

@@ -4,11 +4,10 @@
       v-for="(item, promotionGoodIndex) in list"
       :key="promotionGoodIndex"
       class="item acea-row row-between-wrapper"
-      @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.id} })"
+      @click="onShopDetails(item)"
     >
       <view class="pictrue">
-        <img :src="item.image" class="image">
-      </view>
+        <image :src="item.image" class="image" /></view>
       <view class="text">
         <view class="name line1">{{ item.storeName }}</view>
         <view class="sp-money acea-row">
@@ -34,8 +33,16 @@ export default {
       default: () => []
     }
   },
-  data: function() {
+  data() {
     return {}
+  },
+  methods: {
+    onShopDetails(item) {
+      const url = '/pages/shop/details/index?id=' + item.id
+      uni.navigateTo({
+        url: url
+      })
+    }
   }
 }
 </script>

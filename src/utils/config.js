@@ -17,11 +17,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const tokenKey = 'userToken'
+const cartCheckedKey = 'cartChecked'
 
 // export default { conf, baseURL }
 
 module.exports = {
   resURL: resURL,
   baseURL: baseURL,
-  tokenKey: tokenKey
+  tokenKey: tokenKey,
+  cartCheckedKey: cartCheckedKey
 }
