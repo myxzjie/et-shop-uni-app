@@ -430,7 +430,7 @@ export default {
     },
     // 默认选中属性；
     loadDefaultSelect() {
-       const that = this
+      const that = this
       const productAttr = that.attr.productAttr
       const value = []
       // productAttr.forEach((element, index, iterable)=>{
@@ -441,7 +441,7 @@ export default {
         that.$set(productAttr[i], 'index', 0)
         value.push(productAttr[i].attrValueArr[0])
       }
-debugger
+      debugger
       // sort();排序函数:数字-英文-汉字；
       const productSelect = this.productValue[value.sort().join(',')]
       if (productSelect && productAttr.length) {

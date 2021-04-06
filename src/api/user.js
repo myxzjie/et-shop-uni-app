@@ -34,10 +34,8 @@ export function collectDelete(id, category) {
  * 批量收藏产品
  * */
 export function collectBatchAdd(data) {
-  return request({url:'/collect/all', method: 'post' ,data})
+  return request({ url: '/collect/all', method: 'post', data })
 }
-
-
 
 /**
  * 省市区

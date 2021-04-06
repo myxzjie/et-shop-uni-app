@@ -100,7 +100,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "eslint --fix",
+      "vue-cli-service lint",
       "git add"
     ]
   },

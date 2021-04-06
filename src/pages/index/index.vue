@@ -1,60 +1,74 @@
 <template>
   <view class="container index">
-    <!-- 小程序头部兼容 -->
-    <!-- #ifdef MP||H5 -->
-    <view class="header acea-row row-center-wrapper">
-      <view class="search acea-row row-middle" @click="onSearch">
-        <text class="iconfont icon-xiazai5" />搜索商品
+    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+      <view slot="content">好酒仓</view>
+    </cu-custom>
+    <view class="cu-bar search bg-white">
+      <view class="cu-avatar round bg-white">
+        <text class="text-olive cuIcon-locationfill" />
+      </view>
+      <view class="search-form round">
+        <text class="cuIcon-search" />
+        <!-- @focus="InputFocus" @blur="InputBlur" -->
+        <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品" @tap="onSearch">
+      </view>
+      <view class="action">
+        <text class="cuIcon-scan" />
       </view>
     </view>
-    <!-- #endif -->
-
-    <view class="slider-banner banner">
-      <swiper v-if="banner.length > 0" :indicator-dots="true" :autoplay="true">
-        <block v-for="(item, bannerIndex) in banner" :key="bannerIndex">
-          <swiper-item>
-            <view class="swiper-item" @click="item.url?$router.push('/'+item.url) : ''">
-              <image :src="item.pic" />
-            </view>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-
-    <!---->
-    <view class="nav acea-row">
-      <navigator
-        v-for="(item, menusIndex) in navigations"
-        :key="menusIndex"
-        class="item"
-        url="/pages/cate/index"
-        open-type="switchTab"
+    <swiper
+      class="card-swiper square-dot"
+      :indicator-dots="true"
+      :circular="true"
+      :autoplay="true"
+      interval="5000"
+      duration="500"
+      indicator-active-color="#0081ff"
+      indicator-color="#8799a3"
+      @change="cardSwiper"
+    >
+      <swiper-item
+        v-for="(item, index) in banner"
+        :key="index"
+        :class="curSwiper == index ? 'cur' : ''"
       >
-        <view class="pictrue">
-          <image :src="item.pic" />
+        <view class="swiper-item" @tap="onSwiper(item.url)">
+          <image :src="item.pic" mode="aspectFill" />
         </view>
-        <view>{{ item.name }}</view>
-      </navigator>
+      </swiper-item>
+    </swiper>
+
+    <view class="navigation cu-list grid col-4 no-border">
+      <view v-for="(item, index) in navigations" :key="index" class="cu-item">
+        <view class="text-red">
+          <image class="image" :src="item.pic" />
+          <!-- <view class="cu-tag badge" v-if="item.badge != 0">
+            <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
+          </view> -->
+        </view>
+        <text>{{ item.name }}</text>
+      </view>
     </view>
 
-    <!---->
-    <view class="news acea-row row-between-wrapper">
-      <view class="pictrue">
-        <image :src="images.notice" show-menu-by-longpress />
+    <view class="cu-bar notification-bar" style="">
+      <view class="cu-avatar round bg-white">
+        <text class="cuIcon-notificationfill text-sm text-olive" />
       </view>
-      <view class="swiper-no-swiping new-banner">
-        <swiper v-if="roll.length > 0" class="swiper-wrapper" :indicator-dots="false" autoplay circular vertical>
+      <view class="bar-swiper">
+        <swiper v-if="roll.length > 0" class="swiper" :indicator-dots="false" autoplay circular vertical>
           <block v-for="(item, rollIndex) in roll" :key="rollIndex">
             <swiper-item class="swiper-slide">
               <view
-                class="swiper-item acea-row row-between-wrapper"
+                class="swiper-item"
                 @click="onNotice(item)"
               >
-                <view class="text acea-row row-between-wrapper">
+                <view class="text">
                   <view v-if="item.show === '是'" class="label">最新</view>
-                  <view class="newsTitle line1">{{ item.info }}</view>
+                  <view class="">{{ item.info }}</view>
                 </view>
-                <view class="iconfont icon-xiangyou" style="margin-right: 0.5rem;" />
+                <view>
+                  <text class="cuIcon-right" />
+                </view>
               </view>
             </swiper-item>
           </block>
@@ -62,44 +76,89 @@
       </view>
     </view>
 
+    <!-- <view class="grid col-3 padding-sm">
+      <view class="padding-sm" v-for="(item, index) in ColorList" :key="index">
+        <view class="padding radius text-center shadow-blur" :class="'bg-' + item.name">
+          <view class="text-lg">{{ item.title }}</view>
+          <view class="margin-top-sm text-Abc">{{ item.name }}</view>
+        </view>
+      </view>
+    </view> -->
+
+    <view v-if="firstList.length > 0">
+      <view class="cu-bar bg-white margin-top solid-bottom">
+        <view class="action">
+          首发新品
+          <text class="hot text-red">NEW~</text>
+        </view>
+        <view class="action">
+          <view class="shadow" @tap="onShopMark(3)">
+            更多
+            <text class="cuIcon-right" />
+          </view>
+        </view>
+      </view>
+      <!-- <product-list :list="firstList" /> -->
+      <view class="newProducts">
+        <swiper
+          class="swiper-wrapper"
+          :options="swiperProducts"
+          :indicator-dots="false"
+          :display-multiple-items="2"
+        >
+          <block v-for="(item, firstListIndex) in firstList" :key="firstListIndex">
+            <swiper-item class="swiper-slide">
+              <view
+                class="newProductsItem"
+                @click="onShopDetails(item)"
+              >
+                <view class="img-box">
+                  <image :src="item.image" />
+                </view>
+                <view class="pro-info line1">{{ item.storeName }}</view>
+                <view class="money font-color-red">￥{{ item.price }}</view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+    </view>
+
+    <view v-if="bast.length > 0">
+      <view class="cu-bar bg-white margin-top solid-bottom">
+        <view class="action">
+          <!-- <text class="cuIcon-title text-orange "></text> -->
+          精品推荐
+        </view>
+        <view class="action">
+          <view class="shadow" @tap="onShopMark(1)">
+            更多
+            <text class="cuIcon-right" />
+          </view>
+        </view>
+      </view>
+      <product-list :list="bast" />
+    </view>
+
+    <view v-if="hot.length > 0">
+      <view class="cu-bar bg-white margin-top solid-bottom">
+        <view class="action">
+          <!-- <text class="cuIcon-title text-orange "></text> -->
+          热门榜单
+          <text class="hot text-red">HOT~</text>
+        </view>
+        <view class="action">
+          <view class="shadow" @tap="onShopMark(2)">
+            更多
+            <text class="cuIcon-right" />
+          </view>
+        </view>
+      </view>
+      <product-list :list="hot" />
+    </view>
+
     <!---->
-    <view style="    margin: 0 0.5rem;">
-      <view v-if="bast.length > 0" class="wrapper">
-        <view class="title acea-row row-between-wrapper">
-          <view class="text">
-            <view class="name line1">精品推荐</view>
-          </view>
-          <view
-            class="more"
-            @click="onShopMark(1)"
-          >
-            更多
-            <text class="iconfont icon-jiantou" />
-          </view>
-        </view>
-        <good-list :list="bast" :is-sort="false" />
-      </view>
-
-      <!---->
-      <view v-if="hot.length > 0" class="wrapper">
-        <view class="title acea-row row-between-wrapper">
-          <view class="text">
-            <view class="name line1">
-              热门榜单
-              <text class="new font-color-red">HOT~</text>
-            </view>
-          </view>
-          <view
-            class="more"
-            @click="onShopMark(2)"
-          >
-            更多
-            <text class="iconfont icon-jiantou" />
-          </view>
-        </view>
-        <good-list :list="hot" :is-sort="false" />
-      </view>
-
+    <view style="margin: 0 0.5rem;">
       <!---->
       <view v-if="firstList.length > 0" class="wrapper">
         <view class="title acea-row row-between-wrapper">
@@ -162,22 +221,28 @@
 </template>
 
 <script>
-import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
-
-import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
+// import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
+// import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
 import { getHomeData } from '@/api/public'
+import productList from '@/components/product-list'
 import goodList from '@/components/shop/good-list'
 import promotionList from '@/components/shop/promotion-list'
 
 export default {
-  components: { uniSearchBar, uniNoticeBar, goodList, promotionList },
+  components: { productList, goodList, promotionList },
   data() {
     return {
+      CustomBar: this.CustomBar,
+      curSwiper: 0,
+      dotStyle: false,
       tabInde: 0,
+      isSort: false,
       images: {
-        notice: this.resURL + '/assets/images/notice.png'
+        notice: this.resURL + '/assets/images/notice.png',
+        one: this.resURL + '/assets/images/one.png',
+        two: this.resURL + '/assets/images/two.png',
+        three: this.resURL + '/assets/images/three.png'
       },
-
       banner: [],
       navigations: [],
       roll: [],
@@ -185,7 +250,23 @@ export default {
       hot: [],
       firstList: [],
       promotion: [],
-      coupon: []
+      coupon: [],
+      ColorList: [{
+        title: '嫣红',
+        name: 'red',
+        color: '#e54d42'
+      },
+      {
+        title: '桔橙',
+        name: 'orange',
+        color: '#f37b1d'
+      },
+      {
+        title: '明黄',
+        name: 'yellow',
+        color: '#fbbd08'
+      }
+      ]
     }
   },
   onLoad() {
@@ -215,6 +296,7 @@ export default {
         that.promotion = data.benefit
         that.coupon = data.couponList
       }, err => {
+        console.error(err)
       })
     },
     onSwitchTab(index) {
@@ -225,6 +307,12 @@ export default {
         url: '/pages/search/index'
       })
     },
+    onSwiper(url) {
+      uni.navigateTo({
+        url: url
+      })
+    },
+    cardSwiper() {},
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
         url = '/pages/cate/index'
@@ -268,12 +356,61 @@ export default {
   .container{
     background-color: #fff;
   }
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+
+  .cu-bar.search {
+    .cu-avatar:first-child,
+    .search-form {
+      margin-left: 0;
+    }
+  }
+  .navigation {
+    .image {
+      width:64rpx;
+      height:64rpx;
+    }
+  }
+  .notification-bar {
+    // max-height: 50upx;
+    min-height: 60upx;
+    border-top: 1upx solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
+    .cu-avatar:first-child {
+      margin-left: 0;
+    }
+    .bar-swiper{
+      display: flex;
+      flex: 1;
+      .swiper {
+        width: 100%;
+        height: 60upx;
+        .swiper-slide {
+          .swiper-item {
+            border-left: 1upx solid rgba(0, 0, 0, 0.05);
+            padding: 0 20upx 0;
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+
+	// .content {
+	// 	display: flex;
+	// 	flex-direction: column;
+	// 	align-items: center;
+	// 	justify-content: center;
+	// }
 
 	.logo {
 		height: 200rpx;

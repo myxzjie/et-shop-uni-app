@@ -44,8 +44,8 @@
               class="pictrue"
               @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.productId }})"
             >
-              <image v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image"></image>
-              <image v-else :src="item.productInfo.image"></image>
+              <image v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image" />
+              <image v-else :src="item.productInfo.image" />
             </view>
             <view class="text">
               <view class="line1">{{ item.productInfo.storeName }}</view>
@@ -199,8 +199,8 @@ export default {
       count: 0,
       checkedIds: [],
       loaded: false,
-      images:{
-        noCart: this.resURL+'/assets/images/noCart.png'
+      images: {
+        noCart: this.resURL + '/assets/images/noCart.png'
       }
     }
   },
@@ -209,7 +209,7 @@ export default {
       this.validList = list.valid
     }
   },
-onLoad(){
+  onLoad() {
     const that = this
     that.carnum()
     that.countMoney()
@@ -221,7 +221,7 @@ onLoad(){
       const that = this
       getCartList().then(res => {
         that.cartList = res.data
-        let checkedIds = uni.getStorageSync(cartCheckedKey)||[]
+        let checkedIds = uni.getStorageSync(cartCheckedKey) || []
         if (!Array.isArray(checkedIds)) checkedIds = []
         this.cartList.valid.forEach(cart => {
           if (checkedIds.indexOf(cart.id) !== -1) cart.checked = true
@@ -241,19 +241,19 @@ onLoad(){
       const id = []
       const valid = []
       const list = that.cartList.valid
-      list.forEach((val)=> {
+      list.forEach((val) => {
         if (val.checked === true) {
           id.push(val.id)
         }
       })
       if (id.length === 0) {
         uni.showToast({
-            title: '请选择产品!',
-            icon: 'none',
-            duration: 2000})
+          title: '请选择产品!',
+          icon: 'none',
+          duration: 2000 })
         return
       }
-      cartDelete(id).then(()=> {
+      cartDelete(id).then(() => {
         list.forEach(function(val, i) {
           if (val.checked === false || val.checked === undefined) { valid.push(list[i]) }
         })
@@ -290,7 +290,7 @@ onLoad(){
       const that = this
       const data = { ids: [], category: '' }
       const list = that.cartList.valid
-      list.forEach((val)=> {
+      list.forEach((val) => {
         if (val.checked === true) {
           data.ids.push(val.productId)
           data.category = val.type
@@ -298,16 +298,16 @@ onLoad(){
       })
       if (data.ids.length === 0) {
         uni.showToast({
-            title: '请选择产品!',
-            icon: 'none',
-            duration: 2000})
+          title: '请选择产品!',
+          icon: 'none',
+          duration: 2000 })
         return
       }
-      collectBatchAdd(data).then(()=> {
+      collectBatchAdd(data).then(() => {
         uni.showToast({
-            title: '收藏成功!',
-            icon: 'none',
-            duration: 2000})
+          title: '收藏成功!',
+          icon: 'none',
+          duration: 2000 })
       })
     },
     // 立即下单；
@@ -321,10 +321,10 @@ onLoad(){
         }
       })
       if (ids.length === 0) {
-         uni.showToast({
-            title: '请选择产品',
-            icon: 'none',
-            duration: 2000})
+        uni.showToast({
+          title: '请选择产品',
+          icon: 'none',
+          duration: 2000 })
         return
       }
       this.$router.push({
@@ -364,9 +364,9 @@ onLoad(){
       const list = that.cartList.valid[index]
       if (list.cartNum <= 1) {
         uni.showToast({
-            title: '购物数量至少为1',
-            icon: 'none',
-            duration: 2000})
+          title: '购物数量至少为1',
+          icon: 'none',
+          duration: 2000 })
         return
       }
       list.cartNum--
@@ -384,9 +384,9 @@ onLoad(){
             this.loadCartList()
           }).catch(error => {
             uni.showToast({
-            title: error.response.data.msg,
-            icon: 'none',
-            duration: 2000})
+              title: error.response.data.msg,
+              icon: 'none',
+              duration: 2000 })
           })
       }
     },

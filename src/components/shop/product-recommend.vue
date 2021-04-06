@@ -45,7 +45,7 @@ export default {
   // onLoad() {
   //   this.hostProducts()
   // },
-  mounted(){
+  mounted() {
     this.hostProducts()
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
       if (that.loading) return // 阻止下次请求（false可以进行请求）；
       if (that.loadend) return // 阻止结束当前请求（false可以进行请求）；
       that.loading = true
-      
+
       getProductRecommend(that.page, that.limit).then(res => {
         that.loading = false
         // apply();js将一个数组插入另一个数组;

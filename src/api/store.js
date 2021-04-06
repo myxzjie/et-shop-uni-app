@@ -61,20 +61,19 @@ export function getCartCount(data) {
  * 购物车列表
  * */
 export function getCartList() {
-  return request({url:'/cart/list'})
+  return request({ url: '/cart/list' })
 }
 
 /*
  * 购物车 修改商品数量
  * */
 export function changeCartNum(id, number) {
-  return request({url:'/cart/num', method:'post' ,data: { id, number }})
+  return request({ url: '/cart/num', method: 'post', data: { id, number }})
 }
-
 
 /*
  * 购物车 删除
  * */
 export function cartDelete(ids) {
-  return request({url:'/cart/del',method:'post', data: { ids }})
+  return request({ url: '/cart/del', method: 'post', data: { ids }})
 }
