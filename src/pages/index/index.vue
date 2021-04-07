@@ -1,7 +1,7 @@
 <template>
   <view class="container index">
     <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
-      <view slot="content">好酒仓</view>
+      <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <view class="cu-bar search bg-white">
       <view class="cu-avatar round bg-white">
@@ -98,30 +98,7 @@
           </view>
         </view>
       </view>
-      <!-- <product-list :list="firstList" /> -->
-      <view class="newProducts">
-        <swiper
-          class="swiper-wrapper"
-          :options="swiperProducts"
-          :indicator-dots="false"
-          :display-multiple-items="2"
-        >
-          <block v-for="(item, firstListIndex) in firstList" :key="firstListIndex">
-            <swiper-item class="swiper-slide">
-              <view
-                class="newProductsItem"
-                @click="onShopDetails(item)"
-              >
-                <view class="img-box">
-                  <image :src="item.image" />
-                </view>
-                <view class="pro-info line1">{{ item.storeName }}</view>
-                <view class="money font-color-red">￥{{ item.price }}</view>
-              </view>
-            </swiper-item>
-          </block>
-        </swiper>
-      </view>
+      <product-new :list="firstList" />
     </view>
 
     <view v-if="bast.length > 0">
@@ -157,63 +134,23 @@
       <product-list :list="hot" />
     </view>
 
+    <view v-if="promotion.length > 0">
+      <view class="cu-bar bg-white margin-top solid-bottom">
+        <view class="action">
+          促销单品
+        </view>
+        <view class="action">
+          <view class="shadow" @tap="onShopPromotion()">
+            更多
+            <text class="cuIcon-right" />
+          </view>
+        </view>
+      </view>
+      <product-promotion :list="promotion" />
+    </view>
+
     <!---->
     <view style="margin: 0 0.5rem;">
-      <!---->
-      <view v-if="firstList.length > 0" class="wrapper">
-        <view class="title acea-row row-between-wrapper">
-          <view class="text">
-            <view class="name line1">
-              首发新品
-              <text class="new font-color-red">NEW~</text>
-            </view>
-          </view>
-          <view
-            class="more"
-            @click="onShopMark(3)"
-          >
-            更多
-            <text class="iconfont icon-jiantou" />
-          </view>
-        </view>
-        <view class="newProducts">
-          <swiper
-            class="swiper-wrapper"
-            :options="swiperProducts"
-            :indicator-dots="false"
-            :display-multiple-items="2"
-          >
-            <block v-for="(item, firstListIndex) in firstList" :key="firstListIndex">
-              <swiper-item class="swiper-slide">
-                <view
-                  class="newProductsItem"
-                  @click="onShopDetails(item)"
-                >
-                  <view class="img-box">
-                    <image :src="item.image" />
-                  </view>
-                  <view class="pro-info line1">{{ item.storeName }}</view>
-                  <view class="money font-color-red">￥{{ item.price }}</view>
-                </view>
-              </swiper-item>
-            </block>
-          </swiper>
-        </view>
-      </view>
-
-      <!---->
-      <view v-if="promotion.length > 0" class="wrapper">
-        <view class="title acea-row row-between-wrapper">
-          <view class="text">
-            <view class="name line1">促销单品</view>
-          </view>
-          <view class="more" @click="onShopPromotion()">
-            更多
-            <text class="iconfont icon-jiantou" />
-          </view>
-        </view>
-        <promotion-list :list="promotion" />
-      </view>
 
       <view style="height:1.2rem;" />
     </view>
@@ -224,14 +161,15 @@
 // import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
 // import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
 import { getHomeData } from '@/api/public'
-import productList from '@/components/product-list'
-import goodList from '@/components/shop/good-list'
-import promotionList from '@/components/shop/promotion-list'
+import ProductNew from '@/components/product/product-new'
+import ProductList from '@/components/product/product-list'
+import ProductPromotion from '@/components/product/product-promotion'
 
 export default {
-  components: { productList, goodList, promotionList },
+  components: { ProductList, ProductNew, ProductPromotion },
   data() {
     return {
+      BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       curSwiper: 0,
       dotStyle: false,
@@ -405,30 +343,23 @@ export default {
     }
   }
 
-	// .content {
-	// 	display: flex;
-	// 	flex-direction: column;
-	// 	align-items: center;
-	// 	justify-content: center;
-	// }
+// 	.logo {
+// 		height: 200rpx;
+// 		width: 200rpx;
+// 		margin: 200rpx auto 50rpx auto;
+// 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
+// 	.text-area {
+// 		display: flex;
+// 		justify-content: center;
+// 	}
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
+// // .title {
+// // 		font-size: 36rpx;
+// // 		color: #8f8f94;
+// //   }
 
-// .title {
-// 		font-size: 36rpx;
-// 		color: #8f8f94;
+//   .swiper-item {
+//     height: 100%;
 //   }
-
-  .swiper-item {
-    height: 100%;
-  }
 </style>

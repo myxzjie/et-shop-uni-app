@@ -10,13 +10,16 @@
       <view class="flex-twice bg-white padding-xs margin-xs radius">
         <view class="content">
           <view class="text text-df">{{ item.storeName }}</view>
-          <view class="price margin-top-sm">
+          <view class="price margin-tb">
             <text class="sale-price text-xl text-red text-bold ">￥{{ item.price }}</text>
-            <text class="raw-price margin-left-xs">￥{{ item.otPrice || 0 }}</text>
           </view>
-          <view class="sales">
+          <view class="sales flex flex-wrap margin-top-sm">
+            <text class="raw-price">原价: ￥{{ item.otPrice || 0 }}</text>
+            <text class="sale-volume">已售: {{ item.sales }}{{ item.unitName }}</text>
+          </view>
+          <!-- <view class="sales ">
             <text class="sale-volume">已售{{ item.sales }}{{ item.unitName }}</text>
-          </view>
+          </view> -->
         </view>
       </view>
     </view>
@@ -37,7 +40,6 @@ export default {
   },
   data() {
     return {
-      isSort: false,
       images: {
         one: this.resURL + '/assets/images/one.png',
         two: this.resURL + '/assets/images/two.png',
@@ -86,6 +88,14 @@ export default {
           box-orient: vertical;
           line-clamp: 2;
           display: -webkit-box;
+        }
+        > .sales {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
         }
         .raw-price {
           text-decoration: line-through;

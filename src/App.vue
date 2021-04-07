@@ -32,6 +32,7 @@ export default {
         Vue.prototype.StatusBar = e.statusBarHeight
         Vue.prototype.CustomBar = e.statusBarHeight + e.titleBarHeight
         // #endif
+        Vue.prototype.BaseName = '好酒仓库'
       }
     })
 

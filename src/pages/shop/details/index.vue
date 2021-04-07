@@ -184,8 +184,8 @@ import {
 import {
   getCoupon,
   collectAdd,
-  collectDelete,
-  getUserInfo
+  collectDelete
+  // ,getUserInfo
 } from '@/api/user'
 // import { isWeixin } from '@utils/index'
 // // import { wechatEvevt } from "@libs/wechat";

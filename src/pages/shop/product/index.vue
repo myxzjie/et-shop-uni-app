@@ -132,7 +132,7 @@ export default {
   methods: {
     loadProductList() {
       const that = this
-      if (that.loaded == true || that.loading == true) return
+      if (that.loaded === true || that.loading === true) return
       that.loading = true
       that.queryParams()
       // if (id !== this.query.sid) {

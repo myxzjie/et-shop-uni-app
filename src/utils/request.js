@@ -46,9 +46,9 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       }
       // const [error, res] = response
       // debugger
-      // if (error) {
-      //   console.error(error)
-      // }
+      if (error) {
+        console.error(error)
+      }
     }).catch(error => {
       const [err, res] = error
       debugger

@@ -3,7 +3,7 @@
     <view class="fixed">
       <cu-custom :is-back="true" bg-color="bg-shadeTop text-white">
         <block slot="backText">返回</block>
-        <block slot="content">{{ BaseName }}</block>
+        <block slot="content">垂直导航</block>
       </cu-custom>
     </view>
     <swiper
@@ -167,7 +167,6 @@ import { getCategory } from '@/api/store'
 export default {
   data() {
     return {
-      BaseName: this.BaseName,
       list: [],
       tabCur: 0,
       mainCur: 0,
