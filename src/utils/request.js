@@ -39,6 +39,9 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       if (data.status === 200) {
         return resolve(data)
       }
+      if (data.status === 6000) {
+        return resolve(data)
+      }
       if (data.status === 401) {
         uni.navigateTo({
           url: '/pages/auth/login'

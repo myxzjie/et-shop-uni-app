@@ -1,5 +1,5 @@
 <template>
-  <view class="container index">
+  <view class="container">
     <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>

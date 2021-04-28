@@ -53,8 +53,8 @@
 	"quickapp": { /* 快应用特有相关 */
 
 	},
-	"mp-weixin": { /* 微信小程序特有相关 */
-		"appid": "wx7aeeec7dd6379f53",
+	"mp-weixin": { /* 微信小程序特有相关 wx7aeeec7dd6379f53 */
+		"appid": "wx38c35a712d777199",
 		"setting": {
 			"urlCheck": false
 		},

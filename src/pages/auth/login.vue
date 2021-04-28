@@ -1,13 +1,33 @@
 <template>
   <view class="container">
-    <view v-if="!hasLogin">
+
+    <view class="ucenter-bg">
+      <image src="@/static/logo.png" class="png" mode="widthFix" />
+      <view class="text-xl">
+        {{ BaseName }}
+        <text class="text-df">2.0</text>
+      </view>
+      <view class="margin-top-sm">
+        <!-- <text></text> -->
+      </view>
+    </view>
+    <view class="padding-xl">
+      <button
+        class="cu-btn bg-green shadow lg block"
+        open-type="getUserInfo"
+        @getuserinfo="getUserInfo"
+      >微信登录</button>
+      <!-- <button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo">微信授权登录</button> -->
+    </view>
+
+    <!-- <view v-if="!hasLogin">
       <view class="getUserInfo">
         <text />
         <button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo">微信授权登录</button>
         <view class="sp-cell" />
         <button type="default" @click="back">取消授权登录</button>
       </view>
-    </view>
+    </view> -->
 
     <van-dialog
       use-slot
@@ -61,10 +81,11 @@
 <script>
 import { tokenKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
-import { wxappSessionCode, wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
+import { wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
 export default {
   data() {
     return {
+      BaseName: this.BaseName,
       show: false,
       register: false,
       phoneInfo: {
@@ -86,36 +107,35 @@ export default {
     ...mapState(['hasLogin', 'sessionKey', 'openid'])
   },
   onLoad(options) {
-    const that = this
-
+    // const that = this
     // 调用 微信 login 获取 code
-    uni.login({
-      success: (res) => {
-        console.log(res)
-        wxappSessionCode({ code: res.code }).then(({ data }) => {
-          this.setSessionKey(data.session_key)
-          this.setOpenid(data.openid)
-        }, err => {
-          console.error(err)
-        })
-        // uni.request({
-        //   url: '', // _self.apiServer+'member&m=codeToSession&code='+res.code,
-        //   success: (sessions) => {
-        //     console.log(sessions)
-        //     // session_key = sessions.data.session_key;
-        //   }
-        // })
-        // 获取用户信息
-        // uni.getUserInfo({
-        //   provider: 'weixin',
-        //   success: function(infoRes) {
-        //     console.log('用户昵称为：' + infoRes.userInfo.nickName)
-        //     uni.setStorageSync('userToken', '')
-        //     that.login(loginRes.body.data) // 将用户信息保存起来
-        //   }
-        // })
-      }
-    })
+    // uni.login({
+    //   success: (res) => {
+    //     console.log(res)
+    //     wxappSessionCode({ code: res.code }).then(({ data }) => {
+    //       that.setSessionKey(data.session_key)
+    //       that.setOpenid(data.openid)
+    //     }, err => {
+    //       console.error(err)
+    //     })
+    //     // uni.request({
+    //     //   url: '', // _self.apiServer+'member&m=codeToSession&code='+res.code,
+    //     //   success: (sessions) => {
+    //     //     console.log(sessions)
+    //     //     // session_key = sessions.data.session_key;
+    //     //   }
+    //     // })
+    //     // 获取用户信息
+    //     // uni.getUserInfo({
+    //     //   provider: 'weixin',
+    //     //   success: function(infoRes) {
+    //     //     console.log('用户昵称为：' + infoRes.userInfo.nickName)
+    //     //     uni.setStorageSync('userToken', '')
+    //     //     that.login(loginRes.body.data) // 将用户信息保存起来
+    //     //   }
+    //     // })
+    //   }
+    // })
   },
   methods: {
     ...mapMutations(['login', 'setSessionKey', 'setOpenid']),
@@ -127,7 +147,7 @@ export default {
     },
     getPhoneNumber(e) {
       const that = this
-      const { encryptedData, iv, userInfo } = e.mp.detail
+      const { encryptedData, iv } = e.mp.detail
       wxappPhone({
         encryptedData: encryptedData,
         iv: iv,
@@ -136,34 +156,37 @@ export default {
         code: '1212'
       }).then(res => {
         that.phoneInfo = res.data
-      }, err => {})
+      }, err => { console.error(err) })
     },
     authLogin(encryptedData, iv, userInfo) {
       const that = this
-      wxappAuth({
-        encryptedData: encryptedData,
-        iv: iv,
-        code: '1232',
-        spread: null,
-        userData: null,
-        phoneData: null,
-        sessionKey: that.sessionKey,
-        openid: that.openid
-      }).then(res => {
-        if (res.status === 200) {
-          that.login('weixin')
-          uni.setStorageSync(tokenKey, res.data.token)
-          uni.navigateBack({})
-        } else if (res.status === 6000) {
-          that.show = true
-          return
-        } else if (res.status == 6002) {
-          that.register = true
-          that.userInfo = { encryptedData, iv, userInfo }
-          return
+      wx.login({
+        success: res => {
+          wx.getUserInfo({
+            success: user => {
+              wxappAuth({
+                code: res.code,
+                userData: user,
+                spread: null
+              }).then(res => {
+                if (res.status === 200) {
+                  that.login('weixin')
+                  uni.setStorageSync(tokenKey, res.data.token)
+                  uni.navigateBack({})
+                } else if (res.status === 6000) {
+                  that.show = true
+                  return
+                } else if (res.status === 6002) {
+                  that.register = true
+                  that.userInfo = { encryptedData, iv, userInfo }
+                  return
+                }
+              }, err => {
+                console.error(err)
+              })
+            }
+          })
         }
-      }, err => {
-        debugger
       })
     },
     onDialogClose(e) {
@@ -193,7 +216,7 @@ export default {
           })
         }
       },
-      err => {})
+      err => { console.error(err) })
     },
     sendMessge() {
       const that = this
@@ -215,7 +238,7 @@ export default {
             content: res.msg
           })
         }
-      }, err => {})
+      }, err => { console.error(err) })
     },
     setCountdown(num = 60) {
       const that = this
@@ -234,6 +257,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ucenter-bg {
+    position: relative;
+    display: flex;
+    height: 700rpx;
+    overflow: hidden;
+    font-weight: 300;
+    color: #fff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    background-image: url(https://image.weilanwl.com/color2.0/index.jpg);
+    background-size: cover;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ubenter-bg::after {
+    position: absolute;
+    right: 0;
+    bottom: -60vw;
+    left: 0;
+    width: 100vw;
+    height: 50vw;
+    margin: auto;
+    background-color: #f1f1f1;
+    content: '';
+    transform: rotate(-10deg) scale(2, 2);
+  }
+
+  .ucenter-bg text {
+    opacity: 0.8;
+  }
+
+  .ucenter-bg image {
+    width: 250rpx;
+    height: 250rpx;
+  }
+
 .sp-cell {
   height: 20rpx;
 }

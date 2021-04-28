@@ -17,7 +17,7 @@ export function wxappSessionCode(data) {
  * */
 export function wxappAuth(data) {
   return request({
-    url: '/wxapp/auth2',
+    url: '/wxapp/auth',
     method: 'post',
     data,
     power: false

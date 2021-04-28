@@ -80,7 +80,7 @@ export default {
           border-radius: 0.5rem 0.03rem;
         }
         .raw-price {
-            text-decoration: line-through;
+          text-decoration: line-through;
         }
     }
   }

@@ -1,180 +1,394 @@
 <template>
-  <view :class="[posterImageStatus ? 'noscroll product-con' : 'product-con']">
-    <product-swiper :img-urls="storeInfo.sliderImageArr" />
-    <view class="wrapper">
-      <view class="share acea-row row-between row-bottom">
-        <view class="money font-color-red">
-          ￥
-          <span class="num">{{ storeInfo.price }}</span>
-          <!-- <span
+  <view>
+    <cu-custom :is-back="true" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
+    </cu-custom>
+
+    <scroll-view scroll-y class="scrollPage">
+      <product-swiper :img-urls="storeInfo.sliderImageArr" />
+
+      <view class="bg-white padding-sm">
+        <view class="flex flex-wrap row-between row-bottom">
+          <view class="">
+            <text class="text-red text-bold text-xl">￥{{ storeInfo.price }}</text>
+          <!-- <text
             v-if="storeInfo.vipPrice && storeInfo.vipPrice > 0"
             class="vip-money"
-          >￥{{ storeInfo.vipPrice }}</span> -->
-          <!-- <img
+          >￥{{ storeInfo.vipPrice }}</text>
+          <image
             v-if="storeInfo.vipPrice && storeInfo.vipPrice > 0"
             :src="$VUE_APP_RES_URL+'/assets/images/vip.png'"
             class="image"
           > -->
-        </view>
+          </view>
         <!-- 分享海报 -->
         <!-- <view class="iconfont icon-fenxiang" @click="listenerActionSheet" /> -->
-      </view>
-      <view class="introduce">{{ storeInfo.storeName }}</view>
-      <view class="label acea-row row-between-wrapper">
-        <view>原价:￥{{ storeInfo.otPrice }}</view>
-        <view>库存:{{ storeInfo.stock }}{{ storeInfo.unitName }}</view>
-        <view>销量:{{ storeInfo.sales }}{{ storeInfo.unitName }}</view>
-      </view>
-      <view v-if="couponList.length" class="coupon acea-row row-between-wrapper" @click="couponTap">
-        <view class="hide line1 acea-row">
-          优惠券：
-          <view
-            v-for="(item, couponListEq) in couponList"
-            :key="couponListEq"
-            class="activity"
-          >满{{ item.use_min_price }}减{{ item.coupon_price }}</view>
         </view>
-        <view class="iconfont icon-jiantou" />
-      </view>
-    </view>
-    <view class="attribute acea-row row-between-wrapper" @click="onSelecAttrTap">
-      <view>
-        {{ attrTxt }}：
-        <text class="atterTxt">{{ attrValue }}</text>
-      </view>
-      <view class="iconfont icon-jiantou" />
-    </view>
-    <view v-if="system_store.id !== undefined" class="store-info">
-      <view class="title">门店信息</view>
-      <view class="info acea-row row-between-wrapper">
-        <view class="picTxt acea-row row-between-wrapper">
-          <view class="pictrue">
-            <img :src="system_store.image">
+
+        <view class="introduce margin-top">{{ storeInfo.storeName }}</view>
+        <view class="flex flex-wrap align-between margin-top">
+          <view>原价:￥{{ storeInfo.otPrice }}</view>
+          <view>库存:{{ storeInfo.stock }}{{ storeInfo.unitName }}</view>
+          <view>销量:{{ storeInfo.sales }}{{ storeInfo.unitName }}</view>
+        </view>
+
+        <view v-if="couponList.length" class="coupon acea-row row-between-wrapper" @click="couponTap">
+          <view class="hide line1 acea-row">
+            优惠券：
+            <view
+              v-for="(item, couponListEq) in couponList"
+              :key="couponListEq"
+              class="activity"
+            >满{{ item.use_min_price }}减{{ item.coupon_price }}</view>
           </view>
-          <view class="text">
-            <view class="name line1">{{ system_store.name }}</view>
-            <view class="address acea-row row-middle" @click="showChang">
-              <span class="addressTxt line1">
-                {{
-                  system_store._detailed_address
-                }}
-              </span>
-              <span class="iconfont icon-youjian" />
+          <view class="iconfont icon-jiantou" />
+        </view>
+      </view>
+
+      <view class="attribute bg-white margin-top-sm padding-sm flex flex-wrap row-between" @tap="onSelecAttrTap">
+        <view>
+          {{ attrTxt }}：
+          <text class="atterTxt">{{ attrValue }}</text>
+        </view>
+        <view class="cuIcon-right" />
+      </view>
+
+      <view v-if="system_store.id !== undefined" class="store-info">
+        <view class="title">门店信息</view>
+        <view class="info acea-row row-between-wrapper">
+          <view class="picTxt acea-row row-between-wrapper">
+            <view class="pictrue">
+              <img :src="system_store.image">
+            </view>
+            <view class="text">
+              <view class="name line1">{{ system_store.name }}</view>
+              <view class="address acea-row row-middle" @click="showChang">
+                <span class="addressTxt line1">
+                  {{
+                    system_store._detailed_address
+                  }}
+                </span>
+                <span class="iconfont icon-youjian" />
+              </view>
             </view>
           </view>
-        </view>
-        <!-- <a class="iconfont icon-dadianhua01 font-color-red" :href="'tel:' + system_store.phone"></a> -->
-      </view>
-    </view>
-    <view v-if="replyCount" class="userEvaluation">
-      <view class="title acea-row row-between-wrapper">
-        <view>用户评价({{ replyCount }})</view>
-        <view
-          class="praise"
-          @click="$router.push({ path: '/pages/shop/EvaluateList/main',query:{id}})"
-        >
-          <span class="font-color-red">{{ replyChance }}%</span>好评率
-          <span class="iconfont icon-jiantou" />
+          <!-- <a class="iconfont icon-dadianhua01 font-color-red" :href="'tel:' + system_store.phone"></a> -->
         </view>
       </view>
-      <user-evaluation :reply="reply" />
-    </view>
-    <view class="superior">
-      <view class="title acea-row row-center-wrapper">
-        <img :src="images.ling">
-        <view class="titleTxt">优品推荐</view>
-        <img :src="images.ling">
+
+      <view v-if="replyCount" class="userEvaluation">
+        <view class="title acea-row row-between-wrapper">
+          <view>用户评价({{ replyCount }})</view>
+          <view
+            class="praise"
+            @click="$router.push({ path: '/pages/shop/EvaluateList/main',query:{id}})"
+          >
+            <span class="font-color-red">{{ replyChance }}%</span>好评率
+            <span class="iconfont icon-jiantou" />
+          </view>
+        </view>
+        <user-evaluation :reply="reply" />
       </view>
-      <template>
-        <view class="slider-banner banner">
-          <swiper v-if="goodList.length > 0" :options="swiperRecommend">
-            <swiper-slide v-for="(item, eq2) in goodList" :key="eq2">
-              <view class="list acea-row row-middle">
-                <view v-for="val in item.list" :key="val.image" class="item">
-                  <view class="pictrue">
-                    <img :src="val.image">
+
+      <view class="bg-white margin-tb-sm">
+        <view class="padding flex flex-wrap align-center text-red text-shadow">
+          <!-- <img :src="images.ling"> -->
+          <view class="cuIcon-title text-df" />
+          <view class="text-df">优品推荐</view>
+          <!-- <img :src="images.ling"> -->
+          <view class="cuIcon-title text-df" />
+        </view>
+
+        <template>
+          <view class="slider-banner banner">
+            <swiper v-if="goodList.length > 0" :options="swiperRecommend">
+              <swiper-slide v-for="(item, eq2) in goodList" :key="eq2">
+                <view class="list acea-row row-middle">
+                  <view v-for="val in item.list" :key="val.image" class="item">
+                    <view class="pictrue">
+                      <img :src="val.image">
+                    </view>
+                    <view class="name line1">{{ val.storeName }}}</view>
+                    <view class="money font-color-red">¥{{ val.price }}</view>
                   </view>
-                  <view class="name line1">{{ val.store_name }}}</view>
-                  <view class="money font-color-red">¥{{ val.price }}</view>
+                </view>
+              </swiper-slide>
+              <view slot="pagination" class="swiper-pagination" />
+            </swiper>
+          </view>
+        </template>
+      </view>
+
+      <view class="padding bg-white">
+        <view class="title text-center text-bold">产品介绍</view>
+        <view class="conter padding-top-sm" v-html="storeInfo.description" />
+      </view>
+
+      <!--  -->
+
+      <view :class="[posterImageStatus ? 'noscroll product-con' : 'product-con']">
+
+        <view class="wrapper">
+          <!-- <view class="share acea-row row-between row-bottom"> -->
+          <!-- <view class="money font-color-red">
+              ￥
+              <span class="num">{{ storeInfo.price }}</span>
+              <span
+                v-if="storeInfo.vipPrice && storeInfo.vipPrice > 0"
+                class="vip-money"
+              >￥{{ storeInfo.vipPrice }}</span>
+              <img
+                v-if="storeInfo.vipPrice && storeInfo.vipPrice > 0"
+                :src="$VUE_APP_RES_URL+'/assets/images/vip.png'"
+                class="image"
+              >
+            </view> -->
+          <!-- 分享海报 -->
+          <!-- <view class="iconfont icon-fenxiang" @click="listenerActionSheet" /> -->
+          <!-- </view> -->
+          <!-- <view class="introduce">{{ storeInfo.storeName }}</view> -->
+          <!-- <view class="label acea-row row-between-wrapper">
+            <view>原价:￥{{ storeInfo.otPrice }}</view>
+            <view>库存:{{ storeInfo.stock }}{{ storeInfo.unitName }}</view>
+            <view>销量:{{ storeInfo.sales }}{{ storeInfo.unitName }}</view>
+          </view> -->
+          <view v-if="couponList.length" class="coupon acea-row row-between-wrapper" @click="couponTap">
+            <view class="hide line1 acea-row">
+              优惠券：
+              <view
+                v-for="(item, couponListEq) in couponList"
+                :key="couponListEq"
+                class="activity"
+              >满{{ item.use_min_price }}减{{ item.coupon_price }}</view>
+            </view>
+            <view class="iconfont icon-jiantou" />
+          </view>
+        </view>
+        <!-- <view class="attribute acea-row row-between-wrapper" @click="onSelecAttrTap">
+          <view>
+            {{ attrTxt }}：
+            <text class="atterTxt">{{ attrValue }}</text>
+          </view>
+          <view class="iconfont icon-jiantou" />
+        </view> -->
+        <view v-if="system_store.id !== undefined" class="store-info">
+          <view class="title">门店信息</view>
+          <view class="info acea-row row-between-wrapper">
+            <view class="picTxt acea-row row-between-wrapper">
+              <view class="pictrue">
+                <img :src="system_store.image">
+              </view>
+              <view class="text">
+                <view class="name line1">{{ system_store.name }}</view>
+                <view class="address acea-row row-middle" @click="showChang">
+                  <span class="addressTxt line1">
+                    {{
+                      system_store._detailed_address
+                    }}
+                  </span>
+                  <span class="iconfont icon-youjian" />
                 </view>
               </view>
-            </swiper-slide>
-            <view slot="pagination" class="swiper-pagination" />
-          </swiper>
+            </view>
+            <!-- <a class="iconfont icon-dadianhua01 font-color-red" :href="'tel:' + system_store.phone"></a> -->
+          </view>
         </view>
-      </template>
-    </view>
-    <view class="product-intro">
-      <view class="title">产品介绍</view>
-      <view class="conter" v-html="storeInfo.description" />
-    </view>
-    <view style="height:1.2rem;" />
-    <view class="footer acea-row row-between-wrapper">
-      <!--<view class="item" @click="$router.push({ path: '/pages/user/CustomerList/main' })">-->
-      <!--<view class="iconfont icon-kefu"></view>-->
-      <!--<view>客服</view>-->
-      <!--</view>-->
-      <view class="item" @click="onCollect">
-        <view class="iconfont" :class="storeInfo.userCollect ? 'icon-shoucang1' : 'icon-shoucang'" />
-        <view class="name">收藏</view>
-      </view>
-      <view
-        class="item animated"
-        :class="animated === true ? 'bounceIn' : ''"
-        @click="onCart()"
-      >
-        <view class="iconfont icon-gouwuche1">
-          <span v-if="cartCount > 0" class="num bg-color-red">
-            {{
-              cartCount
-            }}
-          </span>
+        <view v-if="replyCount" class="userEvaluation">
+          <view class="title acea-row row-between-wrapper">
+            <view>用户评价({{ replyCount }})</view>
+            <view
+              class="praise"
+              @click="$router.push({ path: '/pages/shop/EvaluateList/main',query:{id}})"
+            >
+              <span class="font-color-red">{{ replyChance }}%</span>好评率
+              <span class="iconfont icon-jiantou" />
+            </view>
+          </view>
+          <user-evaluation :reply="reply" />
         </view>
-        <view>购物车</view>
+        <view class="superior">
+          <view class="title acea-row row-center-wrapper">
+            <img :src="images.ling">
+            <view class="titleTxt">优品推荐</view>
+            <img :src="images.ling">
+          </view>
+          <template>
+            <view class="slider-banner banner">
+              <swiper v-if="goodList.length > 0" :options="swiperRecommend">
+                <swiper-slide v-for="(item, eq2) in goodList" :key="eq2">
+                  <view class="list acea-row row-middle">
+                    <view v-for="val in item.list" :key="val.image" class="item">
+                      <view class="pictrue">
+                        <img :src="val.image">
+                      </view>
+                      <view class="name line1">{{ val.storeName }}}</view>
+                      <view class="money font-color-red">¥{{ val.price }}</view>
+                    </view>
+                  </view>
+                </swiper-slide>
+                <view slot="pagination" class="swiper-pagination" />
+              </swiper>
+            </view>
+          </template>
+        </view>
+        <!-- <view class="product-intro">
+          <view class="title">产品介绍</view>
+          <view class="conter" v-html="storeInfo.description" />
+        </view> -->
+        <!-- <view style="height:1.2rem;" /> -->
+        <!-- <view class="footer acea-row row-between-wrapper"> -->
+        <!--<view class="item" @click="$router.push({ path: '/pages/user/CustomerList/main' })">-->
+        <!--<view class="iconfont icon-kefu"></view>-->
+        <!--<view>客服</view>-->
+        <!--</view>-->
+        <!-- <view class="item" @click="onCollect">
+            <view class="iconfont" :class="storeInfo.userCollect ? 'icon-shoucang1' : 'icon-shoucang'" />
+            <view class="name">收藏</view>
+          </view>
+          <view
+            class="item animated"
+            :class="animated === true ? 'bounceIn' : ''"
+            @click="onCart()"
+          >
+            <view class="iconfont icon-gouwuche1">
+              <span v-if="cartCount > 0" class="num bg-color-red">
+                {{
+                  cartCount
+                }}
+              </span>
+            </view>
+            <view>购物车</view>
+          </view>
+          <view class="bnt acea-row">
+            <view class="joinCart" @click="onJoinCart">加入购物车</view>
+            <view class="buy" @click="tapBuy">立即购买</view>
+          </view>
+        </view> -->
+        <CouponPop :coupon="coupon" @changeFun="changeFun" />
+        <product-window :attr="attr" @changeFun="changeFun" />
+        <StorePoster
+          :poster-image-status="posterImageStatus"
+          :poster-data="posterData"
+          @setPosterImageStatus="setPosterImageStatus"
+        />
+        <ShareInfo :share-info-status="shareInfoStatus" @setShareInfoStatus="setShareInfoStatus" />
+        <view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
+          <view v-if="weixinStatus === true" class="item" @click="setShareInfoStatus">
+            <view class="iconfont icon-weixin3" />
+            <view class>发送给朋友</view>
+          </view>
+          <view class="item" @click="setPosterImageStatus">
+            <view class="iconfont icon-haibao" />
+            <view class>生成海报</view>
+          </view>
+        </view>
+        <view v-show="posters" class="mask" @touchmove.prevent @click="listenerActionClose" />
+        <view v-if="mapShow" class="geoPage">
+          <iframe
+            width="100%"
+            height="100%"
+            frameborder="0"
+            scrolling="no"
+            :src="'https://apis.map.qq.com/uri/v1/geocoder?coord=' +system_store.latitude +',' +system_store.longitude +'&referer=' +mapKey"
+          />
+        </view>
       </view>
-      <view class="bnt acea-row">
-        <view class="joinCart" @click="onJoinCart">加入购物车</view>
-        <view class="buy" @click="tapBuy">立即购买</view>
+
+      <!-- <cart-dialog :show-modal="showModal" /> -->
+      <view class="cu-modal bottom-modal" :class="showModal ? 'show' : ''" @tap="hideModal">
+        <view class="cu-dialog" @tap.stop="">
+          <view class="cu-bar">
+            <view class="action text-blue" />
+            <view class="action" @tap="hideModal">
+              <text class="cuIcon-roundclose" @click="hideModal" />
+            </view>
+          </view>
+          <view class="dialog-content padding">
+            <view class="flex flex-wrap row-between">
+              <view class="pictrue">
+                <image :src="attr.productSelect.image" class="image" />
+              </view>
+              <view class="content">
+                <view class="name">{{ attr.productSelect.storeName }}</view>
+                <view class="sales text-left">
+                  <text class="price text-red text-xl">￥{{ attr.productSelect.price }}</text>
+                  <text class="stock margin-left">库存: {{ attr.productSelect.stock }}</text>
+                </view>
+              </view>
+              <!-- <view class="cuIcon-roundclose" @click="hideModal" /> -->
+            </view>
+          </view>
+
+          <view class="attribute padding">
+            <view v-for="(item, indexw) in attr.productAttr" :key="indexw" class="item">
+              <view class="title text-left">{{ item.attrName }}</view>
+              <view class="flex flex-wrap row-middle">
+                <view
+                  v-for="(itemn, indexn) in item.attrValue"
+                  :key="indexn"
+                  class="name padding margin-xs"
+                  :class="item.index == indexn ? 'active' : ''"
+                  @tap="tapAttr(indexw, indexn)"
+                >
+                  {{ itemn.attr }}
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="cart-quantity padding">
+            <view class="title text-left">数量</view>
+            <view class="flex flex-wrap row-left">
+              <view
+                class="decrease"
+                :class="attr.productSelect.cartNum <= 1 ? 'disable' : ''"
+                @click="ChangeCartNum(-1)"
+              >-</view>
+              <view class="quantity">{{ attr.productSelect.cartNum || 1 }}</view>
+              <view
+                class="increase"
+                :class="attr.productSelect.cartNum >= attr.productSelect.stock? 'on': ''"
+                @click="ChangeCartNum(1)"
+              >+</view>
+            </view>
+          </view>
+
+          <view class="cu-tabbar-height" />
+        </view>
       </view>
-    </view>
-    <CouponPop :coupon="coupon" @changeFun="changeFun" />
-    <product-window :attr="attr" @changeFun="changeFun" />
-    <StorePoster
-      :poster-image-status="posterImageStatus"
-      :poster-data="posterData"
-      @setPosterImageStatus="setPosterImageStatus"
-    />
-    <ShareInfo :share-info-status="shareInfoStatus" @setShareInfoStatus="setShareInfoStatus" />
-    <view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
-      <view v-if="weixinStatus === true" class="item" @click="setShareInfoStatus">
-        <view class="iconfont icon-weixin3" />
-        <view class>发送给朋友</view>
+
+      <view class="cu-tabbar-height" />
+    </scroll-view>
+    <view class="cu-bar bg-white tabbar border shop foot">
+      <button class="action" @tap="onCollect">
+        <view class="cuIcon-likefill" :class="storeInfo.userCollect?'text-red':'text-grey'">
+          <view v-if="storeInfo.userCollect" class="cu-tag badge" />
+        </view>
+        收藏
+      </button>
+      <view class="action" @tap="onCart">
+        <view class="cuIcon-cart">
+          <view v-if="cartCount > 0" class="cu-tag badge">{{ cartCount }}</view>
+        </view>
+        购物车
       </view>
-      <view class="item" @click="setPosterImageStatus">
-        <view class="iconfont icon-haibao" />
-        <view class>生成海报</view>
-      </view>
-    </view>
-    <view v-show="posters" class="mask" @touchmove.prevent @click="listenerActionClose" />
-    <view v-if="mapShow" class="geoPage">
-      <iframe
-        width="100%"
-        height="100%"
-        frameborder="0"
-        scrolling="no"
-        :src="'https://apis.map.qq.com/uri/v1/geocoder?coord=' +system_store.latitude +',' +system_store.longitude +'&referer=' +mapKey"
-      />
+      <view class="bg-orange submit" @tap="onJoinCart">加入购物车</view>
+      <view class="bg-red submit" @tap="tapBuy">立即订购</view>
     </view>
   </view>
 </template>
 
 <script>
-import ProductSwiper from '@/components/shop/product-swiper'
+import ProductSwiper from '@/components/product/product-swiper'
+// import ProductSwiper from '@/components/shop/product-swiper'
 import ProductWindow from '@/components/shop/product-window'
+import cartDialog from '@/pages/shop/details/components/cart-dialog'
 // import UserEvaluation from '@components/UserEvaluation'
 // import CouponPop from '@components/CouponPop'
 // import StorePoster from '@components/StorePoster'
 // import ShareInfo from '@components/ShareInfo'
+
 import {
   getProductDetail,
   addCart,
@@ -194,7 +408,8 @@ import {
 export default {
   components: {
     ProductSwiper,
-    ProductWindow
+    ProductWindow,
+    cartDialog
     // UserEvaluation,
     // CouponPop,
     // StorePoster,
@@ -202,6 +417,7 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       id: 0,
       shareInfoStatus: false,
       weixinStatus: false,
@@ -270,7 +486,13 @@ export default {
     // this.productCon()
     // this.coupons();
   },
+  onShow(e) {
+    this.loadProductDetails()
+  },
   methods: {
+    hideModal() {
+      this.showModal = false
+    },
     showChang: function() {
       if (isWeixin()) {
         const config = {
@@ -297,9 +519,6 @@ export default {
         this.mapShow = true
       }
     },
-    updateTitle() {
-      // document.title = this.storeInfo.storeName || this.$route.meta.title;
-    },
     setOpenShare: function() {
       // var data = this.storeInfo;
       // var href = location.href;
@@ -312,7 +531,7 @@ export default {
       //           : href + "&spread=" + res.data.uid;
       //       var configAppMessage = {
       //         desc: data.store_info,
-      //         title: data.store_name,
+      //         title: data.storeName,
       //         link: href,
       //         imgUrl: data.image
       //       };
@@ -334,7 +553,7 @@ export default {
       //   } else {
       //     var configAppMessage = {
       //       desc: data.store_info,
-      //       title: data.store_name,
+      //       title: data.storeName,
       //       link: href,
       //       imgUrl: data.image
       //     };
@@ -404,7 +623,6 @@ export default {
 
           that.mapKay = res.data.mapKay
           that.goodList = goodArray
-          that.updateTitle()
           that.loadDefaultSelect()
           that.loadCartCount()
           // that.getImageBase64();
@@ -433,93 +651,98 @@ export default {
       const that = this
       const productAttr = that.attr.productAttr
       const value = []
-      // productAttr.forEach((element, index, iterable)=>{
-      //   debugger
-      //    that.$set(element, 'index', 0)
-      // })
-      for (let i = 0; i < productAttr.length; i++) {
-        that.$set(productAttr[i], 'index', 0)
-        value.push(productAttr[i].attrValueArr[0])
-      }
-      debugger
+      productAttr.forEach((element, index, iterable) => {
+        element.index = 0
+        value.push(productAttr[index].attrValueArr[0])
+      })
+
       // sort();排序函数:数字-英文-汉字；
-      const productSelect = this.productValue[value.sort().join(',')]
+      const productSelect = that.productValue[value.sort().join(',')]
       if (productSelect && productAttr.length) {
-        this.$set(
-          this.attr.productSelect,
-          'store_name',
-          this.storeInfo.storeName
-        )
-        console.log('productSelect:' + productSelect)
-        this.$set(this.attr.productSelect, 'image', productSelect.image)
-        this.$set(this.attr.productSelect, 'price', productSelect.price)
-        this.$set(this.attr.productSelect, 'stock', productSelect.stock)
-        this.$set(this.attr.productSelect, 'unique', productSelect.unique)
-        this.$set(this.attr.productSelect, 'cartNum', 1)
-        this.$set(this, 'attrValue', value.sort().join(','))
-        this.$set(this, 'attrTxt', '已选择')
+        that.attr.productSelect = Object.assign({
+          storeName: that.storeInfo.storeName,
+          image: productSelect.image,
+          price: productSelect.price,
+          stock: productSelect.stock,
+          unique: productSelect.unique,
+          cartNum: 1
+        })
+        that.attrValue = value.sort().join(','),
+        that.attrTxt = '已选择'
       } else if (!productSelect && productAttr.length) {
-        this.$set(
-          this.attr.productSelect,
-          'store_name',
-          this.storeInfo.storeName
-        )
-        this.$set(this.attr.productSelect, 'image', this.storeInfo.image)
-        this.$set(this.attr.productSelect, 'price', this.storeInfo.price)
-        this.$set(this.attr.productSelect, 'stock', 0)
-        this.$set(this.attr.productSelect, 'unique', '')
-        this.$set(this.attr.productSelect, 'cartNum', 0)
-        this.$set(this, 'attrValue', '')
-        this.$set(this, 'attrTxt', '请选择')
+        that.attr.productSelect = Object.assign({
+          storeName: that.storeInfo.storeName,
+          image: that.storeInfo.image,
+          price: that.storeInfo.price,
+          stock: 0,
+          unique: '',
+          cartNum: 0
+        })
+        that.attrValue = ''
+        that.attrTxt = '请选择'
       } else if (!productSelect && !productAttr.length) {
-        this.$set(
-          this.attr.productSelect,
-          'store_name',
-          this.storeInfo.storeName
-        )
-        this.$set(this.attr.productSelect, 'image', this.storeInfo.image)
-        this.$set(this.attr.productSelect, 'price', this.storeInfo.price)
-        this.$set(this.attr.productSelect, 'stock', this.storeInfo.stock)
-        this.$set(
-          this.attr.productSelect,
-          'unique',
-          this.storeInfo.unique || ''
-        )
-        this.$set(this.attr.productSelect, 'cartNum', 1)
-        this.$set(this, 'attrValue', '')
-        this.$set(this, 'attrTxt', '请选择')
+        that.attr.productSelect = Object.assign({
+          storeName: that.storeInfo.storeName,
+          image: that.storeInfo.image,
+          price: that.storeInfo.price,
+          stock: that.storeInfo.stock,
+          unique: that.storeInfo.unique || '',
+          cartNum: 1
+        })
+        that.attrValue = ''
+        that.attrTxt = '请选择'
       }
     },
     // 购物车；
-    ChangeCartNum(changeValue) {
-      debugger
-      // changeValue:是否 加|减
+    ChangeCartNum(changeValue) { // changeValue:是否 加|减
+      const that = this
       // 获取当前变动属性
-      let productSelect = this.productValue[this.attrValue]
+      let productSelect = that.productValue[that.attrValue]
       // 如果没有属性,赋值给商品默认库存
-      if (productSelect === undefined && !this.attr.productAttr.length) { productSelect = this.attr.productSelect }
+      if (productSelect === undefined && !that.attr.productAttr.length) {
+        productSelect = that.attr.productSelect
+      }
       // 无属性值即库存为0；不存在加减；
       if (productSelect === undefined) return
       const stock = productSelect.stock || 0
-      const num = this.attr.productSelect
+      const product = that.attr.productSelect
       if (changeValue > 0) {
-        num.cartNum += changeValue
-        // this.$set(this.attr.productSelect, 'cartNum', num.cartNum)
-        if (num.cartNum > stock) {
-          this.$set(this.attr.productSelect, 'cartNum', stock)
-          this.$set(this, 'cartNum', stock)
+        product.cartNum += changeValue
+        // that.attr.productSelect.cartNum = num.cartNum
+        if (product.cartNum > stock) {
+          that.attr.productSelect.cartNum = stock
+          that.cartNum = stock
         }
       } else {
-        num.cartNum--
-        if (num.cartNum < 1) {
-          this.$set(this.attr.productSelect, 'cartNum', 1)
-          this.$set(this, 'cartNum', 1)
+        product.cartNum--
+        if (product.cartNum < 1) {
+          that.attr.productSelect.cartNum = 1
+          that.cartNum = 1
         }
       }
     },
+    tapAttr(indexw, indexn) {
+      const that = this
+      that.attr.productAttr[indexw].index = indexn
+      const value = that.getCheckedValue().sort().join(',')
+      that.changeFun({ action: 'ChangeAttr', value: value })
+    },
+    // 获取被选中属性；
+    getCheckedValue() {
+      const productAttr = this.attr.productAttr
+      // console.log(productAttr)
+      const value = []
+      for (let i = 0; i < productAttr.length; i++) {
+        for (let j = 0; j < productAttr[i].attrValueArr.length; j++) {
+          if (productAttr[i].index === j) {
+            value.push(productAttr[i].attrValueArr[j])
+          }
+        }
+      }
+      return value
+    },
     // 将父级向子集多次传送的函数合二为一；
     changeFun(opt) {
-      debugger
       if (typeof opt !== 'object') opt = {}
       const action = opt.action || ''
       const value = opt.value === undefined ? '' : opt.value
@@ -542,7 +765,8 @@ export default {
     },
     // 可领取优惠券接口；
     coupons() {
-      const that = this; const q = { page: 1, limit: 20 }
+      const that = this
+      const q = { page: 1, limit: 20 }
       getCoupon(q).then(res => {
         that.$set(that, 'couponList', res.data || [])
         that.$set(that.coupon, 'list', res.data)
@@ -550,8 +774,9 @@ export default {
     },
     // 打开属性插件；
     onSelecAttrTap() {
-      this.attr.cartAttr = true
-      this.isOpen = true
+      // this.attr.cartAttr = true
+      // this.isOpen = true
+      this.showModal = true
     },
     changeattr(msg) {
       this.attr.cartAttr = msg
@@ -559,26 +784,24 @@ export default {
     },
     // 选择属性；
     ChangeAttr: function(res) {
-      console.log(res)
-      const productSelect = this.productValue[res]
-      console.log(this.productValue)
-      console.log(productSelect)
+      const that = this
+      const productSelect = that.productValue[res]
       if (productSelect) {
-        this.$set(this.attr.productSelect, 'image', productSelect.image)
-        this.$set(this.attr.productSelect, 'price', productSelect.price)
-        this.$set(this.attr.productSelect, 'stock', productSelect.stock)
-        this.$set(this.attr.productSelect, 'unique', productSelect.unique)
-        this.$set(this.attr.productSelect, 'cartNum', 1)
-        this.$set(this, 'attrValue', res)
-        this.$set(this, 'attrTxt', '已选择')
+        that.attr.productSelect.image = productSelect.image
+        that.attr.productSelect.price = productSelect.price
+        that.attr.productSelect.stock = productSelect.stock
+        that.attr.productSelect.unique = productSelect.unique
+        that.attr.productSelect.cartNum = 1
+        that.attrValue = res
+        that.attrTxt = '已选择'
       } else {
-        this.$set(this.attr.productSelect, 'image', this.storeInfo.image)
-        this.$set(this.attr.productSelect, 'price', this.storeInfo.price)
-        this.$set(this.attr.productSelect, 'stock', 0)
-        this.$set(this.attr.productSelect, 'unique', '')
-        this.$set(this.attr.productSelect, 'cartNum', 0)
-        this.$set(this, 'attrValue', '')
-        this.$set(this, 'attrTxt', '请选择')
+        that.attr.productSelect.image = that.storeInfo.image
+        that.attr.productSelect.price = that.storeInfo.price
+        that.attr.productSelect.stock = 0
+        that.attr.productSelect.unique = ''
+        that.attr.productSelect.cartNum = 0
+        that.attrValue = ''
+        that.attrTxt = '请选择'
       }
     },
     // 购物车
@@ -603,35 +826,29 @@ export default {
       }
     },
     //  点击加入购物车按钮
-    onJoinCart() {
-      // 0=加入购物车
+    onJoinCart() { // 0=加入购物车
       this.goCat(0)
+    },
+    // 立即购买；
+    tapBuy() { //  1=直接购买
+      this.goCat(1)
     },
     // 加入购物车；
     goCat(news) {
       const that = this
-      debugger
       const productSelect = that.productValue[this.attrValue]
       // 打开属性
-      if (that.attrValue) {
+      if (!that.showModal) {
         // 默认选中了属性，但是没有打开过属性弹窗还是自动打开让用户查看默认选中的属性
-        that.attr.cartAttr = !that.isOpen
-      } else {
-        if (that.isOpen) {
-          that.attr.cartAttr = true
-        } else {
-          that.attr.cartAttr = !that.attr.cartAttr
-        }
-      }
-      // 只有关闭属性弹窗时进行加入购物车
-      if (that.attr.cartAttr === true && that.isOpen === false) {
-        return (that.isOpen = true)
+        // that.attr.cartAttr = !that.isOpen
+        that.showModal = true
+        return
       }
       // 如果有属性,没有选择,提示用户选择
       if (
         that.attr.productAttr.length &&
         productSelect === undefined &&
-        that.isOpen === true
+        that.showModal === true
       ) {
         return that.$dialog.toast({ mes: '产品库存不足，请选择其它' })
       }
@@ -645,13 +862,9 @@ export default {
             : ''
       }
       addCart(query).then((res) => {
-        that.isOpen = false
-        that.attr.cartAttr = false
+        that.showModal = false
         if (news) {
-          that.$router.push({
-            path: '/pages/order/OrderSubmission/main',
-            query: { ids: res.data.cartId }
-          })
+          uni.navigateTo({ url: '/pages/order/submit/index?ids=' + res.data.cartId })
         } else {
           uni.showToast({
             title: '添加购物车成功',
@@ -688,11 +901,6 @@ export default {
       })
       // }
     },
-    // 立即购买；
-    tapBuy() {
-      //  1=直接购买
-      this.goCat(1)
-    },
     listenerActionSheet: function() {
       if (isWeixin() === true) {
         this.weixinStatus = true
@@ -706,7 +914,68 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.cu-modal {
+  z-index:1020;
+  .pictrue {
+    > .image {
+      width: 120upx;
+      height:120upx;
+    }
+  }
+  .dialog-content {
+    padding-top: 0;
+  }
+  .content {
+    .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+  }
+  .cuIcon-roundclose{
+    font-size: 32upx;
+  }
+  .attribute {
+    .item {
+      .name {
+        border: 1px solid #bbb;
+        font-size: 28upx;
+        // color: #282828;
+        padding: 10upx 28upx;
+        border-radius: 5upx;
+        margin: 10upx 0 10upx 10upx;
+        &:first-child {
+          margin-left: 0;
+        }
+        &.active{
+          color: #fff;
+          background-color: #73CBB6;
+          border-color: #73CBB6;
+        }
+      }
+
+    }
+  }
+  .cart-quantity {
+    padding-top:0;
+    .quantity, .decrease, .increase {
+      padding: 10upx 20upx;
+      border: 1upx solid #282828;
+    }
+    & .disable {
+      border: 1upx solid #dedede;
+    }
+    .decrease {
+      border-right: 0;
+    }
+    .increase {
+      border-left: 0;
+    }
+  }
+}
+
 .geoPage {
   position: fixed;
   width: 100%;

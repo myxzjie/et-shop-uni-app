@@ -1814,12 +1814,12 @@ page {
   padding: 0 0.3rem;
   font-size: 0.7rem;
   color: #8c8c8c;
-  position: fixed;
-  left: 0;
+  /* position: fixed; */
+  /* left: 0; */
   width: 100%;
   background-color: #f5f5f5;
   z-index: 5;
-  top: 0;
+  /* top: 0; */
 }
 
 .shoppingCart .labelNav .item .iconfont {

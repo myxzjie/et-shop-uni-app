@@ -1,24 +1,47 @@
 <template>
-  <view ref="container" class="newsList">
-    <view v-for="(item, articleListIndex) in articles" :key="articleListIndex" class="list">
-      <view
-        class="item acea-row row-between-wrapper"
-        @click="onDetails(item)"
-      >
-        <view class="text acea-row row-column-between">
-          <view class="name line2">{{ item.title }}</view>
-          <view>{{ item.addTime }}</view>
-        </view>
-        <view class="pictrue">
-          <image v-if="item.imageInput" :src="item.imageInput" /></view>
-      </view>
-    </view>
+  <view>
+    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+      <view slot="content">{{ BaseName }}</view>
+    </cu-custom>
+    <scroll-view scroll-y class="scrollPage">
 
-    <!--暂无新闻-->
-    <view v-if="articles.length === 0" class="noCommodity">
-      <view class="noPictrue">
-        <image :src="images.noNews" class="image" /></view>
-    </view>
+      <view class="cu-card article no-card">
+        <view v-for="(item, index) in articles" :key="index" class="cu-item shadow" @tap="onDetails(item)">
+          <view
+            class="title"
+          ><view
+            class="text-cut"
+          >{{ item.title }}</view></view>
+          <view class="content">
+            <image
+              :src="item.imageInput"
+              mode="aspectFill"
+            />
+            <view class="desc">
+              <view class="text-content" v-html="item.remark" />
+              <view>
+                <view class="text-gray text-sm">
+                  <text class="cuIcon-time margin-lr-xs">{{ item.addTime }}</text>
+                  <text class="cuIcon-attentionfill margin-lr-xs" > {{ article.visit }}</text>
+                  <text class="cuIcon-appreciatefill margin-lr-xs" > 20 </text>
+                  <!-- <text class="cuIcon-messagefill margin-lr-xs"></text> 30 -->
+                </view>
+                <!-- <view class="cu-tag bg-red light sm round">正义天使</view> -->
+                <!-- <view class="cu-tag bg-green light sm round">史诗</view> -->
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!--暂无新闻-->
+      <view v-if="articles.length === 0" class="hothing margin">
+        <view class="pictrue">
+          <image :src="images.noNews" class="image" />
+        </view>
+      </view>
+
+    </scroll-view>
   </view>
 </template>
 <script>
@@ -69,3 +92,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.cu-card {
+  >.cu-item {
+    border-bottom: 1upx dotted #ddd;
+  }
+
+}
+</style>
