@@ -5,19 +5,19 @@
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view class="article">
-         <view class="title padding text-blod text-xxl">{{ article.title }}</view>
-         <view class="article-bar flex flex-wrap row-middle padding-tb-sm padding-lr">
-           <view class="item zone text-red">新闻专区</view>
+        <view class="title padding text-blod text-xxl">{{ article.title }}</view>
+        <view class="article-bar flex flex-wrap row-middle padding-tb-sm padding-lr">
+          <view class="item zone text-red">新闻专区</view>
           <view class="item">
-            <text class="cuIcon-time"></text>
+            <text class="cuIcon-time" />
             <text class="padding-left-xs">{{ article.addTime }}</text>
           </view>
           <view class="item">
-            <text class="cuIcon-attention"></text>
+            <text class="cuIcon-attention" />
             <text class="padding-left-xs">{{ article.visit }}</text>
           </view>
-         </view>
-         <view class="content padding" v-html="article.content" />
+        </view>
+        <view class="content padding" v-html="article.content" />
       </view>
 
     </scroll-view>
@@ -37,7 +37,7 @@ export default {
     const that = this
     that.id = option.id
   },
-  onShow(){
+  onShow() {
     this.articleDetails()
   },
   methods: {
@@ -59,8 +59,8 @@ export default {
       &.zone {
         border: 1upx solid red;
         padding: 3upx 10upx;
-      } 
-    } 
+      }
+    }
   }
 }
 

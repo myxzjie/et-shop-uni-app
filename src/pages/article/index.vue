@@ -22,8 +22,8 @@
               <view>
                 <view class="text-gray text-sm">
                   <text class="cuIcon-time margin-lr-xs">{{ item.addTime }}</text>
-                  <text class="cuIcon-attentionfill margin-lr-xs" > {{ article.visit }}</text>
-                  <text class="cuIcon-appreciatefill margin-lr-xs" > 20 </text>
+                  <text class="cuIcon-attentionfill margin-lr-xs"> {{ article.visit }}</text>
+                  <text class="cuIcon-appreciatefill margin-lr-xs"> 20 </text>
                   <!-- <text class="cuIcon-messagefill margin-lr-xs"></text> 30 -->
                 </view>
                 <!-- <view class="cu-tag bg-red light sm round">正义天使</view> -->

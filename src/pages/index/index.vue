@@ -39,7 +39,7 @@
     </swiper>
 
     <view class="navigation cu-list grid col-4 no-border">
-      <view v-for="(item, index) in navigations" :key="index" class="cu-item">
+      <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
         <view class="text-red">
           <image class="image" :src="item.pic" />
           <!-- <view class="cu-tag badge" v-if="item.badge != 0">
@@ -150,10 +150,49 @@
     </view>
 
     <!---->
-    <view style="margin: 0 0.5rem;">
 
-      <view style="height:1.2rem;" />
+    <view class="cu-bar tabbar bg-white foot">
+      <view class="action" :data-id="1" @click="changeTab">
+        <view class="cuIcon-cu-image">
+          <image v-if="active === 1" src="@/static/tabbar/tab-home-current.png" />
+          <image v-else src="@/static/tabbar/tab-home.png" />
+        </view>
+        <view :class="{ 'text-gray': active === 1 }">元素</view>
+      </view>
+      <view class="action" :data-id="2" @click="changeTab">
+        <view class="cuIcon-cu-image">
+          <image v-if="active === 2" src="@/static/tabbar/tab-cate-current.png" />
+          <image v-else src="@/static/tabbar/tab-cate.png" />
+        </view>
+        <view class="text-gray">分类</view>
+      </view>
+      <view class="action" :data-id="3" @click="changeTab">
+        <view class="cuIcon-cu-image">
+          <image v-if="active === 3" src="@/static/tabbar/tab-find-current.png" />
+          <image v-else src="@/static/tabbar/tab-find.png" />
+          <!-- <view class="cu-tag badge">99</view> -->
+        </view>
+        <view class="text-gray">发现</view>
+      </view>
+      <view class="action" :data-id="4" @click="changeTab">
+        <view class="cuIcon-cu-image">
+          <image v-if="active === 4" src="@/static/tabbar/tab-cart-current.png" />
+          <image v-else src="@/static/tabbar/tab-cart.png" />
+          <!-- <view class="cu-tag badge" /> -->
+        </view>
+        <view class="text-gray">购物车</view>
+      </view>
+
+      <view class="action" :data-id="5" @click="changeTab">
+        <view class="cuIcon-cu-image">
+          <image v-if="active === 5" src="@/static/tabbar/tab-me-current.png" />
+          <image v-else src="@/static/tabbar/tab-me.png" />
+          <!-- <view class="cu-tag badge" /> -->
+        </view>
+        <view class="text-gray">我的</view>
+      </view>
     </view>
+
   </view>
 </template>
 
@@ -169,6 +208,7 @@ export default {
   components: { ProductList, ProductNew, ProductPromotion },
   data() {
     return {
+      active: 1,
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       curSwiper: 0,
@@ -222,6 +262,11 @@ export default {
     that.loadHomeData()
   },
   methods: {
+    changeTab(e) {
+      const that = this
+      const { id } = e.currentTarget.dataset
+      that.active = id
+    },
     loadHomeData() {
       const that = this
       getHomeData().then(({ status, data }) => {
@@ -251,6 +296,11 @@ export default {
       })
     },
     cardSwiper() {},
+    navigationPage(item) {
+      // const that = this
+      debugger
+      uni.switchTab({ url: item.wxapp_url })
+    },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
         url = '/pages/cate/index'
