@@ -1,7 +1,8 @@
 <template>
   <view>
     <view class="fixed">
-      <cu-custom bg-color="bg-shadeTop text-white">
+      <cu-custom :is-back="true" bg-color="bg-shadeTop text-white">
+        <block slot="backText">返回</block>
         <!-- <block slot="content">{{ BaseName }}</block> -->
       </cu-custom>
     </view>
@@ -73,12 +74,14 @@
         </scroll-view>
       </view>
     </scroll-view>
+    <tab-bar :current="2" />
   </view>
 </template>
 
 <script>
 import { getCategory } from '@/api/store'
 export default {
+  components: {},
   data() {
     return {
       BaseName: this.BaseName,

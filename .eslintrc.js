@@ -1,7 +1,9 @@
 module.exports = {
   globals: {
     wx: true,
-    uni: true
+    uni: true,
+    getCurrentPages: true,
+    __wxConfig: true
   },
   root: true,
   parserOptions: {

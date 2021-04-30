@@ -3,7 +3,6 @@
     <!-- <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom> -->
-
     <home v-if="active === 1" />
     <cate v-else-if="active === 2" />
     <article-view v-else-if="active === 3" />
@@ -12,47 +11,8 @@
 
     <view class="cu-tabbar-height" />
 
-    <view class="cu-bar tabbar bg-white foot">
-      <view class="action" :data-id="1" @click="changeTab">
-        <view class="cuIcon-cu-image">
-          <image v-if="active === 1" src="@/static/tabbar/tab-home-current.png" />
-          <image v-else src="@/static/tabbar/tab-home.png" />
-        </view>
-        <view :class="{ 'text-gray': active === 1 }">元素</view>
-      </view>
-      <view class="action" :data-id="2" @click="changeTab">
-        <view class="cuIcon-cu-image">
-          <image v-if="active === 2" src="@/static/tabbar/tab-cate-current.png" />
-          <image v-else src="@/static/tabbar/tab-cate.png" />
-        </view>
-        <view class="text-gray">分类</view>
-      </view>
-      <view class="action" :data-id="3" @click="changeTab">
-        <view class="cuIcon-cu-image">
-          <image v-if="active === 3" src="@/static/tabbar/tab-find-current.png" />
-          <image v-else src="@/static/tabbar/tab-find.png" />
-          <!-- <view class="cu-tag badge">99</view> -->
-        </view>
-        <view class="text-gray">发现</view>
-      </view>
-      <view class="action" :data-id="4" @click="changeTab">
-        <view class="cuIcon-cu-image">
-          <image v-if="active === 4" src="@/static/tabbar/tab-cart-current.png" />
-          <image v-else src="@/static/tabbar/tab-cart.png" />
-          <!-- <view class="cu-tag badge" /> -->
-        </view>
-        <view class="text-gray">购物车</view>
-      </view>
+    <tab-bar :list="tabBar" @change="changeTab" />
 
-      <view class="action" :data-id="5" @click="changeTab">
-        <view class="cuIcon-cu-image">
-          <image v-if="active === 5" src="@/static/tabbar/tab-me-current.png" />
-          <image v-else src="@/static/tabbar/tab-me.png" />
-          <!-- <view class="cu-tag badge" /> -->
-        </view>
-        <view class="text-gray">我的</view>
-      </view>
-    </view>
   </view>
 </template>
 
@@ -62,16 +22,54 @@ import Cate from '@/pages/cate/index'
 import ArticleView from '@/pages/article/index'
 import Cart from '@/pages/cart/index'
 import Me from '@/pages/me/index'
+import TabBar from '@/components/tab-bar/index'
 import { getHomeData } from '@/api/public'
 
 export default {
-  components: { Home, Cate, ArticleView, Cart, Me },
+  components: { Home, Cate, ArticleView, Cart, Me, TabBar },
   data() {
     return {
       active: 1,
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       curSwiper: 0,
+      tabBar: [
+        {
+          id: 1,
+          name: '首页',
+          icon: 'svg-icon-home',
+          default: '/static/tabbar/tab-home.png',
+          current: '/static/tabbar/tab-home-current.png'
+        },
+        {
+          id: 2,
+          name: '分类',
+          icon: 'svg-icon-cate',
+          default: '/static/tabbar/tab-cate.png',
+          current: '/static/tabbar/tab-cate-current.png'
+        },
+        {
+          id: 3,
+          name: '发现',
+          icon: 'svg-icon-discover',
+          default: '/static/tabbar/tab-find.png',
+          current: '/static/tabbar/tab-find-current.png'
+        },
+        {
+          id: 4,
+          name: '购物车',
+          icon: 'svg-icon-cart',
+          default: '/static/tabbar/tab-cart.png',
+          current: '/static/tabbar/tab-cart-current.png'
+        },
+        {
+          id: 5,
+          name: '我的',
+          icon: 'svg-icon-me',
+          default: '/static/tabbar/tab-me.png',
+          current: '/static/tabbar/tab-me-current.png'
+        }
+      ],
       dotStyle: false,
       isSort: false,
       // images: {
@@ -87,7 +85,7 @@ export default {
       hot: [],
       firstList: [],
       promotion: [],
-      coupon: [],
+      coupon: []
       // ColorList: [{
       //   title: '嫣红',
       //   name: 'red',
@@ -115,9 +113,8 @@ export default {
     that.loadHomeData()
   },
   methods: {
-    changeTab(e) {
+    changeTab(id) {
       const that = this
-      const { id } = e.currentTarget.dataset
       that.active = id
     },
     loadHomeData() {
@@ -149,11 +146,6 @@ export default {
       })
     },
     cardSwiper() {},
-    navigationPage(item) {
-      // const that = this
-      debugger
-      uni.switchTab({ url: item.wxapp_url })
-    },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
         url = '/pages/cate/index'

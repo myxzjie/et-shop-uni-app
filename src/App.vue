@@ -113,7 +113,8 @@ export default {
 </script>
 
 <style lang='scss'>
-    @import "./static/css/base.css";
+  @import "./static/css/base.css";
+  @import './static/css/icon.scss';
 </style>
 <style lang='scss'>
   @import "./static/css/reset.css";
@@ -128,6 +129,7 @@ export default {
 <style>
   @import 'colorui/main.css';
   @import 'colorui/icon.css';
+
     /*每个页面公共css */
 
     /*

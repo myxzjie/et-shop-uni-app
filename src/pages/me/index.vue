@@ -257,10 +257,7 @@ export default {
   //   this.loadUserInfo()
   //   this.isWeixin = isWeixin()
   // },
-  onLoad() {
-
-  },
-  onShow() {
+  mounted() {
   //   this.isWeixin = isWeixin()
     const that = this
     that.loadUser()

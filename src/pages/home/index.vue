@@ -238,10 +238,8 @@ export default {
         url: url
       })
     },
-    cardSwiper() {},
     navigationPage(item) {
-      // const that = this
-      uni.navigateTo({ url: item.wxapp_url })
+      uni.navigateTo({ url: item.wxapp_url + '?isBack=true' })
     },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {

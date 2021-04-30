@@ -1,6 +1,7 @@
 <template>
   <view>
-    <cu-custom :is-back="true" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom :is-back="isBack" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+      <view v-if="isBack" slot="backText">返回</view>
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
@@ -41,14 +42,17 @@
       </view>
 
     </scroll-view>
+
   </view>
 </template>
 <script>
 import { resURL } from '@/utils/config'
 import { getArticleList } from '@/api/public'
 export default {
+  components: {},
   data() {
     return {
+      isBack: false,
       loading: false,
       loadend: false,
       query: {
@@ -60,6 +64,9 @@ export default {
         noNews: resURL + '/assets/images/noNews.png'
       }
     }
+  },
+  onLoad(option) {
+    this.isBack = !!option.isBack
   },
   mounted() {
     const that = this
@@ -87,7 +94,8 @@ export default {
     },
     onDetails(item) {
       uni.navigateTo({ url: '/pages/article/details/index?id=' + item.id })
-    }
+    },
+    cardSwiper() {}
   }
 }
 </script>
