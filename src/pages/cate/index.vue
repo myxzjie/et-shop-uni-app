@@ -1,76 +1,78 @@
 <template>
-  <view class="container">
+  <view>
     <view class="fixed">
       <cu-custom bg-color="bg-shadeTop text-white">
         <!-- <block slot="content">{{ BaseName }}</block> -->
       </cu-custom>
     </view>
-    <swiper
-      class="screen-swiper round-dot"
-      :indicator-dots="true"
-      :circular="true"
-      :autoplay="true"
-      interval="5000"
-      duration="500"
-    >
-      <swiper-item v-for="(item, index) in 4" :key="index">
-        <image
-          :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900' + index + '.jpg'"
-          mode="aspectFill"
-        />
-      </swiper-item>
-    </swiper>
-    <view class="VerticalBox">
-      <scroll-view
-        class="VerticalNav nav"
-        scroll-y
-        scroll-with-animation
-        :scroll-top="verticalNavTop"
-        style="height: calc(100vh - 375upx);"
+    <scroll-view scroll-y class="scrollPage">
+      <swiper
+        class="screen-swiper round-dot"
+        :indicator-dots="true"
+        :circular="true"
+        :autoplay="true"
+        interval="5000"
+        duration="500"
       >
-        <view
-          v-for="(item, index) in list"
-          :key="index"
-          class="cu-item"
-          :class="index == tabCur ? 'text-green cur' : ''"
-          :data-id="index"
-          @tap="onTabSelect"
+        <swiper-item v-for="(item, index) in 4" :key="index">
+          <image
+            :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900' + index + '.jpg'"
+            mode="aspectFill"
+          />
+        </swiper-item>
+      </swiper>
+      <view class="VerticalBox">
+        <scroll-view
+          class="VerticalNav nav"
+          scroll-y
+          scroll-with-animation
+          :scroll-top="verticalNavTop"
+          style="height: calc(100vh - 375upx);"
         >
-          {{ item.cateName }}
-        </view>
-      </scroll-view>
-      <scroll-view
-        class="VerticalMain"
-        scroll-y
-        scroll-with-animation
-        style="height: calc(100vh - 375upx);"
-        :scroll-into-view="'main-' + mainCur"
-        @scroll="VerticalMain"
-      >
-        <view
-          v-for="(item, index) in list"
-          :id="'main-' + index"
-          :key="index"
-          class="padding-top"
-        >
-          <view class="cu-bar solid-bottom bg-white">
-            <view class="action">
-              <text class="cuIcon-title text-green" /> {{ item.cateName }}</view>
+          <view
+            v-for="(item, index) in list"
+            :key="index"
+            class="cu-item"
+            :class="index == tabCur ? 'text-green cur' : ''"
+            :data-id="index"
+            @tap="onTabSelect"
+          >
+            {{ item.cateName }}
           </view>
-          <view class="cate cu-list grid col-3 no-border">
-            <view v-for="(item, index) in item.children" :key="index" class="cu-item" @tap="onProduct(item)">
-              <view class="pictrue text-red">
-                <image class="image" :src="item.pic" />
+        </scroll-view>
+        <scroll-view
+          class="VerticalMain"
+          scroll-y
+          scroll-with-animation
+          style="height: calc(100vh - 375upx);"
+          :scroll-into-view="'main-' + mainCur"
+          @scroll="VerticalMain"
+        >
+          <view
+            v-for="(item, index) in list"
+            :id="'main-' + index"
+            :key="index"
+            class="padding-top"
+          >
+            <view class="cu-bar solid-bottom bg-white">
+              <view class="action">
+                <text class="cuIcon-title text-green" /> {{ item.cateName }}</view>
+            </view>
+            <view class="cate cu-list grid col-3 no-border">
+              <view v-for="(item, index) in item.children" :key="index" class="cu-item" @tap="onProduct(item)">
+                <view class="pictrue text-red">
+                  <image class="image" :src="item.pic" />
                 <!-- <view class="cu-tag badge" v-if="item.badge != 0">
                       <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
                      </view> -->
+                </view>
+                <text class="name">{{ item.cateName }}</text>
               </view>
-              <text class="name">{{ item.cateName }}</text>
             </view>
           </view>
-        </view>
-      </scroll-view>
-    </view>
+        </scroll-view>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
@@ -87,7 +89,7 @@ export default {
       load: true
     }
   },
-  onLoad() {
+  mounted() {
     uni.showLoading({
       title: '加载中...',
       mask: true

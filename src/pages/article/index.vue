@@ -1,10 +1,9 @@
 <template>
   <view>
-    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom :is-back="true" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-
       <view class="cu-card article no-card">
         <view v-for="(item, index) in articles" :key="index" class="cu-item shadow" @tap="onDetails(item)">
           <view
@@ -37,7 +36,7 @@
       <!--暂无新闻-->
       <view v-if="articles.length === 0" class="hothing margin">
         <view class="pictrue">
-          <image :src="images.noNews" class="image" />
+          <image :src="images.noNews" class="image" mode="aspectFill" />
         </view>
       </view>
 
@@ -62,7 +61,7 @@ export default {
       }
     }
   },
-  onLoad() {
+  mounted() {
     const that = this
     that.loadArticle()
   },
@@ -82,7 +81,7 @@ export default {
         that.query.page++
         // 判断所有数据是否加载完成
         that.loadend = res.data.length < that.query.limit
-      }, err => {}).finally(() => {
+      }, err => { console.error(err) }).finally(() => {
         that.loading = false
       })
     },

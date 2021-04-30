@@ -1,210 +1,184 @@
 <template>
-  <view class="container index">
-    <!-- 小程序头部兼容 -->
-    <!-- #ifdef MP||H5 -->
-    <view class="header acea-row row-center-wrapper">
-      <!-- <uni-search-bar :radius="100" placeholder="搜索商品" @confirm="search"></uni-search-bar> -->
-      <view class="search acea-row row-middle" @click="onSearch">
-        <icon type="search" size="34rpx" />
-        <text>搜索商品</text>
+  <view>
+    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+      <view slot="content">{{ BaseName }}</view>
+    </cu-custom>
+    <scroll-view scroll-y class="scrollPage">
+      <view class="cu-bar search bg-white">
+        <view class="cu-avatar round bg-white">
+          <text class="text-olive cuIcon-locationfill" />
+        </view>
+        <view class="search-form round">
+          <text class="cuIcon-search" />
+          <!-- @focus="InputFocus" @blur="InputBlur" -->
+          <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品" @tap="onSearch">
+        </view>
+        <view class="action">
+          <text class="cuIcon-scan" />
+        </view>
       </view>
-    </view>
-    <!-- #endif -->
-
-    <view class="slider-banner banner">
-      <swiper v-if="banner.length > 0" :indicator-dots="true" :autoplay="true">
-        <block v-for="(item, bannerIndex) in banner" :key="bannerIndex">
-          <swiper-item>
-            <view class="swiper-item" @click="item.url?$router.push('/'+item.url) : ''">
-              <image :src="item.pic" />
-            </view>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-
-    <!---->
-    <view class="nav acea-row">
-      <navigator
-        v-for="(item, menusIndex) in navigations"
-        :key="menusIndex"
-        class="item"
-        url="/pages/cate/index"
-        open-type="switchTab"
+      <swiper
+        class="card-swiper square-dot"
+        :indicator-dots="true"
+        :circular="true"
+        :autoplay="true"
+        interval="5000"
+        duration="500"
+        indicator-active-color="#0081ff"
+        indicator-color="#8799a3"
+        @change="cardSwiper"
       >
-        <view class="pictrue">
-          <image :src="item.pic" />
-        </view>
-        <view>{{ item.name }}</view>
-      </navigator>
-    </view>
-
-    <!---->
-    <view class="news acea-row row-left">
-      <view class="pictrue">
-        <image :src="noticeImage" show-menu-by-longpress />
-      </view>
-      <view class="swiper-no-swiping new-banner">
-        <swiper v-if="roll.length > 0" class="swiper-wrapper" :indicator-dots="false" autoplay circular vertical>
-          <block v-for="(item, rollIndex) in roll" :key="rollIndex">
-            <swiper-item class="swiper-slide">
-              <view
-                class="swiper-item acea-row row-between-wrapper"
-                @click="item.url?$router.push(item.url) : ''"
-              >
-                <view class="text acea-row row-between-wrapper">
-                  <view v-if="item.show === '是'" class="label">最新</view>
-                  <view class="newsTitle line1">{{ item.info }}</view>
-                </view>
-                <view class="iconfont icon-xiangyou" />
-              </view>
-            </swiper-item>
-          </block>
-        </swiper>
-      </view>
-    </view>
-
-    <!---->
-    <view v-if="bast.length > 0" class="wrapper">
-      <view class="title acea-row row-between-wrapper">
-        <view class="text">
-          <view class="name line1">精品推荐</view>
-        </view>
-        <view
-          class="more"
-          @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:1} })"
+        <swiper-item
+          v-for="(item, index) in banner"
+          :key="index"
+          :class="curSwiper == index ? 'cur' : ''"
         >
-          更多
-          <text class="iconfont icon-jiantou" />
-        </view>
-      </view>
-      <good-list :list="bast" :is-sort="false" />
-    </view>
-
-    <!---->
-    <view v-if="hot.length > 0" class="wrapper">
-      <view class="title acea-row row-between-wrapper">
-        <view class="text">
-          <view class="name line1">
-            热门榜单
-            <text class="new font-color-red">HOT~</text>
+          <view class="swiper-item" @tap="onSwiper(item.url)">
+            <image :src="item.pic" mode="aspectFill" />
           </view>
-        </view>
-        <view
-          class="more"
-          @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:2} })"
-        >
-          更多
-          <text class="iconfont icon-jiantou" />
+        </swiper-item>
+      </swiper>
+
+      <view class="navigation cu-list grid col-4 no-border">
+        <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
+          <view class="text-red">
+            <image class="image" :src="item.pic" />
+          <!-- <view class="cu-tag badge" v-if="item.badge != 0">
+            <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
+          </view> -->
+          </view>
+          <text>{{ item.name }}</text>
         </view>
       </view>
-      <good-list :list="hot" :is-sort="false" />
-    </view>
 
-    <!---->
-    <view v-if="firstList.length > 0" class="wrapper">
-      <view class="title acea-row row-between-wrapper">
-        <view class="text">
-          <view class="name line1">
+      <view class="cu-bar notification-bar" style="">
+        <view class="cu-avatar round bg-white">
+          <text class="cuIcon-notificationfill text-sm text-olive" />
+        </view>
+        <view class="bar-swiper">
+          <swiper v-if="roll.length > 0" class="swiper" :indicator-dots="false" autoplay circular vertical>
+            <block v-for="(item, rollIndex) in roll" :key="rollIndex">
+              <swiper-item class="swiper-slide">
+                <view
+                  class="swiper-item"
+                  @click="onNotice(item)"
+                >
+                  <view class="text">
+                    <view v-if="item.show === '是'" class="label">最新</view>
+                    <view class="">{{ item.info }}</view>
+                  </view>
+                  <view>
+                    <text class="cuIcon-right" />
+                  </view>
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+      </view>
+
+      <!-- <view class="grid col-3 padding-sm">
+      <view class="padding-sm" v-for="(item, index) in ColorList" :key="index">
+        <view class="padding radius text-center shadow-blur" :class="'bg-' + item.name">
+          <view class="text-lg">{{ item.title }}</view>
+          <view class="margin-top-sm text-Abc">{{ item.name }}</view>
+        </view>
+      </view>
+    </view> -->
+
+      <view v-if="firstList.length > 0">
+        <view class="cu-bar bg-white margin-top solid-bottom">
+          <view class="action">
             首发新品
-            <text class="new font-color-red">NEW~</text>
+            <text class="hot text-red">NEW~</text>
+          </view>
+          <view class="action">
+            <view class="shadow" @tap="onShopMark(3)">
+              更多
+              <text class="cuIcon-right" />
+            </view>
           </view>
         </view>
-        <view
-          class="more"
-          @click="$router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:3} })"
-        >
-          更多
-          <text class="iconfont icon-jiantou" />
-        </view>
+        <product-new :list="firstList" />
       </view>
-      <view class="newProducts">
-        <swiper
-          class="swiper-wrapper"
-          :options="swiperProducts"
-          :indicator-dots="false"
-          :display-multiple-items="2"
-        >
-          <block v-for="(item, firstListIndex) in firstList" :key="firstListIndex">
-            <swiper-item class="swiper-slide">
-              <view
-                class="newProductsItem"
-                @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.id} })"
-              >
-                <view class="img-box">
-                  <img :src="item.image">
-                </view>
-                <view class="pro-info line1">{{ item.storeName }}</view>
-                <view class="money font-color-red">￥{{ item.price }}</view>
-              </view>
-            </swiper-item>
-          </block>
-        </swiper>
-      </view>
-    </view>
 
-    <!---->
-    <view v-if="promotion.length > 0" class="wrapper">
-      <view class="title acea-row row-between-wrapper">
-        <view class="text">
-          <view class="name line1">促销单品</view>
+      <view v-if="bast.length > 0">
+        <view class="cu-bar bg-white margin-top solid-bottom">
+          <view class="action">
+            <!-- <text class="cuIcon-title text-orange "></text> -->
+            精品推荐
+          </view>
+          <view class="action">
+            <view class="shadow" @tap="onShopMark(1)">
+              更多
+              <text class="cuIcon-right" />
+            </view>
+          </view>
         </view>
-        <view class="more" @click="$router.push('/pages/shop/GoodsPromotion/main')">
-          更多
-          <span class="iconfont icon-jiantou" />
-        </view>
+        <product-list :list="bast" />
       </view>
-      <promotion-list :list="promotion" />
-    </view>
 
-    <view style="height:1.2rem;" />
+      <view v-if="hot.length > 0">
+        <view class="cu-bar bg-white margin-top solid-bottom">
+          <view class="action">
+            <!-- <text class="cuIcon-title text-orange "></text> -->
+            热门榜单
+            <text class="hot text-red">HOT~</text>
+          </view>
+          <view class="action">
+            <view class="shadow" @tap="onShopMark(2)">
+              更多
+              <text class="cuIcon-right" />
+            </view>
+          </view>
+        </view>
+        <product-list :list="hot" />
+      </view>
 
-    <!-- <tab-bar :current="tabIndex" :tabBar="tabbar" @click="onSwitchTab" /> -->
+      <view v-if="promotion.length > 0">
+        <view class="cu-bar bg-white margin-top solid-bottom">
+          <view class="action">
+            促销单品
+          </view>
+          <view class="action">
+            <view class="shadow" @tap="onShopPromotion()">
+              更多
+              <text class="cuIcon-right" />
+            </view>
+          </view>
+        </view>
+        <product-promotion :list="promotion" />
+      </view>
 
+    </scroll-view>
   </view>
 </template>
 
 <script>
-import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
-
-import { resURL } from '@/utils/config'
-import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
+// import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
+// import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
 import { getHomeData } from '@/api/public'
-import search from '@/components/search'
-import goodList from '@/components/shop/good-list'
-import promotionList from '@/components/shop/promotion-list'
+import ProductNew from '@/components/product/product-new'
+import ProductList from '@/components/product/product-list'
+import ProductPromotion from '@/components/product/product-promotion'
 
 export default {
-  components: { uniSearchBar, uniNoticeBar, search, goodList, promotionList },
+  components: { ProductList, ProductNew, ProductPromotion },
   data() {
     return {
+      active: 1,
+      BaseName: this.BaseName,
+      CustomBar: this.CustomBar,
+      curSwiper: 0,
+      dotStyle: false,
       tabInde: 0,
-      tabbar: [
-        {
-          'pagePath': '/pages/home/index',
-          'iconPath': '/static/tabBar/home.png',
-          'selectedIconPath': '/static/tabBar/home_col.png',
-          'text': '首页',
-          'fontIcon': 'icon-shouye'
-        },
-        // 这里是要动态切换的栏目，先隐藏，动态追加
-        // {
-        //     "pagePath": "/pages/tabBar/manage/manage",
-        //     "iconPath": "/static/tabBar/home.png",
-        //     "selectedIconPath": "/static/tabBar/home_col.png",
-        //     "text": "管理",
-        //     "fontIcon": "icon-guanli"
-        // },
-        {
-          'pagePath': '/pages/tabBar/person/person',
-          'iconPath': '/static/tabBar/person.png',
-          'selectedIconPath': '/static/tabBar/person_col.png',
-          'text': '我的',
-          'fontIcon': 'icon-wode'
-        }
-      ],
-      //
-      noticeImage: resURL + '/assets/images/notice.png',
+      isSort: false,
+      images: {
+        notice: this.resURL + '/assets/images/notice.png',
+        one: this.resURL + '/assets/images/one.png',
+        two: this.resURL + '/assets/images/two.png',
+        three: this.resURL + '/assets/images/three.png'
+      },
       banner: [],
       navigations: [],
       roll: [],
@@ -212,21 +186,26 @@ export default {
       hot: [],
       firstList: [],
       promotion: [],
-      coupon: []
+      coupon: [],
+      ColorList: [{
+        title: '嫣红',
+        name: 'red',
+        color: '#e54d42'
+      },
+      {
+        title: '桔橙',
+        name: 'orange',
+        color: '#f37b1d'
+      },
+      {
+        title: '明黄',
+        name: 'yellow',
+        color: '#fbbd08'
+      }
+      ]
     }
   },
-  onLoad() {
-    debugger
-    const that = this
-    that.loadHomeData()
-    // Dialog.alert({
-    //   title: '标题',
-    //   message: '弹窗内容'
-    // }).then(() => {
-    //   // on close
-    // });
-  },
-  onShow() {
+  mounted() {
     const that = this
     that.loadHomeData()
   },
@@ -243,6 +222,7 @@ export default {
         that.promotion = data.benefit
         that.coupon = data.couponList
       }, err => {
+        console.error(err)
       })
     },
     onSwitchTab(index) {
@@ -253,6 +233,16 @@ export default {
         url: '/pages/search/index'
       })
     },
+    onSwiper(url) {
+      uni.navigateTo({
+        url: url
+      })
+    },
+    cardSwiper() {},
+    navigationPage(item) {
+      // const that = this
+      uni.navigateTo({ url: item.wxapp_url })
+    },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
         url = '/pages/cate/index'
@@ -261,6 +251,31 @@ export default {
       }
       uni.switchTab({
         url: url
+      })
+    },
+    onNotice(item) {
+      // open-type="switchTab"
+      debugger
+      uni.navigateTo({
+        url: item.url
+      })
+    },
+    onShopDetails(item) {
+      const url = '/pages/shop/details/index?id=' + item.id
+      uni.navigateTo({
+        url: url
+      })
+    },
+    onShopPromotion() {
+      // $router.push('/pages/shop/GoodsPromotion/main')
+      uni.navigateTo({
+        url: '/pages/shop/promotion/index'
+      })
+    },
+    onShopMark(type) {
+      // $router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:3} })
+      uni.navigateTo({
+        url: '/pages/shop/mark/index?type=' + type
       })
     }
   }
@@ -271,30 +286,52 @@ export default {
   .container{
     background-color: #fff;
   }
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-// .title {
-// 		font-size: 36rpx;
-// 		color: #8f8f94;
-//   }
-
-  .swiper-item {
-    height: 100%;
+  .cu-bar.search {
+    .cu-avatar:first-child,
+    .search-form {
+      margin-left: 0;
+    }
+  }
+  .navigation {
+    .image {
+      width:64rpx;
+      height:64rpx;
+    }
+  }
+  .notification-bar {
+    // max-height: 50upx;
+    min-height: 60upx;
+    border-top: 1upx solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
+    .cu-avatar:first-child {
+      margin-left: 0;
+    }
+    .bar-swiper{
+      display: flex;
+      flex: 1;
+      .swiper {
+        width: 100%;
+        height: 60upx;
+        .swiper-slide {
+          .swiper-item {
+            border-left: 1upx solid rgba(0, 0, 0, 0.05);
+            padding: 0 20upx 0;
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
   }
 </style>

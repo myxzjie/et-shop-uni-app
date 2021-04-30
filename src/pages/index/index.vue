@@ -1,155 +1,16 @@
 <template>
   <view class="container">
-    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <!-- <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
       <view slot="content">{{ BaseName }}</view>
-    </cu-custom>
-    <view class="cu-bar search bg-white">
-      <view class="cu-avatar round bg-white">
-        <text class="text-olive cuIcon-locationfill" />
-      </view>
-      <view class="search-form round">
-        <text class="cuIcon-search" />
-        <!-- @focus="InputFocus" @blur="InputBlur" -->
-        <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品" @tap="onSearch">
-      </view>
-      <view class="action">
-        <text class="cuIcon-scan" />
-      </view>
-    </view>
-    <swiper
-      class="card-swiper square-dot"
-      :indicator-dots="true"
-      :circular="true"
-      :autoplay="true"
-      interval="5000"
-      duration="500"
-      indicator-active-color="#0081ff"
-      indicator-color="#8799a3"
-      @change="cardSwiper"
-    >
-      <swiper-item
-        v-for="(item, index) in banner"
-        :key="index"
-        :class="curSwiper == index ? 'cur' : ''"
-      >
-        <view class="swiper-item" @tap="onSwiper(item.url)">
-          <image :src="item.pic" mode="aspectFill" />
-        </view>
-      </swiper-item>
-    </swiper>
+    </cu-custom> -->
 
-    <view class="navigation cu-list grid col-4 no-border">
-      <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
-        <view class="text-red">
-          <image class="image" :src="item.pic" />
-          <!-- <view class="cu-tag badge" v-if="item.badge != 0">
-            <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
-          </view> -->
-        </view>
-        <text>{{ item.name }}</text>
-      </view>
-    </view>
+    <home v-if="active === 1" />
+    <cate v-else-if="active === 2" />
+    <article-view v-else-if="active === 3" />
+    <cart v-else-if="active === 4" />
+    <me v-else-if="active === 5" />
 
-    <view class="cu-bar notification-bar" style="">
-      <view class="cu-avatar round bg-white">
-        <text class="cuIcon-notificationfill text-sm text-olive" />
-      </view>
-      <view class="bar-swiper">
-        <swiper v-if="roll.length > 0" class="swiper" :indicator-dots="false" autoplay circular vertical>
-          <block v-for="(item, rollIndex) in roll" :key="rollIndex">
-            <swiper-item class="swiper-slide">
-              <view
-                class="swiper-item"
-                @click="onNotice(item)"
-              >
-                <view class="text">
-                  <view v-if="item.show === '是'" class="label">最新</view>
-                  <view class="">{{ item.info }}</view>
-                </view>
-                <view>
-                  <text class="cuIcon-right" />
-                </view>
-              </view>
-            </swiper-item>
-          </block>
-        </swiper>
-      </view>
-    </view>
-
-    <!-- <view class="grid col-3 padding-sm">
-      <view class="padding-sm" v-for="(item, index) in ColorList" :key="index">
-        <view class="padding radius text-center shadow-blur" :class="'bg-' + item.name">
-          <view class="text-lg">{{ item.title }}</view>
-          <view class="margin-top-sm text-Abc">{{ item.name }}</view>
-        </view>
-      </view>
-    </view> -->
-
-    <view v-if="firstList.length > 0">
-      <view class="cu-bar bg-white margin-top solid-bottom">
-        <view class="action">
-          首发新品
-          <text class="hot text-red">NEW~</text>
-        </view>
-        <view class="action">
-          <view class="shadow" @tap="onShopMark(3)">
-            更多
-            <text class="cuIcon-right" />
-          </view>
-        </view>
-      </view>
-      <product-new :list="firstList" />
-    </view>
-
-    <view v-if="bast.length > 0">
-      <view class="cu-bar bg-white margin-top solid-bottom">
-        <view class="action">
-          <!-- <text class="cuIcon-title text-orange "></text> -->
-          精品推荐
-        </view>
-        <view class="action">
-          <view class="shadow" @tap="onShopMark(1)">
-            更多
-            <text class="cuIcon-right" />
-          </view>
-        </view>
-      </view>
-      <product-list :list="bast" />
-    </view>
-
-    <view v-if="hot.length > 0">
-      <view class="cu-bar bg-white margin-top solid-bottom">
-        <view class="action">
-          <!-- <text class="cuIcon-title text-orange "></text> -->
-          热门榜单
-          <text class="hot text-red">HOT~</text>
-        </view>
-        <view class="action">
-          <view class="shadow" @tap="onShopMark(2)">
-            更多
-            <text class="cuIcon-right" />
-          </view>
-        </view>
-      </view>
-      <product-list :list="hot" />
-    </view>
-
-    <view v-if="promotion.length > 0">
-      <view class="cu-bar bg-white margin-top solid-bottom">
-        <view class="action">
-          促销单品
-        </view>
-        <view class="action">
-          <view class="shadow" @tap="onShopPromotion()">
-            更多
-            <text class="cuIcon-right" />
-          </view>
-        </view>
-      </view>
-      <product-promotion :list="promotion" />
-    </view>
-
-    <!---->
+    <view class="cu-tabbar-height" />
 
     <view class="cu-bar tabbar bg-white foot">
       <view class="action" :data-id="1" @click="changeTab">
@@ -192,20 +53,19 @@
         <view class="text-gray">我的</view>
       </view>
     </view>
-
   </view>
 </template>
 
 <script>
-// import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
-// import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
+import Home from '@/pages/home/index'
+import Cate from '@/pages/cate/index'
+import ArticleView from '@/pages/article/index'
+import Cart from '@/pages/cart/index'
+import Me from '@/pages/me/index'
 import { getHomeData } from '@/api/public'
-import ProductNew from '@/components/product/product-new'
-import ProductList from '@/components/product/product-list'
-import ProductPromotion from '@/components/product/product-promotion'
 
 export default {
-  components: { ProductList, ProductNew, ProductPromotion },
+  components: { Home, Cate, ArticleView, Cart, Me },
   data() {
     return {
       active: 1,
@@ -213,14 +73,13 @@ export default {
       CustomBar: this.CustomBar,
       curSwiper: 0,
       dotStyle: false,
-      tabInde: 0,
       isSort: false,
-      images: {
-        notice: this.resURL + '/assets/images/notice.png',
-        one: this.resURL + '/assets/images/one.png',
-        two: this.resURL + '/assets/images/two.png',
-        three: this.resURL + '/assets/images/three.png'
-      },
+      // images: {
+      //   notice: this.resURL + '/assets/images/notice.png',
+      //   one: this.resURL + '/assets/images/one.png',
+      //   two: this.resURL + '/assets/images/two.png',
+      //   three: this.resURL + '/assets/images/three.png'
+      // },
       banner: [],
       navigations: [],
       roll: [],
@@ -229,33 +88,27 @@ export default {
       firstList: [],
       promotion: [],
       coupon: [],
-      ColorList: [{
-        title: '嫣红',
-        name: 'red',
-        color: '#e54d42'
-      },
-      {
-        title: '桔橙',
-        name: 'orange',
-        color: '#f37b1d'
-      },
-      {
-        title: '明黄',
-        name: 'yellow',
-        color: '#fbbd08'
-      }
-      ]
+      // ColorList: [{
+      //   title: '嫣红',
+      //   name: 'red',
+      //   color: '#e54d42'
+      // },
+      // {
+      //   title: '桔橙',
+      //   name: 'orange',
+      //   color: '#f37b1d'
+      // },
+      // {
+      //   title: '明黄',
+      //   name: 'yellow',
+      //   color: '#fbbd08'
+      // }
+      // ]
     }
   },
   onLoad() {
-    const that = this
-    that.loadHomeData()
-    // Dialog.alert({
-    //   title: '标题',
-    //   message: '弹窗内容'
-    // }).then(() => {
-    //   // on close
-    // });
+    // const that = this
+    // that.loadHomeData()
   },
   onShow() {
     const that = this
