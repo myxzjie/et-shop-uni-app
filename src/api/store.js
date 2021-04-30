@@ -77,3 +77,10 @@ export function changeCartNum(id, number) {
 export function cartDelete(ids) {
   return request({ url: '/cart/del', method: 'post', data: { ids }})
 }
+
+/**
+ * 搜索推荐关键字
+ */
+export function getSearchKeyword() {
+  return request({ url: '/search/keyword' })
+}

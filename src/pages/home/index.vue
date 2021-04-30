@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
@@ -10,13 +10,15 @@
         </view>
         <view class="search-form round">
           <text class="cuIcon-search" />
-          <!-- @focus="InputFocus" @blur="InputBlur" -->
-          <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品" @tap="onSearch">
+          <navigator url="/pages/search/index" hover-class="none">
+            <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品">
+          </navigator>
         </view>
         <view class="action">
           <text class="cuIcon-scan" />
         </view>
       </view>
+      <!-- @change="cardSwiper" -->
       <swiper
         class="card-swiper square-dot"
         :indicator-dots="true"
@@ -26,14 +28,14 @@
         duration="500"
         indicator-active-color="#0081ff"
         indicator-color="#8799a3"
-        @change="cardSwiper"
       >
         <swiper-item
           v-for="(item, index) in banner"
           :key="index"
           :class="curSwiper == index ? 'cur' : ''"
+          @tap="onSwiper(item)"
         >
-          <view class="swiper-item" @tap="onSwiper(item.url)">
+          <view class="swiper-item">
             <image :src="item.pic" mode="aspectFill" />
           </view>
         </swiper-item>
@@ -77,15 +79,6 @@
         </view>
       </view>
 
-      <!-- <view class="grid col-3 padding-sm">
-      <view class="padding-sm" v-for="(item, index) in ColorList" :key="index">
-        <view class="padding radius text-center shadow-blur" :class="'bg-' + item.name">
-          <view class="text-lg">{{ item.title }}</view>
-          <view class="margin-top-sm text-Abc">{{ item.name }}</view>
-        </view>
-      </view>
-    </view> -->
-
       <view v-if="firstList.length > 0">
         <view class="cu-bar bg-white margin-top solid-bottom">
           <view class="action">
@@ -93,10 +86,10 @@
             <text class="hot text-red">NEW~</text>
           </view>
           <view class="action">
-            <view class="shadow" @tap="onShopMark(3)">
+            <navigator class="shadow" url="/pages/shop/mark/index?type=3" hover-class="none">
               更多
               <text class="cuIcon-right" />
-            </view>
+            </navigator>
           </view>
         </view>
         <product-new :list="firstList" />
@@ -109,10 +102,10 @@
             精品推荐
           </view>
           <view class="action">
-            <view class="shadow" @tap="onShopMark(1)">
+            <navigator class="shadow" url="/pages/shop/mark/index?type=1" hover-class="none">
               更多
               <text class="cuIcon-right" />
-            </view>
+            </navigator>
           </view>
         </view>
         <product-list :list="bast" />
@@ -126,10 +119,10 @@
             <text class="hot text-red">HOT~</text>
           </view>
           <view class="action">
-            <view class="shadow" @tap="onShopMark(2)">
+            <navigator class="shadow" url="/pages/shop/mark/index?type=2" hover-class="none">
               更多
               <text class="cuIcon-right" />
-            </view>
+            </navigator>
           </view>
         </view>
         <product-list :list="hot" />
@@ -141,10 +134,10 @@
             促销单品
           </view>
           <view class="action">
-            <view class="shadow" @tap="onShopPromotion()">
+            <navigator class="shadow" url="/pages/shop/promotion/index" hover-class="none">
               更多
               <text class="cuIcon-right" />
-            </view>
+            </navigator>
           </view>
         </view>
         <product-promotion :list="promotion" />
@@ -166,19 +159,12 @@ export default {
   components: { ProductList, ProductNew, ProductPromotion },
   data() {
     return {
-      active: 1,
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       curSwiper: 0,
       dotStyle: false,
       tabInde: 0,
       isSort: false,
-      images: {
-        notice: this.resURL + '/assets/images/notice.png',
-        one: this.resURL + '/assets/images/one.png',
-        two: this.resURL + '/assets/images/two.png',
-        three: this.resURL + '/assets/images/three.png'
-      },
       banner: [],
       navigations: [],
       roll: [],
@@ -186,23 +172,7 @@ export default {
       hot: [],
       firstList: [],
       promotion: [],
-      coupon: [],
-      ColorList: [{
-        title: '嫣红',
-        name: 'red',
-        color: '#e54d42'
-      },
-      {
-        title: '桔橙',
-        name: 'orange',
-        color: '#f37b1d'
-      },
-      {
-        title: '明黄',
-        name: 'yellow',
-        color: '#fbbd08'
-      }
-      ]
+      coupon: []
     }
   },
   mounted() {
@@ -225,18 +195,17 @@ export default {
         console.error(err)
       })
     },
-    onSwitchTab(index) {
-      this.tabInde = index
-    },
     onSearch() {
       uni.navigateTo({
         url: '/pages/search/index'
       })
     },
-    onSwiper(url) {
+    onSwiper(item) {
       uni.navigateTo({
-        url: url
+        url: item.wxapp_url
       })
+    },
+    cardSwiper(e) {
     },
     navigationPage(item) {
       uni.navigateTo({ url: item.wxapp_url + '?isBack=true' })
@@ -253,7 +222,6 @@ export default {
     },
     onNotice(item) {
       // open-type="switchTab"
-      debugger
       uni.navigateTo({
         url: item.url
       })
@@ -263,73 +231,56 @@ export default {
       uni.navigateTo({
         url: url
       })
-    },
-    onShopPromotion() {
-      // $router.push('/pages/shop/GoodsPromotion/main')
-      uni.navigateTo({
-        url: '/pages/shop/promotion/index'
-      })
-    },
-    onShopMark(type) {
-      // $router.push({ path: '/pages/shop/HotNewGoods/main',query:{type:3} })
-      uni.navigateTo({
-        url: '/pages/shop/mark/index?type=' + type
-      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .container{
-    background-color: #fff;
+.cu-bar.search {
+  .cu-avatar:first-child,
+  .search-form {
+    margin-left: 0;
   }
-
-  .cu-bar.search {
-    .cu-avatar:first-child,
-    .search-form {
-      margin-left: 0;
-    }
+}
+.navigation {
+  .image {
+    width:64rpx;
+    height:64rpx;
   }
-  .navigation {
-    .image {
-      width:64rpx;
-      height:64rpx;
-    }
+}
+.notification-bar {
+  min-height: 60upx;
+  border-top: 1upx solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
+  .cu-avatar:first-child {
+    margin-left: 0;
   }
-  .notification-bar {
-    // max-height: 50upx;
-    min-height: 60upx;
-    border-top: 1upx solid rgba(0, 0, 0, 0.05);
-    border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
-    .cu-avatar:first-child {
-      margin-left: 0;
-    }
-    .bar-swiper{
-      display: flex;
-      flex: 1;
-      .swiper {
-        width: 100%;
-        height: 60upx;
-        .swiper-slide {
-          .swiper-item {
-            border-left: 1upx solid rgba(0, 0, 0, 0.05);
-            padding: 0 20upx 0;
-            overflow: hidden;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-flex-wrap: wrap;
-            flex-wrap: wrap;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-            -webkit-box-pack: justify;
-            -webkit-justify-content: space-between;
-            justify-content: space-between;
-          }
+  .bar-swiper{
+    display: flex;
+    flex: 1;
+    .swiper {
+      width: 100%;
+      height: 60upx;
+      .swiper-slide {
+        .swiper-item {
+          border-left: 1upx solid rgba(0, 0, 0, 0.05);
+          padding: 10upx 20upx 0;
+          overflow: hidden;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-box-pack: justify;
+          -webkit-justify-content: space-between;
+          justify-content: space-between;
         }
       }
     }
   }
+}
 </style>

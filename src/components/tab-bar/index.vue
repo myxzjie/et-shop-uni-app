@@ -4,11 +4,11 @@
       v-for="(item, index) in list"
       :key="index"
       class="action"
-      :class="[active === item.id ? 'text-green' : 'text-gray']"
+      :class="[active === item.id ? 'text-green' : 'text-gray', item.shadow ? 'add-action':'']"
       :data-id="item.id"
       @tap="switchTab(item.id)"
     >
-      <view :class="item.icon">
+      <view :class="[item.icon, item.shadow ? 'bg-green': '']">
         <!-- <image :src="active === item.id ? item.current : item.default" mode="aspectFit" /> -->
         <!-- <view class="cu-tag badge">99</view> -->
       </view>
@@ -59,8 +59,23 @@ export default {
         // text-align: center;
         font-size: 64upx;
       }
+      &.add-action {
+        [class*="svg-icon-"] {
+          position: absolute;
+          width: 70upx;
+          z-index: 2;
+          height: 70upx;
+          border-radius: 50%;
+          line-height: 70upx;
+          font-size: 50upx;
+          top: -35upx;
+          left: 0;
+          right: 0;
+          margin: auto;
+          padding: 0;
+        }
+      }
     }
   }
 }
-
 </style>

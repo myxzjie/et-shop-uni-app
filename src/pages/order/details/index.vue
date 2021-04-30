@@ -432,20 +432,20 @@ export default {
         type: type,
         class_status: 0
       }
-      if (type == 1 && combination_id > 0) {
+      if (type === 1 && combination_id > 0) {
         status.type = 6
         status.class_status = 1
       } // 查看拼团
-      if (type == 2 && delivery_type == 'express') status.class_status = 2 // 查看物流
-      if (type == 2) status.class_status = 3 // 确认收货
-      if (type == 4 || type === 0) status.class_status = 4 // 删除订单
+      if (type === 2 && delivery_type === 'express') status.class_status = 2 // 查看物流
+      if (type === 2) status.class_status = 3 // 确认收货
+      if (type === 4 || type === 0) status.class_status = 4 // 删除订单
       if (
         !seckill_id &&
         !bargain_id &&
         !combination_id &&
-        (type == 3 || type == 4)
+        (type === 3 || type === 4)
       ) { status.class_status = 5 } // 再次购买
-      if (type == 9) {
+      if (type === 9) {
         // 线下付款
         status.class_status = 0
         this.offlineStatus = false
