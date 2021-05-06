@@ -4,7 +4,7 @@
     <cate v-else-if="active === 2" />
     <article-view v-else-if="active === 3" />
     <cart v-else-if="active === 4" />
-    <me v-else-if="active === 5" />
+    <me v-show="active === 5" />
 
     <view class="cu-tabbar-height" />
 
@@ -69,7 +69,9 @@ export default {
 
     }
   },
-  onLoad() {},
+  onLoad(option) {
+    this.active = option.active
+  },
   onShow() {},
   methods: {
     changeTab(id) {

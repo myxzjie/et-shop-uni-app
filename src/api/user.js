@@ -4,9 +4,7 @@ import request from '@/utils/request'
  * 个人中心
  * */
 export function getUser() {
-  return request({
-    url: '/user'
-  })
+  return request({url: '/user',  power: true })
 }
 
 /*
@@ -33,15 +31,29 @@ export function collectDelete(id, category) {
 /*
  * 批量收藏产品
  * */
+export function postCollectAll(data) {
+  return request.post('/collect/all', data)
+}
+
+/*
+ * 批量收藏产品
+ * */
 export function collectBatchAdd(data) {
   return request({ url: '/collect/all', method: 'post', data })
+}
+
+/*
+ * 获取收藏产品
+ * */
+export function getCollectUser(page, limit) {
+  return request({url:'/collect/user', data:{ page: page, limit: limit }})
 }
 
 /**
  * 省市区
  */
 export function district(data) {
-  return request.get('/citys', data, { login: false })
+  return request({url:'/citys', data })
 }
 
 /**
@@ -116,7 +128,7 @@ export function getCouponsUser(type) {
  * 用户信息
  * */
 export function getUserInfo() {
-  return request.get('/userinfo', { login: true })
+  return request({url:'/userinfo',  power: true })
 }
 
 /*
@@ -166,20 +178,6 @@ export function getAddress(id) {
  * */
 export function postAddress(data) {
   return request.post('/address/edit', data)
-}
-
-/*
- * 获取收藏产品
- * */
-export function getCollectUser(page, limit) {
-  return request.get('/collect/user', { page: page, limit: limit })
-}
-
-/*
- * 批量收藏产品
- * */
-export function postCollectAll(data) {
-  return request.post('/collect/all', data)
 }
 
 /*

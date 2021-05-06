@@ -202,7 +202,6 @@
   </view>
 </template>
 <script>
-import { resURL } from '@/utils/config'
 import { getUser, getMenuUser, getUserInfo } from '@/api/user'
 
 // import SwitchWindow from '@components/SwitchWindow'
@@ -274,7 +273,7 @@ export default {
         that.orderStatusNum = res.data.orderStatusNum
       })
     },
-    loadMenuUser: function() {
+    loadMenuUser() {
       const that = this
       getMenuUser().then(res => {
         that.MyMenus = res.data.routine_my_menus

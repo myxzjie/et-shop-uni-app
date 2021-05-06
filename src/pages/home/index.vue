@@ -63,7 +63,7 @@
               <swiper-item class="swiper-slide">
                 <view
                   class="swiper-item"
-                  @click="onNotice(item)"
+                  @tap="onNotice(item)"
                 >
                   <view class="text">
                     <view v-if="item.show === '是'" class="label">最新</view>
@@ -223,7 +223,7 @@ export default {
     onNotice(item) {
       // open-type="switchTab"
       uni.navigateTo({
-        url: item.url
+        url: item.wxapp_url
       })
     },
     onShopDetails(item) {

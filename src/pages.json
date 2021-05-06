@@ -56,6 +56,9 @@
 		},
 		{
 			"path": "pages/me/account/index"
+		},
+		{
+			"path": "pages/collection/index"
 		}
 	],
 	"globalStyle": {

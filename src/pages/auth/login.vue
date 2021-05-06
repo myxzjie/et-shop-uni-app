@@ -82,6 +82,7 @@
 import { tokenKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
 import { wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
+import { redirectTo } from '@/utils/auth'
 export default {
   data() {
     return {
@@ -172,7 +173,7 @@ export default {
                 if (res.status === 200) {
                   that.login('weixin')
                   uni.setStorageSync(tokenKey, res.data.token)
-                  uni.navigateBack({})
+                  redirectTo()
                 } else if (res.status === 6000) {
                   that.show = true
                   return

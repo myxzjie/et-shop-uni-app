@@ -35,7 +35,7 @@ export default {
     },
     isSort: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {

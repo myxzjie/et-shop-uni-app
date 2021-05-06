@@ -1,12 +1,11 @@
 <template>
   <view
     v-if="loading || !loaded"
-    class="Loads acea-row row-center-wrapper"
-    style="margin-top: .2rem;"
+    class="loading-wrap flex flex-wrap align-center margin-top"
   >
     <template v-if="loading">
       <view
-        class="iconfont icon-jiazai loading acea-row row-center-wrapper"
+        class="cuIcon-loading loading flex flex-wrap align-center"
       />
       正在加载中
     </template>
@@ -25,3 +24,25 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.loading-wrap{
+  // height: 0.8rem;
+  // font-size: 0.7rem;
+  // color: #000;
+  /*加载动画*/
+  @keyframes load {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .loadingpic {
+    animation: load 3s linear 1s infinite;
+  }
+  .loading {
+    animation: load linear 1s infinite;
+  }
+}
+</style>

@@ -7,7 +7,7 @@
     </view>
 
     <view class="cu-list grid col-2 no-border">
-      <view v-for="(item, index) in hostProduct" :key="index" class="cu-item" @tap="onProduct(item)">
+      <view v-for="(item, index) in hostProduct" :key="index" class="cu-item" @tap="onProductDetails(item)">
         <view class="pictrue">
           <image class="image" :src="item.image" />
         </view>
@@ -57,6 +57,11 @@ export default {
         that.hostProduct.push.apply(that.hostProduct, res.data)
         that.loadend = res.data.length < that.limit // 判断所有数据是否加载完成；
         that.page = that.page + 1
+      })
+    },
+    onProductDetails(item) {
+      uni.navigateTo({
+        url : '/pages/shop/details/index?id='+item.id
       })
     }
   },
