@@ -59,6 +59,9 @@
 		},
 		{
 			"path": "pages/collection/index"
+		},
+		{
+			"path": "pages/coupon/index"
 		}
 	],
 	"globalStyle": {

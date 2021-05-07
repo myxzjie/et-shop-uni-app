@@ -30,7 +30,7 @@
       class="margin bg-white"
     >
       <view class="noPictrue margin padding">
-        <image src="https://shop.cdn.dev56.com/assets/images/noCollection.png" class="image" mode="widthFix"/>
+        <image src="https://shop.cdn.dev56.com/assets/images/noCollection.png" class="image" mode="widthFix" />
       </view>
       <product-recommend />
     </view>
@@ -57,7 +57,7 @@ export default {
     }
   },
   onLoad() {},
-  onShow(){
+  onShow() {
     this.getUserCollectProduct()
   },
   onReachBottom() {
@@ -80,7 +80,7 @@ export default {
     // 删除收藏；
     delCollection(index) {
       const that = this
-      const {pid,category} = that.collectProductList[index]
+      const { pid, category } = that.collectProductList[index]
       collectDelete(pid, category).then(() => {
         uni.showToast({
           title: '删除收藏成功!',
@@ -94,7 +94,7 @@ export default {
       })
     },
     onProduct(item) {
-      uni.navigateTo({url: '/pages/shop/GoodsCon/main?id='+item.pid})
+      uni.navigateTo({ url: '/pages/shop/GoodsCon/main?id=' + item.pid })
     }
   }
 }
@@ -118,9 +118,5 @@ export default {
 }
 .noPictrue {
   text-align: center;
-  .image{
-    // width: 207upx;
-    // height: 207upx;
-  }
 }
 </style>

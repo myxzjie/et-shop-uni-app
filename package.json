@@ -91,6 +91,7 @@
     "lint-staged": "^10.5.4",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "postcss-comment": "^2.0.0",
     "sass-loader": "^10.0.2",

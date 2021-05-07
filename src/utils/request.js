@@ -1,6 +1,6 @@
 // request
 import { baseURL, tokenKey } from '@/utils/config'
-import {authLoginTo } from '@/utils/auth'
+import { authLoginTo } from '@/utils/auth'
 
 const filter = []
 

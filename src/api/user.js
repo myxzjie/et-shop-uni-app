@@ -4,7 +4,7 @@ import request from '@/utils/request'
  * 个人中心
  * */
 export function getUser() {
-  return request({url: '/user',  power: true })
+  return request({ url: '/user', power: true })
 }
 
 /*
@@ -46,14 +46,14 @@ export function collectBatchAdd(data) {
  * 获取收藏产品
  * */
 export function getCollectUser(page, limit) {
-  return request({url:'/collect/user', data:{ page: page, limit: limit }})
+  return request({ url: '/collect/user', data: { page: page, limit: limit }})
 }
 
 /**
  * 省市区
  */
 export function district(data) {
-  return request({url:'/citys', data })
+  return request({ url: '/citys', data })
 }
 
 /**
@@ -99,36 +99,36 @@ export function registerReset(data) {
 /*
  * 领取优惠券列表
  * */
-export function getCoupon(q) {
-  return request.get('/coupons', q, { login: true })
+export function getCoupon(data) {
+  return request({ url: '/coupons', data, power: true })
 }
 
 /*
  * 点击领取优惠券
  * */
 export function getCouponReceive(id) {
-  return request.post('/coupon/receive', { couponId: id }, { login: true })
+  return request({ url: '/coupon/receive', method: 'POST', data: { couponId: id }, power: true })
 }
 
 /*
  * 批量领取优惠券
  * */
 export function couponReceiveBatch(couponId) {
-  return request.post('/coupon/receive/batch', { couponId })
+  return request({ url: '/coupon/receive/batch', method: 'POST', data: { couponId: couponId }})
 }
 
 /*
  * 我的优惠券
  * */
 export function getCouponsUser(type) {
-  return request.get('/coupons/user/' + type)
+  return request({ url: '/coupons/user/' + type })
 }
 
 /*
  * 用户信息
  * */
 export function getUserInfo() {
-  return request({url:'/userinfo',  power: true })
+  return request({ url: '/userinfo', power: true })
 }
 
 /*

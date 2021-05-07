@@ -61,7 +61,7 @@ export default {
     },
     onProductDetails(item) {
       uni.navigateTo({
-        url : '/pages/shop/details/index?id='+item.id
+        url: '/pages/shop/details/index?id=' + item.id
       })
     }
   },
