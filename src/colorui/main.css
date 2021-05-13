@@ -3973,3 +3973,7 @@ align-items: center;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
 }
+
+.loading-image {
+  animation: load 3s linear 1s infinite;
+}

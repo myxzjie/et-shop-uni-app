@@ -16,10 +16,10 @@
         <view class="content padding-sm">
           <view class="condition ellipsis-line text-lg padding-xs">购物满{{ item.useMinPrice }}元可用</view>
           <view class="data flex flex-wrap align-between padding-top-sm">
-            <view class="padding-right" v-if="item.endTime !== 0">
+            <view v-if="item.endTime !== 0" class="padding-right">
               <!-- <data-format-t :data="item.startTime" />-
               <data-format-t :data="item.endTime" /> -->
-              {{item.startTime| dateFormat}} - {{item.endTime | dateFormat}}
+              {{ item.startTime| dateFormat }} - {{ item.endTime | dateFormat }}
             </view>
             <view v-else>不限时</view>
             <view v-if="item.isUse === true" class="cu-btn round bg-gray sm">已领取</view>
@@ -44,30 +44,27 @@
 import { getCoupon, getCouponReceive } from '@/api/user'
 import Loading from '@/components/loading'
 import ProductRecommend from '@/components/product/product-recommend'
-// import DataFormatT from '@components/DataFormatT'
 import moment from 'moment'
 export default {
   name: 'GetCoupon',
   components: {
     Loading,
     ProductRecommend
-    // DataFormatT
   },
-  filters:{
-			dateFormat(value){
-        value = +value * 1000
-				return moment(value).format('YYYY/MM/DD')
-        // const d = new Date(value)
-
-        // return (
-        //   d.getFullYear() +
-        //   '/' +
-        //   (d.getMonth() + parseInt(1)) +
-        //   '/' +
-        //   d.getDate()
-        // )
-			}
-	},
+  filters: {
+    dateFormat(value) {
+      value = +value * 1000
+      return moment(value).format('YYYY/MM/DD')
+      // const d = new Date(value)
+      // return (
+      //   d.getFullYear() +
+      //   '/' +
+      //   (d.getMonth() + parseInt(1)) +
+      //   '/' +
+      //   d.getDate()
+      // )
+    }
+  },
   data() {
     return {
       page: 1,
@@ -127,12 +124,9 @@ export default {
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 200upx;
-      // height: 100%;
       color: #fff;
-      // font-size: 0.36rem;
       font-weight: bold;
       text-align: center;
-      // line-height: 1.7rem;
       flex: 1;
       &.coupon-gray{
         background-image: url('/static/coupon-gray.png');

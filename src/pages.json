@@ -62,6 +62,12 @@
 		},
 		{
 			"path": "pages/coupon/index"
+		},
+		{
+			"path": "pages/clockin/index"
+		},
+		{
+			"path": "pages/clockin/details"
 		}
 	],
 	"globalStyle": {

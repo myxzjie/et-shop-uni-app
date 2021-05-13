@@ -5435,7 +5435,7 @@ page {
 }
 
 .sign .wrapper .list .item .venus {
-  background-image: url('https://h5.dayouqiantu.cn/static/images/stars2.png');
+  background-image: url('https://shop.cdn.dev56.com/assets/images/stars2.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 0.56rem;
@@ -5444,11 +5444,11 @@ page {
 }
 
 .sign .wrapper .list .item .venus.venusSelect {
-  background-image: url('https://h5.dayouqiantu.cn/static/images/stars1.png');
+  background-image: url('https://shop.cdn.dev56.com/assets/images/stars1.png');
 }
 
 .sign .wrapper .list .item .venus.reward {
-  background-image: url('https://h5.dayouqiantu.cn/static/images/stars3.png');
+  background-image: url('https://shop.cdn.dev56.com/assets/images/stars3.png');
   width: 0.75rem;
   height: 0.56rem;
 }

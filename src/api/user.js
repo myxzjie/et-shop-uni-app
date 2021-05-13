@@ -184,35 +184,35 @@ export function postAddress(data) {
  * 签到配置
  * */
 export function getSignConfig() {
-  return request.get('/sign/config')
+  return request({ url: '/sign/config' })
 }
 
 /*
  * 签到里的签到列表
  * */
 export function getSignList(page, limit) {
-  return request.get('/sign/list', { page: page, limit: limit })
+  return request({ url: '/sign/list', data: { page: page, limit: limit }})
 }
 
 /*
  * 签到列表
  * */
 export function getSignMonth(page, limit) {
-  return request.get('/sign/month', { page: page, limit: limit })
+  return request({ url: '/sign/month', data: { page: page, limit: limit }})
 }
 
 /*
  * 签到用户信息
  * */
-export function postSignUser(sign) {
-  return request.post('/sign/user', sign)
+export function postSignUser(data) {
+  return request({ url: '/sign/user', method: 'POST', data })
 }
 
 /*
  * 签到
  * */
-export function postSignIntegral(sign) {
-  return request.post('/sign/integral', sign)
+export function postSignIntegral(data) {
+  return request({ url: '/sign/integral', method: 'POST', data })
 }
 
 /*
