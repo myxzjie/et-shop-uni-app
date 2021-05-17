@@ -29,7 +29,7 @@
       v-if="collectProductList.length < 1 && page > 1"
       class="margin bg-white"
     >
-      <view class="noPictrue margin padding">
+      <view class="no-pictrue margin padding">
         <image src="https://shop.cdn.dev56.com/assets/images/noCollection.png" class="image" mode="widthFix" />
       </view>
       <product-recommend />
@@ -116,7 +116,7 @@ export default {
     }
   }
 }
-.noPictrue {
+.no-pictrue {
   text-align: center;
 }
 </style>

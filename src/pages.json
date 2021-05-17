@@ -68,6 +68,11 @@
 		},
 		{
 			"path": "pages/clockin/details"
+		},
+		{
+			"path": "pages/activity/buy-group/index"
+		},{
+			"path": "pages/activity/buy-group/details"
 		}
 	],
 	"globalStyle": {

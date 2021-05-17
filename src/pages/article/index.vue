@@ -105,6 +105,5 @@ export default {
   >.cu-item {
     border-bottom: 1upx dotted #ddd;
   }
-
 }
 </style>

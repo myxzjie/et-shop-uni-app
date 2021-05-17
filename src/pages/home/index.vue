@@ -53,7 +53,7 @@
         </view>
       </view>
 
-      <view class="cu-bar notification-bar" style="">
+      <view class="cu-bar notification-bar">
         <view class="cu-avatar round bg-white">
           <text class="cuIcon-notificationfill text-sm text-olive" />
         </view>
