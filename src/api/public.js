@@ -147,9 +147,5 @@ export function getLogistics() {
  * @retins {*}
  * */
 export function imageBase64(image, code) {
-  return request.post(
-    '/image_base64',
-    { image: image, code: code },
-    { login: false }
-  )
+  return request({ url: '/image_base64', data: { image: image, code: code }})
 }

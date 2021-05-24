@@ -58,6 +58,15 @@
 			"path": "pages/me/account/index"
 		},
 		{
+			"path": "pages/me/order/index"
+		},
+		{
+			"path": "pages/me/order/post-sale"
+		},
+		{
+			"path": "pages/me/coupon/index"
+		},
+		{
 			"path": "pages/collection/index"
 		},
 		{
@@ -71,8 +80,21 @@
 		},
 		{
 			"path": "pages/activity/buy-group/index"
-		},{
+		},
+		{
 			"path": "pages/activity/buy-group/details"
+		},
+		{
+			"path": "pages/activity/seckill/index"
+		},
+		{
+			"path": "pages/activity/seckill/details"
+		},
+		{
+			"path": "pages/activity/bargain/index"
+		},
+		{
+			"path": "pages/activity/bargain/details"
 		}
 	],
 	"globalStyle": {

@@ -89,8 +89,7 @@
             <view v-if="groupListindex < groupListCount" class="item acea-row row-between-wrapper">
               <view class="pictxt acea-row row-between-wrapper">
                 <view class="pictrue">
-                  <img :src="item.avatar" class="image">
-                </view>
+                  <image :src="item.avatar" class="image" /></view>
                 <view class="text line1" v-text="item.nickname" />
               </view>
               <view class="right acea-row row-middle">
@@ -218,7 +217,6 @@
 </template>
 
 <script>
-// import { swiper, swiperSlide } from "vue-awesome-swiper";
 import ProductSwiper from '@/components/product/product-swiper'
 // import ProductConSwiper from '@components/ProductConSwiper'
 // import CountDown from '@components/CountDown'
@@ -407,7 +405,6 @@ export default {
         data.new = 1
         addCart(data)
           .then(res => {
-            debugger
             uni.navigateTo({
               url: '/pages/order/submit/index?ids=' + res.data.cartId
             })

@@ -3911,6 +3911,14 @@ scroll-view.cu-steps .cu-item {
 	color: #ffffff;
 }
 
+.text-decoration {
+	text-decoration: line-through;
+}
+
+.loading-image {
+  animation: load 3s linear 1s infinite;
+}
+
 .ellipsis-line {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -3920,11 +3928,11 @@ scroll-view.cu-steps .cu-item {
 
 .align-center {
 	-webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
 }
 
 .align-between {
@@ -3974,6 +3982,16 @@ align-items: center;
 	justify-content: space-between;
 }
 
-.loading-image {
-  animation: load 3s linear 1s infinite;
+.row-around {
+	-webkit-justify-content: space-around;
+	justify-content: space-around;
+}
+
+.row-column-around {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: space-around;
+	justify-content: space-around;
 }

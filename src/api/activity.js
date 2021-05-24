@@ -42,21 +42,21 @@ export function getCombinationPoster(data) {
  * 秒杀列表配置
  */
 export function getSeckillConfig() {
-  return request.get('/seckill/index', {}, { login: false })
+  return request({ url: '/seckill/index' })
 }
 
 /**
  * 秒杀列表
  */
 export function getSeckillList(time, data) {
-  return request.get('/seckill/list/' + time, data, { login: false })
+  return request({ url: '/seckill/list/' + time, data })
 }
 
 /**
  * 秒杀产品详情
  */
 export function getSeckillDetail(id) {
-  return request.get('/seckill/detail/' + id, {}, { login: false })
+  return request({ url: '/seckill/detail/' + id })
 }
 
 /**
@@ -64,21 +64,21 @@ export function getSeckillDetail(id) {
  * @param {*} data
  */
 export function getBargainList(data) {
-  return request.get('/bargain/list', data, { login: false })
+  return request({ url: '/bargain/list', data })
 }
 
 /**
  * 砍价产品详情
  */
 export function getBargainDetail(id) {
-  return request.get('/bargain/detail/' + id)
+  return request({ url: '/bargain/detail/' + id })
 }
 
 /**
  * 砍价 观看/分享/参与次数
  */
 export function getBargainShare(data) {
-  return request.post('/bargain/share', data)
+  return request({ url: '/bargain/share', method: 'POST', data })
 }
 
 /**
@@ -86,7 +86,7 @@ export function getBargainShare(data) {
  * @param {*} data
  */
 export function getBargainStart(data) {
-  return request.post('/bargain/start', data)
+  return request({ url: '/bargain/start', method: 'POST', data })
 }
 
 /**
@@ -94,7 +94,7 @@ export function getBargainStart(data) {
  * @param {*} data
  */
 export function getBargainHelp(data) {
-  return request.post('/bargain/help', data)
+  return request({ url: '/bargain/help', method: 'POST', data })
 }
 
 /**
@@ -102,7 +102,7 @@ export function getBargainHelp(data) {
  * @param {*} data
  */
 export function getBargainHelpPrice(data) {
-  return request.post('/bargain/help/price', data)
+  return request({ url: '/bargain/help/price', method: 'POST', data })
 }
 
 /**

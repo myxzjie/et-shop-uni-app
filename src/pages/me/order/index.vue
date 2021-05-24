@@ -1,0 +1,478 @@
+<template>
+  <view>
+    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
+      <view slot="content">{{ BaseName }}</view>
+    </cu-custom>
+    <scroll-view scroll-y class="scrollPage">
+      <view class="my-order">
+        <view class="header bg-cyan padding">
+          <view class="picTxt flex flex-wrap align-between">
+            <view class="text">
+              <view class="name">订单信息</view>
+              <view class="margin-top-sm">
+                <text>累计订单：{{ orderData.orderCount || 0 }} </text>
+                <text class="margin-left-sm"> 总消费：￥{{ orderData.sumPrice || 0 }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="nav flex flex-wrap row-around padding-tb-sm">
+          <!-- <van-tabs :active="active" @change="onChange">
+        <van-tab title="待付款" class="item" >
+          <view>待付款</view>
+           <view class="num">{{ orderData.unpaidCount || 0 }}</view>
+        </van-tab>
+        <van-tab title="待发货" class="item">
+          <view>待发货</view>
+          <view class="num">{{ orderData.unshippedCount || 0 }}</view>
+        </van-tab>
+        <van-tab title="标签 3" class="item">内容 3</van-tab>
+        <van-tab title="标签 4" class="item">内容 4</van-tab>
+      </van-tabs>
+      <view></view> -->
+          <view
+            class="item"
+            :class="{ on: type === 0 }"
+            @click="changeType(0)"
+          >
+            <view>待付款</view>
+            <view class="num">{{ orderData.unpaidCount || 0 }}</view>
+          </view>
+          <view
+            class="item"
+            :class="{ on: type === 1 }"
+            @click="changeType(1)"
+          >
+            <view>待发货</view>
+            <view class="num">{{ orderData.unshippedCount || 0 }}</view>
+          </view>
+          <view
+            class="item"
+            :class="{ on: type === 2 }"
+            @click="changeType(2)"
+          >
+            <view>待收货</view>
+            <view class="num">{{ orderData.receivedCount || 0 }}</view>
+          </view>
+          <view
+            class="item"
+            :class="{ on: type === 3 }"
+            @click="changeType(3)"
+          >
+            <view>待评价</view>
+            <view class="num">{{ orderData.evaluatedCount || 0 }}</view>
+          </view>
+          <view
+            class="item"
+            :class="{ on: type === 4 }"
+            @click="changeType(4)"
+          >
+            <view>已完成</view>
+            <view class="num">{{ orderData.completeCount || 0 }}</view>
+          </view>
+        </view>
+        <view class="list margin-top-sm">
+          <view v-for="(order,orderListIndex) in orderList" :key="orderListIndex" class="order-wrap bg-white margin-bottom-sm">
+            <view class="title acea-row row-between-wrapper">
+              <view class="flex flex-wraprow-middle padding-sm">
+                <text
+                  v-if="order.combinationId > 0"
+                  class="sign cart-color acea-row row-center-wrapper"
+                >拼团</text>
+                <text v-if="order.seckillId > 0" class="sign cart-color acea-row row-center-wrapper">秒杀</text>
+                <text v-if="order.bargainId > 0" class="sign cart-color acea-row row-center-wrapper">砍价</text>
+                <text class="margin-left-sm">{{ order.addTime|dateFormat }}</text>
+              </view>
+              <view class="font-color-red">{{ getStatus(order) }}</view>
+            </view>
+            <view
+              class="padding-sm"
+              @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+            >
+              <view
+                v-for="(cart,cartInfoIndex) in order.cartInfo"
+                :key="cartInfoIndex"
+                class="item flex flex-wrap row-between row-top"
+              >
+                <view class="pictrue">
+                  <image
+                    v-if="cart.combinationId === 0 && cart.bargainId === 0 &&cart.seckillId === 0"
+                    :src="cart.productInfo.image"
+                    @click.stop="
+                      $router.push({ path: '/pages/shop/GoodsCon/main',query:{id:cart.productInfo.id} })
+                    "
+                  />
+                  <image
+                    v-else-if="cart.combinationId > 0"
+                    :src="cart.productInfo.image"
+                    @click.stop="
+                      $router.push({
+                        path: '/pages/activity/GroupDetails/main',query:{id:cart.combinationId}
+                      })
+                    "
+                  />
+                  <image
+                    v-else-if="cart.bargainId > 0"
+                    :src="cart.productInfo.image"
+                    @click.stop="
+                      $router.push({
+                        path: '/pages/activity/DargainDetails/main',query:{id:cart.bargainId}
+                      })
+                    "
+                  />
+                  <image
+                    v-else-if="cart.seckillId > 0"
+                    :src="cart.productInfo.image"
+                    @click.stop="
+                      $router.push({
+                        path: '/pages/activity/SeckillDetails/main',query:{id:cart.seckillId}
+                      })
+                    "
+                  />
+                </view>
+                <view class="content padding-left-sm ">
+                  <view>{{ cart.productInfo.storeName }} </view>
+                  <view class="text-red text-lg margin-top-xs">
+                    ￥{{
+                      cart.productInfo.attrInfo
+                        ? cart.productInfo.attrInfo.price
+                        : cart.productInfo.price
+                    }}
+                  </view>
+                  <view class="totalPrice margin-top-xs">
+                    共{{ order.cartInfo.length || 0 }}件商品，总金额
+                    <text
+                      class="money text-cyan"
+                    >￥{{ order.payPrice }}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+            <view class="bottom acea-row row-right row-middle padding-sm">
+              <template v-if="order._status._type == 0">
+                <view class="cu-btn line-grey round sm" @click="cancelOrder(order)">取消订单</view>
+                <view class="margin-left-sm" />
+                <view
+                  class="cu-btn bg-cyan round sm"
+                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                >立即付款</view>
+              </template>
+              <template v-if="order._status._type == 1 || order._status._type == 9">
+                <view
+                  class="cu-btn bg-cyan round sm"
+                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                >查看详情</view>
+              </template>
+              <template v-if="order._status._type == 2">
+                <view
+                  class="cu-btn line-grey round sm"
+                  @click="
+                    $router.push({ path: '/pages/order/Logistics/main',query:{id:order.orderId}})
+                  "
+                >查看物流</view>
+                <view class="margin-left-sm" />
+                <!-- <view class="cu-btn bg-cyan round sm" @click="takeOrder(order)">确认收货</view> -->
+                <view class="cu-btn bg-cyan round sm" @click="onWriteOff(order)">核销码</view>
+              </template>
+              <template v-if="order._status._type == 3">
+                <!--<view-->
+                <!--class="bnt default"-->
+                <!--@click="-->
+                <!--$router.push({ path: '/pages/order/Logistics/main',query:{id:order.orderId}})-->
+                <!--"-->
+                <!--v-if="order.deliveryType == 'express'"-->
+                <!--&gt;-->
+                <!--查看物流-->
+                <!--</view>-->
+                <view
+                  class="cu-btn bg-cyan round sm"
+                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                >去评价</view>
+              </template>
+              <template v-if="order._status._type === 4">
+                <view
+                  class="cu-btn bg-cyan round sm"
+                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                >查看订单</view>
+              </template>
+            </view>
+          </view>
+        </view>
+        <view v-if="orderList.length === 0 && page > 1" class="noCart">
+          <view class="pictrue">
+            <img :src="images.noOrder">
+          </view>
+        </view>
+        <Loading :loaded="loaded" :loading="loading" />
+        <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" />
+
+        <van-dialog
+          use-slot
+          title="订单核销二维码"
+          :show="show"
+          async-close
+          z-index="50"
+          @confirm="beforeClose"
+        >
+          <view class="qrcode-box">
+            <img v-if="qrcode !== ''" :src="qrcode" class="qrcode" show-menu-by-longpress>
+          </view>
+        </van-dialog>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+<script>
+import { getOrderData, getOrderList, orderQrcode } from '@/api/order'
+// import {
+//   cancelOrderHandle,
+//   payOrderHandle,
+//   takeOrderHandle
+// } from '@/libs/order'
+import Loading from '@/components/loading'
+// import Payment from '@components/Payment'
+// import DataFormat from '@components/DataFormat'
+import { mapGetters } from 'vuex'
+// import { isWeixin, dataFormat } from '@utils'
+import moment from 'moment'
+const STATUS = [
+  '待付款',
+  '待发货',
+  '待收货',
+  '待评价',
+  '已完成',
+  '',
+  '',
+  '',
+  '',
+  '待付款'
+]
+
+export default {
+  components: {
+    Loading
+    // Payment,
+    // DataFormat
+  },
+  filters: {
+    dateFormat(value) {
+      value = +value * 1000
+      return moment(value).format('YYYY/MM/DD HH:mm:ss')
+      // const d = new Date(value)
+      // return (
+      //   d.getFullYear() +
+      //   '/' +
+      //   (d.getMonth() + parseInt(1)) +
+      //   '/' +
+      //   d.getDate()
+      // )
+    }
+  },
+  data() {
+    return {
+      active: 1,
+      offlinePayStatus: 2,
+      orderData: {},
+      type: '',
+      page: 1,
+      limit: 20,
+      loaded: false,
+      loading: false,
+      orderList: [],
+      pay: false,
+      payType: ['yue', 'weixin'],
+      // from: isWeixin() ? 'weixin' : 'weixinh5',
+      show: false,
+      qrcode: '',
+      images: {
+        noOrder: 'https://shop.cdn.dev56.com/assets/images/noOrder.png'
+      }
+    }
+  },
+  computed: mapGetters(['userInfo']),
+  watch: {
+    $route(n) {
+      if (n.name === NAME) {
+        const type = parseInt(this.$route.query.type) || 0
+        this.active = type
+        if (this.type !== type) {
+          this.changeType(type)
+        }
+        this.getOrderData()
+      }
+    },
+    type() {
+
+    }
+  },
+  onLoad(option) {
+    this.type = option.type
+  },
+  onShow() {
+    this.getOrderData()
+    this.getOrderList()
+  },
+  methods: {
+    // dataFormat,
+    setOfflinePayStatus(status) {
+      var that = this
+      that.offlinePayStatus = status
+      if (status === 1) {
+        if (that.payType.indexOf('offline') < 0) {
+          that.payType.push('offline')
+        }
+      }
+    },
+    getOrderData() {
+      const that = this
+      getOrderData().then(res => {
+        this.orderData = res.data
+        that.$forceUpdate()
+      })
+    },
+    takeOrder(order) {
+      takeOrderHandle(order.orderId).finally(() => {
+        this.reload()
+        this.getOrderData()
+      })
+    },
+    reload() {
+      this.changeType(this.type)
+    },
+    changeType(type) {
+      this.type = type
+      this.orderList = []
+      this.page = 1
+      this.loaded = false
+      this.loading = false
+      this.getOrderList()
+    },
+    getOrderList() {
+      if (this.loading || this.loaded) return
+      this.loading = true
+      const that = this
+      const { page, limit, type } = this
+      getOrderList({
+        page,
+        limit,
+        type
+      }).then(res => {
+        this.orderList = this.orderList.concat(res.data)
+        this.page++
+        this.loaded = res.data.length < this.limit
+        this.loading = false
+        that.$forceUpdate()
+      })
+    },
+    getStatus(order) {
+      return STATUS[order._status._type]
+    },
+    cancelOrder(order) {
+      cancelOrderHandle(order.orderId)
+        .then(() => {
+          this.orderList.splice(this.orderList.indexOf(order), 1)
+        })
+        .catch(() => {
+          this.reload()
+        })
+    },
+    paymentTap: function(order) {
+      const that = this
+      if (
+        !(order.combinationId > 0 || order.bargainId > 0 || order.seckillId > 0)
+      ) {
+        that.setOfflinePayStatus(order.offlinePayStatus)
+      }
+      this.pay = true
+      this.toPay = type => {
+        payOrderHandle(order.orderId, type, that.from)
+          .then(() => {
+            const type = parseInt(this.$route.query.type) || 0
+            that.changeType(type)
+            that.getOrderData()
+          })
+          .catch(() => {
+            const type = parseInt(that.$route.query.type) || 0
+            that.changeType(type)
+            that.getOrderData()
+          })
+      }
+    },
+    toPay() {},
+    onWriteOff(order) {
+      const that = this
+      that.qrcode = ''
+      orderQrcode({ id: order.id, orderId: order.orderId }).then(res => {
+        that.qrcode = res.data
+        that.show = true
+      }).catch(error => {
+        that.$dialog.$dialog.message(error.response.data.msg)
+      })
+    },
+    onDialogClose() {
+      this.show = false
+    },
+    beforeClose(event) {
+      if (event.type === 'confirm') {
+        this.show = false
+      } else if (event.type === 'cancel') {
+      }
+    },
+    onChange(event) {
+      wx.showToast({
+        title: `切换到标签 ${event.detail.index + 1}`,
+        icon: 'none'
+      })
+    }
+  },
+  onReachBottom() {
+    !this.loading && this.getOrderList()
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.order-wrap {
+  border-bottom: 1px solid #eee;
+  .pictrue {
+    > image {
+      width: 160upx;
+      height: 160upx;
+      border-radius: 5upx;
+      border: 1px solid #eee;
+    }
+  }
+  .content {
+    width: calc(100% - 160upx);
+  }
+  .bottom {
+     border-top: 1px solid #eee;
+  }
+}
+
+.noCart {
+  margin-top: 0.17rem;
+  padding-top: 0.1rem;
+}
+
+.noCart .pictrue {
+  width: 4rem;
+  height: 3rem;
+  margin: 0.7rem auto 0.5rem auto;
+}
+
+.noCart .pictrue img {
+  width: 100%;
+  height: 100%;
+}
+.qrcode-box {
+ text-align: center;
+}
+.qrcode-box .qrcode{
+  width: 4rem;
+  height: 4rem;
+  padding: 0.5rem;
+  margin: 0.7rem auto 0.5rem auto;
+}
+</style>

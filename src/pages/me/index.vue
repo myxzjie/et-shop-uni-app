@@ -105,7 +105,7 @@
           </view>
         </navigator>
 
-        <navigator class="flex flex-sub flex-direction" url="/pages/user/coupon/UserCoupon/main" hover-class="none">
+        <navigator class="flex flex-sub flex-direction" url="/pages/me/coupon/index" hover-class="none">
           <view class="text-xxl text-green">{{ userInfo.couponCount || 0 }}</view>
           <view class="margin-top-sm">优惠券</view>
         </navigator>
@@ -120,7 +120,7 @@
       </view>
 
       <view class="cu-list grid col-5 no-border">
-        <view class="cu-item" url="/pages/order/MyOrder/main?type=0" hover-class="none">
+        <view class="cu-item" @tap="onOrderPage(0)">
           <view class="cuIcon-pay text-red">
             <view v-if="orderStatusNum.unpaidCount > 0" class="cu-tag badge">
               <block>{{ orderStatusNum.unpaidCount }}</block>
@@ -129,7 +129,7 @@
           <text>待付款</text>
         </view>
 
-        <view class="cu-item" url="/pages/order/MyOrder/main?type=1" hover-class="none">
+        <view class="cu-item" @tap="onOrderPage(1)">
           <view class="cuIcon-send text-red">
             <view v-if="orderStatusNum.unshippedCount > 0" class="cu-tag badge">
               <block>{{ orderStatusNum.unshippedCount }}</block>
@@ -138,7 +138,7 @@
           <text>待发货</text>
         </view>
 
-        <view class="cu-item" url="/pages/order/MyOrder/main?type=2" hover-class="none">
+        <view class="cu-item" @tap="onOrderPage(2)">
           <view class="cuIcon-deliver text-red">
             <view v-if="orderStatusNum.receivedCount > 0" class="cu-tag badge">
               <block>{{ orderStatusNum.receivedCount }}</block>
@@ -147,7 +147,7 @@
           <text>待收货</text>
         </view>
 
-        <view class="cu-item" url="/pages/order/MyOrder/main?type=3" hover-class="none">
+        <view class="cu-item" @tap="onOrderPage(3)">
           <view class="cuIcon-evaluate text-red">
             <view v-if="orderStatusNum.evaluatedCount > 0" class="cu-tag badge">
               <block>{{ orderStatusNum.evaluatedCount }}</block>
@@ -156,7 +156,7 @@
           <text>待评价</text>
         </view>
 
-        <view class="cu-item" url="/pages/order/ReturnList/main" hover-class="none">
+        <view class="cu-item" @tap="onPostSale">
           <view class="cuIcon-friendfavor text-red">
             <view v-if="orderStatusNum.refundCount > 0" class="cu-tag badge">
               <block>{{ orderStatusNum.refundCount }}</block>
@@ -262,6 +262,9 @@ export default {
     that.loadUser()
     that.loadMenuUser()
   },
+  onShow() {
+    debugger
+  },
   methods: {
     changeswitch: function(data) {
       this.switchActive = data
@@ -282,6 +285,16 @@ export default {
     loadUserInfo() {
       getUserInfo().then(res => {
 
+      })
+    },
+    onOrderPage(type) {
+      uni.navigateTo({
+        url: `/pages/me/order/index?type=${type}`
+      })
+    },
+    onPostSale() {
+      uni.navigateTo({
+        url: '/pages/me/order/post-sale'
       })
     },
     goPages: function(index) {

@@ -83,7 +83,7 @@
         <view class="cu-bar bg-white margin-top solid-bottom">
           <view class="action">
             首发新品
-            <text class="hot text-red">NEW~</text>
+            <text class="text-red text-xs">NEW~</text>
           </view>
           <view class="action">
             <navigator class="shadow" url="/pages/shop/mark/index?type=3" hover-class="none">
@@ -116,7 +116,7 @@
           <view class="action">
             <!-- <text class="cuIcon-title text-orange "></text> -->
             热门榜单
-            <text class="hot text-red">HOT~</text>
+            <text class="text-red text-xs">HOT~</text>
           </view>
           <view class="action">
             <navigator class="shadow" url="/pages/shop/mark/index?type=2" hover-class="none">

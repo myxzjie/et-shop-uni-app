@@ -13,9 +13,10 @@ Vue.component('uni-pop', uniPop)
 Vue.use(uView)
 // Vue.use(vant)
 
-Vue.prototype.http = http
+Vue.prototype.$http = http
 Vue.prototype.$store = store
 Vue.prototype.resURL = resURL
+Vue.prototype.$res = resURL
 
 Vue.config.productionTip = false
 

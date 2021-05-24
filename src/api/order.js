@@ -46,7 +46,7 @@ export function createOrder(key, data = {}) {
  * @returns {*}
  */
 export function getOrderData() {
-  return request.get('/order/data')
+  return request({ url: '/order/data' })
 }
 
 /**
@@ -54,7 +54,7 @@ export function getOrderData() {
  * @returns {*}
  */
 export function getOrderList(data) {
-  return request.get('/order/list', data)
+  return request({ url: '/order/list', data })
 }
 
 /**

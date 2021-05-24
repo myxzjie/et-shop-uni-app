@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { getUserInfo } from '@/api/user'
 
 Vue.use(Vuex)
 
@@ -11,7 +12,8 @@ const store = new Vuex.Store({
     openid: null,
     testvuex: false,
     colorIndex: 0,
-    colorList: ['#FF0000', '#00FF00', '#0000FF']
+    colorList: ['#FF0000', '#00FF00', '#0000FF'],
+    userInfo: null
   },
   mutations: {
     setSessionKey(state, sessionKey) {
@@ -36,14 +38,32 @@ const store = new Vuex.Store({
     },
     setColorIndex(state, index) {
       state.colorIndex = index
+    },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   getters: {
     currentColor(state) {
       return state.colorList[state.colorIndex]
-    }
+    },
+    userInfo: state => state.userInfo || {}
   },
   actions: {
+    getUserInfo({ state, commit }, force) {
+      if (state.userInfo !== null && !force) {
+        return Promise.resolve(state.userInfo)
+      } else {
+        return new Promise(resolve => {
+          getUserInfo().then((data) => {
+            commit('setUserInfo', data)
+            resolve(data)
+          }).catch(err => {
+            console.log(err.message)
+          })
+        })
+      }
+    },
     // lazy loading openid
     getUserOpenId: async function({
       commit,
