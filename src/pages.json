@@ -67,6 +67,30 @@
 			"path": "pages/me/coupon/index"
 		},
 		{
+			"path": "pages/me/commission/index"
+		},
+		{
+			"path": "pages/me/integral/index"
+		},
+		{
+			"path": "pages/me/gold/index"
+		},
+		{
+			"path": "pages/me/member/index"
+		},
+		{
+			"path": "pages/me/address/index"
+		},
+		{
+			"path": "pages/me/address/edit"
+		},
+		{
+			"path": "pages/me/card/index"
+		},
+		{
+			"path": "pages/me/bargain/record"
+		},
+		{
 			"path": "pages/collection/index"
 		},
 		{

@@ -7,6 +7,7 @@ import cuCustom from './colorui/components/cu-custom.vue'
 // import TabBar from '@/components/tab-bar'
 import uniPop from '@/components/uni-pop'
 import { resURL } from '@/utils/config'
+import schema from 'async-validator'
 
 Vue.component('uni-pop', uniPop)
 
@@ -17,6 +18,9 @@ Vue.prototype.$http = http
 Vue.prototype.$store = store
 Vue.prototype.resURL = resURL
 Vue.prototype.$res = resURL
+Vue.prototype.$validator = (rule) => {
+  return new schema(rule)
+}
 
 Vue.config.productionTip = false
 

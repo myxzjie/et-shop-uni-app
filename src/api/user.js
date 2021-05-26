@@ -142,21 +142,21 @@ export function wxappAuth(data) {
  * 地址列表
  * */
 export function getAddressList(data) {
-  return request.get('/address/list', data || {})
+  return request({ url: '/address/list', data })
 }
 
 /*
  * 删除地址
  * */
 export function getAddressRemove(id) {
-  return request.post('/address/del', { id: id })
+  return request({ url: '/address/del', method: 'POST', data: { id: id }})
 }
 
 /*
  * 设置默认地址
  * */
 export function getAddressDefaultSet(id) {
-  return request.post('/address/default/set', { id: id })
+  return request({ url: '/address/default/set', method: 'POST', data: { id: id }})
 }
 
 /*
@@ -170,14 +170,14 @@ export function getAddressDefault() {
  * 获取单个地址
  * */
 export function getAddress(id) {
-  return request.get('/address/detail/' + id)
+  return request({ url: `/address/detail/${id}` })
 }
 
 /*
  * 修改 添加地址
  * */
 export function postAddress(data) {
-  return request.post('/address/edit', data)
+  return request({ url: '/address/edit', method: 'POST', data })
 }
 
 /*
@@ -219,14 +219,14 @@ export function postSignIntegral(data) {
  * 推广数据
  * */
 export function getSpreadInfo() {
-  return request.get('/commission')
+  return request({ url: '/commission' })
 }
 
 /*
  * 推广人列表
  * */
 export function getSpreadUser(screen) {
-  return request.post('/spread/people', screen)
+  return request({ url: '/spread/people', screen })
 }
 
 /*
@@ -247,14 +247,14 @@ export function getCommissionInfo(q, types) {
  * 积分记录
  * */
 export function getIntegralList(q) {
-  return request.get('/integral/list', q)
+  return request({ url: '/integral/list', q })
 }
 
 /*
  * 核销金记录
  * */
 export function goldRecord(q) {
-  return request.get('/gold/list', q)
+  return request({ url: '/gold/list', q })
 }
 
 /**
@@ -283,42 +283,42 @@ export function postCashInfo(cash) {
  * 会员中心
  * */
 export function getVipInfo() {
-  return request.get('/user/level/grade')
+  return request({ url: '/user/level/grade' })
 }
 
 /*
  * 会员等级任务
  * */
 export function getVipTask(id) {
-  return request.get('/user/level/task/' + id)
+  return request({ url: `/user/level/task/${id}` })
 }
 
 /*
  * 资金统计
  * */
 export function getBalance() {
-  return request.get('/user/balance')
+  return request({ url: '/user/balance' })
 }
 
 /*
  * 活动状态
  * */
 export function getActivityStatus() {
-  return request.get('/user/activity', {}, { login: false })
+  return request({ url: '/user/activity' })
 }
 
 /*
  * 活动状态
  * */
 export function getSpreadImg() {
-  return request.get('/poster/rebate')
+  return request({ url: '/poster/rebate' })
 }
 
 /*
  * 用户修改信息
  * */
 export function postUserEdit(data) {
-  return request.post('/user/edit', data)
+  return request({ url: '/user/edit', method: 'post', data })
 }
 
 /*
@@ -379,5 +379,5 @@ export function getBrokerageRank(q) {
  * 检测会员等级
  */
 export function setDetection() {
-  return request.get('user/level/detection')
+  return request({ url: '/user/level/detection' })
 }

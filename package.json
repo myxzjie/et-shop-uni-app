@@ -59,6 +59,7 @@
     "@dcloudio/uni-stat": "^2.0.0-28920200907001",
     "@vant/weapp": "^1.5.2",
     "@vue/shared": "^3.0.0-rc.4",
+    "async-validator": "^3.5.2",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
     "regenerator-runtime": "^0.12.1",

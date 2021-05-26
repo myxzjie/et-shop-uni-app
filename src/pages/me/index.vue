@@ -82,14 +82,14 @@
             我的余额
           </view>
         </navigator>
-        <navigator v-if="userInfo.isPromoter === 1 || userInfo.statu === 2" class="flex flex-sub flex-direction solid-right" url="/pages/user/promotion/UserPromotion/main" hover-class="none">
+        <navigator v-if="userInfo.isPromoter === 1 || userInfo.statu === 2" class="flex flex-sub flex-direction solid-right" url="/pages/me/commission/index" hover-class="none">
           <view class="text-xxl text-blue">{{ userInfo.brokeragePrice || 0 }}</view>
           <view class="margin-top-sm">
             <!-- <text class="cuIcon-favorfill" />  -->
             当前佣金
           </view>
         </navigator>
-        <navigator class="flex flex-sub flex-direction" url="/pages/user/signIn/Integral/main" hover-class="none">
+        <navigator class="flex flex-sub flex-direction solid-right" url="/pages/me/integral/index" hover-class="none">
           <view class="text-xxl text-green">{{ userInfo.integral || 0 }}</view>
           <view class="margin-top-sm">
             <!-- <text class="cuIcon-fork" />  -->
@@ -97,7 +97,7 @@
           </view>
         </navigator>
 
-        <navigator class="flex flex-sub flex-direction" url="/pages/user/gold/gold-record/main" hover-class="none">
+        <navigator class="flex flex-sub flex-direction solid-right" url="/pages/me/gold/index" hover-class="none">
           <view class="text-xxl text-green">{{ userInfo.gold || 0 }}</view>
           <view class="margin-top-sm">
             <!-- <text class="cuIcon-fork" />  -->
@@ -171,17 +171,19 @@
       </view>
 
       <view class="service cu-list grid col-4 no-border">
-        <view v-for="(item, index) in MyMenus" :key="index" class="cu-item">
-          <!-- <view class="cuIcon-cardboardfill text-red">
+        <block v-for="(item, index) in MyMenus" :key="index">
+          <view class="cu-item" @tap="onServicePage(item)">
+            <!-- <view class="cuIcon-cardboardfill text-red">
             <view class="cu-tag badge">
               <block>99</block>
             </view>
           </view> -->
-          <view class="pictrue">
-            <image :src="item.pic" mode="widthFix" />
+            <view class="pictrue">
+              <image :src="item.pic" mode="widthFix" />
+            </view>
+            <text>{{ item.name }}</text>
           </view>
-          <text>{{ item.name }}</text>
-        </view>
+        </block>
       </view>
 
       <view class="margin-top text-center">
@@ -297,6 +299,11 @@ export default {
         url: '/pages/me/order/post-sale'
       })
     },
+    onServicePage(item) {
+      uni.navigateTo({
+        url: item.wxapp_url
+      })
+    },
     goPages: function(index) {
       const url = this.MyMenus[index].wxapp_url
       // console.log('user:'+this.userInfo.statu)
@@ -378,8 +385,8 @@ export default {
   .cu-item {
     .pictrue {
       > image {
-        width: 100upx;
-        height: 100upx;
+        width: 48upx;
+        height: 48upx;
       }
     }
   }

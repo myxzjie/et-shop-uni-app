@@ -142,12 +142,12 @@ export function getBargainPoster(data) {
  * @param {*} data
  */
 export function getBargainUserList(data) {
-  return request.get('/bargain/user/list', data)
+  return request({url:'/bargain/user/list', data})
 }
 
 /**
  * 砍价取消
  */
 export function getBargainUserCancel(data) {
-  return request.post('/bargain/user/cancel', data)
+  return request({url:'/bargain/user/cancel', method: 'POST', data})
 }
