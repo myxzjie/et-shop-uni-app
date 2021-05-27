@@ -7,6 +7,12 @@
 如果觉得对你有用，随手点个 🌟 Star 🌟 支持下，这样才有持续下去的动力，谢谢！～
 ```
 
+
+[gitee https://gitee.com/dev56/et-shop-uni-app.git](https://gitee.com/dev56/et-shop-uni-app.git)
+
+[github https://github.com/myxzjie/et-shop-uni-app.git](https://github.com/myxzjie/et-shop-uni-app.git)
+
+
 ### 项目状态
 1. 好酒仓库小程序-持续更新
 > * 有bug、功能点问题，请提issues
