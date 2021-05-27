@@ -4,11 +4,11 @@
     <cate v-else-if="active === 2" />
     <article-view v-else-if="active === 3" />
     <cart v-else-if="active === 4" />
-    <me v-show="active === 5" />
+    <me v-else-if="active === 5" />
 
     <view class="cu-tabbar-height" />
 
-    <tab-bar :list="tabBar" @change="changeTab" />
+    <tab-bar v-show="isVisible" :list="tabBar" @change="changeTab" />
 
   </view>
 </template>
@@ -25,9 +25,10 @@ export default {
   components: { Home, Cate, ArticleView, Cart, Me, TabBar },
   data() {
     return {
-      active: 1,
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
+      active: 1,
+      isVisible: true,
       tabBar: [
         {
           id: 1,
@@ -76,6 +77,11 @@ export default {
   methods: {
     changeTab(id) {
       this.active = id
+      if (this.active === 4) {
+        this.isVisible = false
+      } else {
+        this.isVisible = true
+      }
     }
   }
 }

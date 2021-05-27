@@ -245,9 +245,6 @@ export default {
     useIntegral() {
       this.computedPrice()
     },
-    $route(n) {
-      if (n.name === NAME) this.getCartInfo()
-    },
     shipping_type() {
       this.computedPrice()
     }

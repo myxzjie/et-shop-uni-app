@@ -259,7 +259,6 @@ export default {
   //   this.isWeixin = isWeixin()
   // },
   mounted() {
-  //   this.isWeixin = isWeixin()
     const that = this
     that.loadUser()
     that.loadMenuUser()

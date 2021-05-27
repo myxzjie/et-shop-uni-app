@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <cu-custom :is-back="true" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
       <block slot="backText">返回</block>
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
@@ -201,7 +201,7 @@
           </view>
         </view>
       </view>
-      <view style="height:2.1rem" />
+
       <view v-if="cartList.valid.length > 0" class="footer acea-row row-between-wrapper">
         <!-- <view>
           <view class="select-btn">
@@ -223,8 +223,10 @@
           <view class="bnt cart-color" @click="onCollectAll">收藏</view>
           <view class="bnt" @click="onCartDelete">删除</view>
         </view>
+
       </view>
     </view>
+
   </view>
 </template>
 <script>
@@ -266,9 +268,10 @@ export default {
       this.validList = list.valid
     }
   },
-  onLoad() {
+  mounted() {
     const that = this
     uni.hideTabBar()
+    wx.hideTabBar()
     that.carnum()
     that.countMoney()
     that.loadCartList()

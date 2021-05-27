@@ -74,7 +74,6 @@
         </scroll-view>
       </view>
     </scroll-view>
-    <tab-bar :current="2" />
   </view>
 </template>
 
