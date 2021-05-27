@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <tip-pop :tip="tip" :duration="duration"></tip-pop>
+    <tip-pop :tip="tip" :duration="duration" />
     <home v-if="active === 1" />
     <cate v-else-if="active === 2" />
     <article-view v-else-if="active === 3" />
@@ -30,7 +30,7 @@ export default {
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       tip: '点击「添加小程序」,使用便捷',
-			duration: 3,
+      duration: 3,
       active: 1,
       isVisible: true,
       tabBar: [

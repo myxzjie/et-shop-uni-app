@@ -1,80 +1,90 @@
 <template>
-  <view ref="container" class="productList">
-    <view>
-      <form @submit.prevent="submitForm">
-        <view class="search bg-color-red acea-row row-between-wrapper">
-          <view class="input acea-row row-between-wrapper">
-            <span class="iconfont icon-sousuo" />
-            <input v-model="where.keyword" placeholder="搜索商品信息">
-          </view>
+  <view>
+    <!-- <view class="fixed"> -->
+      <cu-custom :is-back="true" bg-color="bg-shadeTop text-white">
+        <!-- <block slot="backText">返回</block> -->
+        <!-- <block slot="content">{{ BaseName }}</block> -->
+      </cu-custom>
+    <!-- </view> -->
+    <scroll-view scroll-y class="scrollPage">
+      <view class="productList">
+        <view>
+          <form @submit.prevent="submitForm">
+            <view class="search bg-color-red acea-row row-between-wrapper">
+              <view class="input acea-row row-between-wrapper">
+                <span class="iconfont icon-sousuo" />
+                <input v-model="where.keyword" placeholder="搜索商品信息">
+              </view>
+              <view
+                class="iconfont"
+                :class="Switch === true ? 'icon-pailie' : 'icon-tupianpailie'"
+                @click="switchTap"
+              />
+            </view>
+          </form>
+        </view>
+        <view class="nav acea-row row-middle">
           <view
-            class="iconfont"
-            :class="Switch === true ? 'icon-pailie' : 'icon-tupianpailie'"
-            @click="switchTap"
-          />
-        </view>
-      </form>
-    </view>
-    <view class="nav acea-row row-middle">
-      <view
-        class="item"
-        :class="title ? 'font-color-red' : ''"
-        @click="onScreenQuery(0)"
-      >{{ title ? title : "默认" }}</view>
-      <view class="item" @click="onScreenQuery(1)">
-        价格
-        <image v-if="price === 0" :src="images.horn" />
-        <image v-if="price === 1" :src="images.up" />
-        <image v-if="price === 2" :src="images.down" />
-      </view>
-      <view class="item" @click="onScreenQuery(2)">
-        销量
-        <image v-if="stock === 0" :src="images.horn" />
-        <image v-if="stock === 1" :src="images.up" />
-        <image v-if="stock === 2" :src="images.down" />
-      </view>
-      <!-- down -->
-      <view class="item" :class="nows ? 'font-color-red' : ''" @click="onScreenQuery(3)">新品</view>
-    </view>
-    <view
-      ref="container"
-      class="list acea-row row-between-wrapper"
-      :class="Switch === true ? '' : 'on'"
-    >
-      <view
-        v-for="(item, productListIndex) in productList"
-        :key="productListIndex"
-        class="item"
-        :class="Switch === true ? '' : 'on'"
-        :title="item.storeName"
-        @click="onShopDetails(item)"
-      >
-        <view class="pictrue" :class="Switch === true ? '' : 'on'">
-          <image :src="item.image" :class="Switch === true ? '' : 'on'" /></view>
-        <view class="text" :class="Switch === true ? '' : 'on'">
-          <view class="name line1">{{ item.storeName }}</view>
-          <view class="money font-color-red" :class="Switch === true ? '' : 'on'">
-            ￥
-            <span class="num">{{ item.price }}</span>
+            class="item"
+            :class="title ? 'font-color-red' : ''"
+            @click="onScreenQuery(0)"
+          >{{ title ? title : "默认" }}</view>
+          <view class="item" @click="onScreenQuery(1)">
+            价格
+            <image v-if="price === 0" :src="images.horn" />
+            <image v-if="price === 1" :src="images.up" />
+            <image v-if="price === 2" :src="images.down" />
           </view>
-          <view class="vip acea-row row-between-wrapper" :class="Switch === true ? '' : 'on'">
-            <view class="vip-money">￥{{ item.otPrice }}</view>
-            <view>已售{{ item.sales }}件</view>
+          <view class="item" @click="onScreenQuery(2)">
+            销量
+            <image v-if="stock === 0" :src="images.horn" />
+            <image v-if="stock === 1" :src="images.up" />
+            <image v-if="stock === 2" :src="images.down" />
+          </view>
+          <!-- down -->
+          <view class="item" :class="nows ? 'font-color-red' : ''" @click="onScreenQuery(3)">新品</view>
+        </view>
+        <view
+          ref="container"
+          class="list acea-row row-between-wrapper"
+          :class="Switch === true ? '' : 'on'"
+        >
+          <view
+            v-for="(item, productListIndex) in productList"
+            :key="productListIndex"
+            class="item"
+            :class="Switch === true ? '' : 'on'"
+            :title="item.storeName"
+            @click="onShopDetails(item)"
+          >
+            <view class="pictrue" :class="Switch === true ? '' : 'on'">
+              <image :src="item.image" :class="Switch === true ? '' : 'on'" /></view>
+            <view class="text" :class="Switch === true ? '' : 'on'">
+              <view class="name line1">{{ item.storeName }}</view>
+              <view class="money font-color-red" :class="Switch === true ? '' : 'on'">
+                ￥
+                <span class="num">{{ item.price }}</span>
+              </view>
+              <view class="vip acea-row row-between-wrapper" :class="Switch === true ? '' : 'on'">
+                <view class="vip-money">￥{{ item.otPrice }}</view>
+                <view>已售{{ item.sales }}件</view>
+              </view>
+            </view>
           </view>
         </view>
+        <Loading :loaded="loaded" :loading="loading" />
+        <view
+          v-if="productList.length === 0 && where.page > 1"
+          class="noCommodity"
+          style="background-color: #fff;"
+        >
+          <view class="noPictrue">
+            <img :src="images.noGood" class="image">
+          </view>
+        </view>
+        <product-recommend v-if="productList.length === 0 && where.page > 1" />
       </view>
-    </view>
-    <Loading :loaded="loaded" :loading="loading" />
-    <view
-      v-if="productList.length === 0 && where.page > 1"
-      class="noCommodity"
-      style="background-color: #fff;"
-    >
-      <view class="noPictrue">
-        <img :src="images.noGood" class="image">
-      </view>
-    </view>
-    <product-recommend v-if="productList.length === 0 && where.page > 1" />
+    </scroll-view>
   </view>
 </template>
 <script>
