@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom :is-back="isBack" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom :is-back="isBack" bg-color="bg-gradual-olive">
       <view v-if="isBack" slot="backText">返回</view>
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>

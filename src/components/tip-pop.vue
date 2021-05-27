@@ -14,7 +14,7 @@
 		data(){
 			return {
         CustomBar: this.CustomBar,
-				showTip:false,
+				showTip: false,
 			}
 		},
 		mounted() {

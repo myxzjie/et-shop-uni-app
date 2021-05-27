@@ -62,9 +62,9 @@ npm run build:mp-weixin
 
 ### 部分截图
 
-![首页](./docs/images/a6l-home.png '首页')
+![首页](docs/images/a6l-home.png '首页')
 
-![个人中心](./docs/images/a6l-me.png '个人中心')
+![个人中心](docs/images/a6l-me.png '个人中心')
 
 
 ### 项目信息
@@ -74,14 +74,12 @@ npm run build:mp-weixin
 3.  WX: myxzjie
 
 
-
-### 其他说明
-> *  
-
-
 ### 交流群
 2.  QQ群: 203498970
 
+
+### 其他说明
+> *  
 
 ### 赞助作者
 > *  打赏就点点🌟 Star 🌟 关注更新，支持下作者就可以了
