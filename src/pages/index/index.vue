@@ -1,5 +1,6 @@
 <template>
   <view class="container">
+    <tip-pop :tip="tip" :duration="duration"></tip-pop>
     <home v-if="active === 1" />
     <cate v-else-if="active === 2" />
     <article-view v-else-if="active === 3" />
@@ -20,13 +21,16 @@ import ArticleView from '@/pages/article/index'
 import Cart from '@/pages/cart/index'
 import Me from '@/pages/me/index'
 import TabBar from '@/components/tab-bar/index'
+import TipPop from '@/components/tip-pop'
 
 export default {
-  components: { Home, Cate, ArticleView, Cart, Me, TabBar },
+  components: { Home, Cate, ArticleView, Cart, Me, TabBar, TipPop },
   data() {
     return {
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
+      tip: '点击「添加小程序」,使用便捷',
+			duration: 3,
       active: 1,
       isVisible: true,
       tabBar: [
