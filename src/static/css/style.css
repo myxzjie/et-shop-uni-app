@@ -1646,10 +1646,10 @@ page {
   width: 100%;
   height: 2.5rem;
   padding-left: 0.5rem;
-  position: fixed;
+  /* position: fixed;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 5; */
 }
 
 .productList .search .input {
@@ -1687,15 +1687,15 @@ page {
 }
 
 .productList .nav {
-  height: 2.3rem;
+  /* height: 2.3rem; */
   color: #454545;
-  position: fixed;
-  left: 0;
+  /* position: fixed; */
+  /* left: 0; */
   width: 100%;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
   background-color: #fff;
-  top: 2.5rem;
-  z-index: 5;
+  /* top: 2.5rem; */
+  /* z-index: 5; */
 }
 
 .productList .nav .item {
@@ -1714,8 +1714,8 @@ page {
 }
 
 .productList .list {
-  padding: 0 0.5rem;
-  margin-top: 5rem;
+  /* padding: 0 0.5rem; */
+  /* margin-top: 5rem; */
 }
 
 .productList .list.on {

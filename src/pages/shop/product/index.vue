@@ -1,29 +1,26 @@
 <template>
   <view>
-    <!-- <view class="fixed"> -->
-      <cu-custom :is-back="true" bg-color="bg-shadeTop text-white">
-        <!-- <block slot="backText">返回</block> -->
-        <!-- <block slot="content">{{ BaseName }}</block> -->
-      </cu-custom>
-    <!-- </view> -->
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
+      <block slot="backText">返回</block>
+      <view slot="content">{{ BaseName }}</view>
+    </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view class="productList">
-        <view>
+      <view class="cu-bar search">
+        <view class="search-form round">
+          <text class="cuIcon-search" />
           <form @submit.prevent="submitForm">
-            <view class="search bg-color-red acea-row row-between-wrapper">
-              <view class="input acea-row row-between-wrapper">
-                <span class="iconfont icon-sousuo" />
-                <input v-model="where.keyword" placeholder="搜索商品信息">
-              </view>
-              <view
-                class="iconfont"
-                :class="Switch === true ? 'icon-pailie' : 'icon-tupianpailie'"
-                @click="switchTap"
-              />
-            </view>
+            <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品">
           </form>
         </view>
-        <view class="nav acea-row row-middle">
+        <view class="action text-cyan">
+          <text v-if="Switch" class="cuIcon-cascades" @tap="switchTap" />
+          <text v-else class="cuIcon-list" @tap="switchTap" />
+        </view>
+      </view>
+
+      <view class="productList">
+
+        <view class="nav acea-row row-middle padding solid">
           <view
             class="item"
             :class="title ? 'font-color-red' : ''"
@@ -31,47 +28,51 @@
           >{{ title ? title : "默认" }}</view>
           <view class="item" @click="onScreenQuery(1)">
             价格
-            <image v-if="price === 0" :src="images.horn" />
-            <image v-if="price === 1" :src="images.up" />
-            <image v-if="price === 2" :src="images.down" />
+            <!-- <view class="flex flex-wrap align-center">
+              <view>价格</view>
+              <view>
+            <view v-if="price === 1 || price === 0" class="cuIcon-triangleupfill"></view>
+            <view v-if="price === 2 || price === 0" class="cuIcon-triangledownfill"></view>
+            </view>
+            </view> -->
+            <!-- <image v-if="price === 0" :src="images.horn" /> -->
+            <!-- <image v-if="price === 1" :src="images.up" /> -->
+            <!-- <image v-if="price === 2" :src="images.down" /> -->
           </view>
           <view class="item" @click="onScreenQuery(2)">
             销量
-            <image v-if="stock === 0" :src="images.horn" />
+            <!-- <image v-if="stock === 0" :src="images.horn" />
             <image v-if="stock === 1" :src="images.up" />
-            <image v-if="stock === 2" :src="images.down" />
+            <image v-if="stock === 2" :src="images.down" /> -->
           </view>
           <!-- down -->
           <view class="item" :class="nows ? 'font-color-red' : ''" @click="onScreenQuery(3)">新品</view>
         </view>
-        <view
-          ref="container"
-          class="list acea-row row-between-wrapper"
-          :class="Switch === true ? '' : 'on'"
-        >
-          <view
-            v-for="(item, productListIndex) in productList"
-            :key="productListIndex"
-            class="item"
-            :class="Switch === true ? '' : 'on'"
-            :title="item.storeName"
-            @click="onShopDetails(item)"
-          >
-            <view class="pictrue" :class="Switch === true ? '' : 'on'">
-              <image :src="item.image" :class="Switch === true ? '' : 'on'" /></view>
-            <view class="text" :class="Switch === true ? '' : 'on'">
-              <view class="name line1">{{ item.storeName }}</view>
-              <view class="money font-color-red" :class="Switch === true ? '' : 'on'">
-                ￥
-                <span class="num">{{ item.price }}</span>
+
+        <view class="padding-sm">
+          <view class="cu-list grid no-border" :class="Switch === true ? 'col-2' : 'col-1'">
+            <view v-for="(item, index) in productList" :key="index" class="cu-item" @tap="onShopDetails">
+              <view class="solid" :class="Switch === true ? '':'flex flex-wrap row-between'">
+                <view class="pictrue padding-xs">
+                  <image :src="item.image" />
+                </view>
+                <view class="content padding-xs">
+                  <view class="name ellipsis-line">{{ item.storeName }}</view>
+                  <view class="price">
+                    <text class="num">￥{{ item.price }}</text>
+                  </view>
+                  <view class="sales text-grey flex flex-wrap row-between">
+                    <view class="text-decoration">￥{{ item.otPrice }}</view>
+                    <view>已售{{ item.sales }}件</view>
+                  </view>
+                </view>
               </view>
-              <view class="vip acea-row row-between-wrapper" :class="Switch === true ? '' : 'on'">
-                <view class="vip-money">￥{{ item.otPrice }}</view>
-                <view>已售{{ item.sales }}件</view>
-              </view>
+
             </view>
+
           </view>
         </view>
+
         <Loading :loaded="loaded" :loading="loading" />
         <view
           v-if="productList.length === 0 && where.page > 1"
@@ -136,7 +137,6 @@ export default {
     that.loadProductList()
   },
   onReachBottom() {
-    debugger
     !this.loading && this.loadProductList()
   },
   methods: {
@@ -235,7 +235,84 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.cu-bar {
+  .search-form {
+    background-color: var(--white);
+  }
+}
+
+.cu-list {
+  .cu-item {
+    .price {
+      text-align: left;
+      text {
+        color: var(--red) !important;
+        font-size: 32upx;
+      }
+    }
+  }
+  &.col-1 {
+    .cu-item {
+      display: block;
+      flex-direction: initial;
+      border-bottom: 1upx solid #eee;
+      .solid::after {
+        border: 0 solid transparent;
+      }
+      .pictrue {
+        width: 160upx;
+        height: 160upx;
+        padding: 0;
+        overflow: hidden;
+        > image {
+          width: 160upx;
+          height: 160upx;
+          border-radius: 5upx;
+          border: 1upx solid #eee;
+        }
+      }
+      .content {
+        width: calc(100% - 160upx);
+        .name {
+          margin-top: 10upx;
+          text-align: left;
+        }
+        .sales {
+          margin-top: 10upx;
+        }
+      }
+
+    }
+  }
+  &.col-2 {
+    .cu-item {
+      // border: 1upx solid #eee;
+      padding: 20upx;
+      .pictrue {
+        > image {
+          width: 100%;
+          height: 340upx;
+          border-radius: 5upx;
+        }
+      }
+      .content {
+        .price {
+          text {
+            color: var(--red) !important;
+            font-size: 28upx;
+          }
+        }
+        .name {
+          font-size: 24upx;
+        }
+        .sales {
+          font-size: 24upx;
+        }
+      }
+    }
+  }
+}
 .noCommodity {
   border-top: 3px solid #f5f5f5;
   padding-bottom: 1px;
