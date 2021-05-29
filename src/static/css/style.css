@@ -1713,10 +1713,6 @@ page {
   margin-left: 0.1rem;
 }
 
-.productList .list {
-  /* padding: 0 0.5rem; */
-  /* margin-top: 5rem; */
-}
 
 .productList .list.on {
   background-color: #fff;
@@ -2726,10 +2722,6 @@ page {
 }
 
 /*地址管理*/
-.address-management .line {
-  /* width: 100%; */
-  /* height: 30rpx; */
-}
 
 .address-management .line img {
   width: 100%;
@@ -2893,15 +2885,6 @@ page {
 }
 
 /*我的订单*/
-.my-order .header {
-  /* height: 2.6rem; */
-  /* padding: 0 0.3rem; */
-}
-
-.my-order .header .picTxt {
-  /* height: 1.9rem; */
-}
-
 .my-order .header .picTxt .text {
   color: rgba(255, 255, 255, 0.8);
   /* font-size: 0.26rem; */
@@ -2949,15 +2932,8 @@ page {
   margin-top: 0.1rem;
 }
 
-.my-order .list {
-  /* width: 6.9rem; */
-  /* margin: 0.14rem auto 0 auto; */
-}
-
 .my-order .list .item {
   background-color: #fff;
-  /* border-radius: 0.06rem; */
-  /* margin-bottom: 0.14rem; */
 }
 
 .my-order .list .item .title {
@@ -2973,16 +2949,6 @@ page {
   padding: 0 0.07rem;
   /* height: 0.36rem; */
   margin-right: 0.15rem;
-}
-
-.my-order .list .item .item-info {
-  /* padding: 0 0.3rem; */
-  /* margin-top: 0.22rem; */
-}
-
-.my-order .list .item .item-info .pictrue {
-  /* width: 1.2rem; */
-  /* height: 1.2rem; */
 }
 
 .my-order .list .item .item-info .pictrue img {
@@ -3019,11 +2985,6 @@ page {
 .my-order .list .item .totalPrice .money {
   /* font-size: 0.28rem; */
   font-weight: bold;
-}
-
-.my-order .list .item .bottom {
-  /* height: 1.07rem; */
-  /* padding: 0 0.3rem; */
 }
 
 .my-order .list .item .bottom .bnt {
@@ -3724,20 +3685,6 @@ page {
   vertical-align: -0.04rem;
 }
 
-.member-center .wrapper {
-  /* background-color: #fff; */
-  /* padding-bottom: 0.16rem; */
-  /* margin-bottom: 0.2rem; */
-}
-
-.member-center .wrapper .title {
-  /* height: 0.98rem; */
-  /* padding: 0 0.3rem; */
-  /* font-size: 0.3rem; */
-  /* font-weight: bold; */
-  /* color: #282828; */
-}
-
 .member-center .wrapper .title .iconfont {
   color: #73CBB6;
   font-weight: normal;
@@ -3755,62 +3702,11 @@ page {
   color: #73CBB6;
 }
 
-.member-center .wrapper .list .item {
-  /* width: 6.9rem; */
-  /* height: 1.84rem; */
-  /* background-color: #f9f9f9; */
-  /* margin: 0 auto 0.2rem auto; */
-  /* padding: 0.27rem 0 0.22rem 0; */
-  /* border-radius: 0.12rem; */
-}
-
-.member-center .wrapper .list .item .top {
-  /* padding-right: 0.27rem; */
-  /* font-size: 0.26rem; */
-  /* color: #999; */
-}
-
-.member-center .wrapper .list .item .top .name {
-  /* border-left: 5upx solid #73CBB6; */
-  /* padding-left: 0.2rem; */
-  /* font-size: 0.28rem; */
-  /* color: #282828; */
-  /* font-weight: bold; */
-}
-
 .member-center .wrapper .list .item .top .name .iconfont {
   color: #999;
   /* font-size: 0.3rem; */
   vertical-align: -0.02rem;
   margin-left: 0.1rem;
-}
-
-.member-center .wrapper .list .item .cu-progress {
-  /* overflow: hidden;
-  height: 0.12rem;
-  background-color: #eee;
-  width: 6.36rem;
-  border-radius: 0.2rem;
-  margin: 0.35rem auto 0 auto; */
-}
-
-.member-center .wrapper .list .item .cu-progress .bg-red {
-  /* width: 0;
-  height: 100%;
-  transition: width 0.6s ease;
-  background-color: #73CBB6;
-  border-radius: 0.2rem; */
-}
-
-.member-center .wrapper .list .item .experience {
-  /* margin-top: 0.17rem; */
-  /* padding: 0 0.27rem; */
-  /* font-size: 0.24rem; */
-  /* color: #999; */
-}
-
-.member-center .wrapper .list .item .experience .num {
-  /* color: #73CBB6; */
 }
 
 .member-center .growthValue {
@@ -3862,34 +3758,6 @@ page {
   transform: translateX(-50%);
 }
 
-/*积分详情*/
-.integral-details .header {
-  /* background-image: url('https://shop.cdn.dev56.com/assets/images/integralbg.jpg'); */
-  /* background-repeat: no-repeat; */
-  /* background-size: 100% 100%; */
-  /* width: 100%; */
-  /* height: 3.6rem; */
-  /* font-size: 0.72rem; */
-  /* color: #fff; */
-  /* padding: 0.31rem 0 0.45rem 0; */
-  /* text-align: center; */
-  /* font-family: 'GuildfordProBook 5'; */
-}
-
-.integral-details .header .currentScore {
-  /* font-size: 0.26rem; */
-  /* color: rgba(255, 255, 255, 0.8); */
-  /* text-align: center; */
-  /* margin-bottom: 0.05rem; */
-}
-
-.integral-details .header .line {
-  /* width: 0.6rem; */
-  /* height: 0.03rem; */
-  /* background-color: #fff; */
-  /* margin: 0.2rem auto 0 auto; */
-}
-
 .integral-details .header .nav {
   /* font-size: 0.22rem; */
   /* color: rgba(255, 255, 255, 0.8); */
@@ -3909,24 +3777,6 @@ page {
   /* font-size: 0.4rem; */
 }
 
-.integral-details .wrapper .nav {
-  /* flex: 1; */
-  /* -o-flex: 1; */
-  /* -ms-flex: 1; */
-  /* width: 6.9rem; */
-  /* border-radius: 0.2rem 0.2rem 0 0; */
-  /* margin: -0.96rem auto 0 auto; */
-  /* background-color: #f7f7f7; */
-  /* height: 0.96rem; */
-  /* font-size: 0.3rem; */
-  /* color: #bbb; */
-}
-
-.integral-details .wrapper .nav .item {
-  /* text-align: center; */
-  /* width: 100%; */
-}
-
 /*.integral-details .wrapper .nav .item{text-align:center;width:50%;}*/
 .integral-details .wrapper .nav .item.on {
   background-color: #fff;
@@ -3938,11 +3788,6 @@ page {
 .integral-details .wrapper .nav .item .iconfont {
   font-size: 0.38rem;
   margin-right: 0.1rem;
-}
-
-.integral-details .wrapper .list {
-  /* background-color: #fff; */
-  /* padding: 0.24rem 0.3rem; */
 }
 
 .integral-details .wrapper .list .tip {
@@ -3967,18 +3812,6 @@ page {
   border-bottom: 1px solid #eee;
   /* font-size: 0.24rem; */
   color: #999;
-}
-
-.integral-details .wrapper .list .item .state {
-  /* font-size: 0.28rem; */
-  /* color: #282828; */
-  /* margin-bottom: 0.08rem; */
-}
-
-.integral-details .wrapper .list .item .num {
-  /* font-size: 0.36rem; */
-  /* font-family: 'GuildfordProBook 5'; */
-  /* color: #16ac57; */
 }
 
 .integral-details .wrapper .list2 {
@@ -4170,10 +4003,6 @@ page {
   margin-top: 0.4rem */
 }
 
-.bargain .header.on {
-  /* background-image: url('https://shop.cdn.dev56.com/assets/images/cut2.png'); */
-}
-
 .bargain .header .pictxt {
   margin: 2.6rem auto 0 auto;
   /* font-size: 0.26rem; */
@@ -4236,15 +4065,6 @@ page {
   top:-80upx;
 }
 
-.bargain .wrapper .pictxt {
-  /* margin: 0.26rem 0 0.37rem 0; */
-}
-
-.bargain .wrapper .pictxt .pictrue {
-  /* width: 1.8rem; */
-  /* height: 1.8rem; */
-}
-
 .bargain .wrapper .pictxt .pictrue img {
   width: 100%;
   height: 100%;
@@ -4273,13 +4093,6 @@ page {
   margin-right: 0.15rem;
 }
 
-.bargain .wrapper .cu-progress {
-  /* overflow: hidden;
-  height: 0.12rem;
-  background-color: #eee;
-  width: 100%;
-  border-radius: 0.2rem; */
-}
 
 .bargain .wrapper .cu-progress .bg-red {
   width: 0;
@@ -4336,39 +4149,6 @@ page {
   color: #999;
   text-align: center;
   margin-top: 0.2rem;
-}
-
-/* .bargain .wrapper .lock, */
-/* .bargain .bargainGang .lock, */
-/* .bargain .goodsDetails .lock {
-  background-image: url('https://shop.cdn.dev56.com/assets/images/lock.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 5.48rem;
-  height: 0.66rem;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -0.43rem;
-  z-index: 5;
-} */
-
-.bargain .bargainGang {
-  /* margin: 0.13rem auto 0 auto; */
-}
-
-.bargain .bargainGang .title,
-.bargain .goodsDetails .title {
-  /* font-size: 0.32rem; */
-  /* font-weight: bold; */
-  /* height: 0.8rem; */
-  /* margin-top: 0.3rem; */
-}
-
-.bargain .bargainGang .title .pictrue,
-.bargain .goodsDetails .title .pictrue {
-  /* width: 0.46rem;
-  height: 0.24rem; */
 }
 
 .bargain .bargainGang .title .pictrue.on,
@@ -4436,10 +4216,6 @@ page {
   text-align: center;
   line-height: 0.8rem;
   height: 0.8rem;
-}
-
-.bargain .goodsDetails {
-  /* margin: 0.13rem auto 0 auto; */
 }
 
 .bargain .goodsDetails~.goodsDetails {
@@ -4571,10 +4347,6 @@ page {
   color: #fc4141;
 }
 
-.bargain-record .item .picTxt .text .money {
-  /* font-size: 0.24rem; */
-}
-
 .bargain-record .item .picTxt .text .money .num {
   /* font-size: 0.32rem; */
   font-weight: bold;
@@ -4582,12 +4354,6 @@ page {
 
 .bargain-record .item .picTxt .text .money .symbol {
   font-weight: bold;
-}
-
-.bargain-record .item .bottom {
-  /* height: 1rem; */
-  /* padding: 0 0.3rem; */
-  /* font-size: 0.27rem; */
 }
 
 .bargain-record .item .bottom .purple {
@@ -4612,15 +4378,6 @@ page {
   line-height: 0.6rem;
 }
 
-.bargain-record .item .bottom .bnt.cancel {
-  /* color: #aaa; */
-  /* border: 1px solid #ddd; */
-}
-
-.bargain-record .item .bottom .bnt~.bnt {
-  /* margin-left: 0.18rem; */
-}
-
 /*拼团列表*/
 .group-list .header {
   background-repeat: no-repeat;
@@ -4632,10 +4389,6 @@ page {
 .group-list .header img {
   width: 100%;
   height: 4.5rem;
-}
-
-.group-list .list {
-  /* margin-top: -1.20rem; */
 }
 
 .group-list .list .item {
@@ -6345,11 +6098,6 @@ page {
   margin: -0.32rem auto 0 auto;
 }
 
-.my-promotion .list {
-  /* padding: 0 0.2rem; */
-  /* margin-top: 0.1rem; */
-}
-
 .my-promotion .list .item {
   width: 320rpx;
   height: 280rpx;
@@ -6369,47 +6117,6 @@ page {
 }
 
 /*我的账户*/
-
-/* .my-account .wrapper .header .headerCon .account {
-  padding: 0 0.35rem;
-}
-
-.my-account .wrapper .header .headerCon .account .assets .money {
-  font-size: 0.72rem;
-  color: #fff;
-  font-family: 'GuildfordProBook 5';
-  margin-top: 0.1rem;
-  height: 0.75rem;
-  line-height: 0.75rem;
-}
-
-.my-account .wrapper .header .headerCon .account .recharge {
-  font-size: 0.28rem;
-  width: 1.5rem;
-  height: 0.54rem;
-  border-radius: 0.27rem;
-  background-color: #fff9f8;
-  text-align: center;
-  line-height: 0.54rem;
-}
-
-.my-account .wrapper .header .headerCon .cumulative {
-  margin-top: 0.46rem;
-}
-
-.my-account .wrapper .header .headerCon .cumulative .item {
-  flex: 1;
-  -o-flex: 1;
-  -ms-flex: 1;
-  padding-left: 0.35rem;
-}
-
-.my-account .wrapper .header .headerCon .cumulative .item .money {
-  font-size: 0.48rem;
-  font-family: 'GuildfordProBook 5';
-  color: #fff;
-  margin-top: 0.06rem;
-} */
 
 .my-account .wrapper .nav {
   /* height: 1.55rem; */
@@ -6665,8 +6372,6 @@ page {
   border-radius: 0.03rem;
   color: #fc4141;
 }
-
-.flash-sale .countDown .text {}
 
 .flash-sale .list.on {
   margin-top: 2.02rem;
@@ -8282,5 +7987,3 @@ page {
   text-align: center;
   line-height: 0.9rem;
 }
-
-.swiper-wrapper {}

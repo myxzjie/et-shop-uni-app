@@ -8,7 +8,7 @@
 ```
 
 
-[gitee https://gitee.com/dev56/et-shop-uni-app.git](https://gitee.com/dev56/et-shop-uni-app.git)
+[gitee https://gitee.com/xzjie/et-shop-uni-app.git](https://gitee.com/xzjie/et-shop-uni-app.git)
 
 [github https://github.com/myxzjie/et-shop-uni-app.git](https://github.com/myxzjie/et-shop-uni-app.git)
 
@@ -62,9 +62,11 @@ npm run build:mp-weixin
 
 ### 部分截图
 
-![首页](docs/images/a6l-home.png '首页')
+![首页](docs/images/et-home.png '首页')
 
-![个人中心](docs/images/a6l-me.png '个人中心')
+![购物车](docs/images/et-cart.png '购物车')
+
+![个人中心](docs/images/et-me.png '个人中心')
 
 
 ### 项目信息

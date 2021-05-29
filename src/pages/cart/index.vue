@@ -7,15 +7,15 @@
     <view class="cart">
       <view class="service-policy flex flex-wrap padding-xs">
         <view class="item">
-          <text class="cuIcon-safe padding-right-xs" />
+          <text class="cuIcon-safe padding-right-xs text-green" />
           100%正品保证
         </view>
         <view class="item">
-          <text class="cuIcon-roundcheck padding-right-xs" />
+          <text class="cuIcon-roundcheck padding-right-xs text-green" />
           所有商品精挑细选
         </view>
         <view class="item">
-          <text class="cuIcon-creative padding-right-xs" />
+          <text class="cuIcon-creative padding-right-xs text-green" />
           售后无忧
         </view>
       </view>
@@ -28,7 +28,7 @@
         <product-recommend />
       </view>
 
-      <view v-else>
+      <view v-else class="solid-top solid-bottom">
         <!--  -->
         <view class="flex flex-wrap align-between padding bg-white">
           <view>
@@ -41,30 +41,58 @@
         </view>
       </view>
 
-      <view class="margin-top">
-
+      <view>
         <view class="cart-list cu-list bg-white">
           <view v-for="(item, index) in validList" :key="index" class="cu-item">
-            <!-- -->
             <view class="content align-between flex flex-wrap">
               <view class="padding-left-sm">
-                <checkbox value :checked="item.checked" />
+                <checkbox-group @change="switchSelect(index)">
+                  <checkbox class="round" :class="item.checked?'checked':''" :checked="item.checked" value />
+                </checkbox-group>
               </view>
               <view
                 class="pictrue"
-                @tap="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.productId }})"
+                @tap="onShopDetails(item)"
               >
                 <image v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image" />
                 <image v-else :src="item.productInfo.image" />
               </view>
               <view class="content-info margin-lr-xs">
-                <view class="name padding-xs">{{ item.productInfo.storeName }}</view>
-                <view v-if="item.productInfo.attrInfo">属性：{{ item.productInfo.attrInfo.suk }}</view>
-                <view class="price text-xl text-red padding-tb-xs">￥{{ item.truePrice }}</view>
+                <view class="name text-grey">{{ item.productInfo.storeName }}</view>
+                <view v-if="item.productInfo.attrInfo" class="text-grey padding-top-xs">属性：{{ item.productInfo.attrInfo.suk }}</view>
+                <view class="price text-red padding-top-xs">￥{{ item.truePrice }}</view>
                 <view class="cart-quantity flex flex-wrap ">
-                  <view class="decrease disable">-</view>
-                  <view class="quantity">1</view>
-                  <view class="increase">+</view>
+                  <view class="decrease disable" @tap.prevent="reduce(index)">-</view>
+                  <view class="quantity">{{ item.cartNum }}</view>
+                  <view class="increase" @tap.prevent="plus(index)">+</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!--失效-->
+        <view class="cart-list cu-list bg-white">
+          <view v-for="(item, index) in cartList.invalid" :key="index" class="cu-item">
+            <view class="content align-between flex flex-wrap">
+              <view class="padding-left-sm">
+                <text>已售完</text></text>
+              </view>
+              <view
+                class="pictrue"
+                @tap="onShopDetails(item)"
+              >
+                <image v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image" />
+                <image v-else :src="item.productInfo.image" />
+              </view>
+              <view class="content-info margin-lr-xs">
+                <view class="name text-grey">{{ item.productInfo.storeName }}</view>
+                <view v-if="item.productInfo.attrInfo" class="text-grey padding-top-xs">属性：{{ item.productInfo.attrInfo.suk }}</view>
+                <view class="price text-red padding-top-xs"></view>
+                <view class="cart-quantity flex flex-wrap ">
+                  <view class="cu-btn bg-red sm" @tap="delInvalidGoods">
+                  <text class="cuIcon-delete"></text>删除
+                  </view>
                 </view>
               </view>
             </view>
@@ -72,96 +100,28 @@
         </view>
 
         <view class="cu-bar bg-white tabbar border shop foot">
-          <view class="action" style="width:210upx">
-            <!-- <view class="well-check"> -->
-            <checkbox value :checked="isAllSelect && cartCount > 0" @change="allChecked" />
-            <!-- <text class="checkAll">全选 ({{ cartCount }})</text> -->
-            <!-- </view> -->
-            <!-- <view class="cuIcon-service text-green">
-              <view class="cu-tag badge"></view>
-            </view> -->
-            <text class="margin-lr-xs text-df">全选 ({{ cartCount }})</text>
+          <view class="action checkbox-wrap">
+            <checkbox-group class="checkbox-all" @change="allChecked">
+              <checkbox class="round" :class="isAllSelect && cartCount > 0 ?'checked':''" :checked="isAllSelect && cartCount > 0" value />
+            </checkbox-group>
+            <text class="text margin-lr-xs text-df">全选 ({{ cartCount }})</text>
           </view>
-          <!-- <view class="action text-orange">
-            <view class="cuIcon-favorfill"></view> 已收藏
-          </view> -->
-          <view class="action" style="width:122px">
-            <!-- <view class="cuIcon-cart">
-              <view class="cu-tag badge">99</view>
-            </view>
-            购物车 -->
-            <text class="text-df text-red">￥{{ countmoney }}</text>
+          <view v-if="footerswitch === false" class="action price-wrap">
+            <text class="text-xl text-red">￥{{ countmoney }}</text>
           </view>
-          <view class="bg-red submit">立即订购</view>
+          <view v-else class="bg-orange submit" @tap="onCollectAll">
+            <view class="cuIcon-favorfill"></view>收藏
+          </view>
+          <view v-if="footerswitch === false" class="bg-red submit" @tap="placeOrder">立即订购</view>
+          <view v-else class="bg-red submit" @tap="onCartDelete">
+            <view class="cuIcon-delete"></view>删除
+          </view>
         </view>
       </view>
     </view>
 
-    <view class="shoppingCart">
+    <!-- <view class="shoppingCart">
       <view v-if="validList.length > 0 || cartList.invalid.length > 0">
-        <view class="list">
-          <!-- <view
-            v-for="(item, cartListValidIndex) in validList"
-            :key="cartListValidIndex"
-            class="item acea-row row-between-wrapper"
-          >
-            <view class="select-btn">
-              <view class="checkbox-wrapper">
-                <checkbox-group @change="switchSelect(cartListValidIndex)">
-                  <label class="well-check">
-                    <checkbox value :checked="item.checked" />
-                  </label>
-                </checkbox-group>
-              </view>
-            </view>
-            <view class="picTxt acea-row row-between-wrapper">
-              <view
-                class="pictrue"
-                @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.productId }})"
-              >
-                <image v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image" />
-                <image v-else :src="item.productInfo.image" />
-              </view>
-              <view class="text">
-                <view class="line1">{{ item.productInfo.storeName }}</view>
-                <view
-                  v-if="item.productInfo.attrInfo"
-                  class="infor line1"
-                >属性：{{ item.productInfo.attrInfo.suk }}</view>
-                <view class="money font-color-red">￥{{ item.truePrice }}</view>
-              </view>
-              <view class="carnum acea-row row-center-wrapper">
-                <view
-                  class="reduce"
-                  :class="validList[cartListValidIndex].cartNum <= 1 ? 'on' : ''"
-                  @click.prevent="reduce(cartListValidIndex)"
-                >-</view>
-                <view class="num">{{ item.cartNum }}</view>
-                <view
-                  v-if="validList[cartListValidIndex].attrInfo"
-                  class="plus"
-                  :class="
-                    validList[cartListValidIndex].cartNum >=
-                      validList[cartListValidIndex].attrInfo.stock
-                      ? 'on'
-                      : ''
-                  "
-                  @click.prevent="plus(cartListValidIndex)"
-                >+</view>
-                <view
-                  v-else
-                  class="plus"
-                  :class="
-                    validList[cartListValidIndex].cartNum >= validList[cartListValidIndex].stock
-                      ? 'on'
-                      : ''
-                  "
-                  @click.prevent="plus(cartListValidIndex)"
-                >+</view>
-              </view>
-            </view>
-          </view> -->
-        </view>
         <view v-if="cartList.invalid.length > 0" class="invalidGoods">
           <view class="goodsNav acea-row row-between-wrapper">
             <view @click="goodsOpen">
@@ -202,30 +162,7 @@
         </view>
       </view>
 
-      <view v-if="cartList.valid.length > 0" class="footer acea-row row-between-wrapper">
-        <!-- <view>
-          <view class="select-btn">
-            <view class="checkbox-wrapper">
-              <checkbox-group @change="allChecked">
-                <view class="well-check">
-                  <checkbox value :checked="isAllSelect && cartCount > 0" />
-                  <text class="checkAll">全选 ({{ cartCount }})</text>
-                </view>
-              </checkbox-group>
-            </view>
-          </view>
-        </view> -->
-        <view v-if="footerswitch === false" class="money acea-row row-middle">
-          <text class="font-color-red">￥{{ countmoney }}</text>
-          <view class="placeOrder bg-color-red" @click="placeOrder">立即下单</view>
-        </view>
-        <view v-else class="button acea-row row-middle">
-          <view class="bnt cart-color" @click="onCollectAll">收藏</view>
-          <view class="bnt" @click="onCartDelete">删除</view>
-        </view>
-
-      </view>
-    </view>
+    </view> -->
 
   </view>
 </template>
@@ -270,8 +207,6 @@ export default {
   },
   mounted() {
     const that = this
-    uni.hideTabBar()
-    wx.hideTabBar()
     that.carnum()
     that.countMoney()
     that.loadCartList()
@@ -388,9 +323,8 @@ export default {
           duration: 2000 })
         return
       }
-      this.$router.push({
-        path: '/pages/order/OrderSubmission/main',
-        query: { ids: ids.join(',') }
+      uni.navigateTo({
+        url: '/pages/order/submit/index?ids='+ids.join(',')
       })
     },
     manage: function() {
@@ -480,6 +414,7 @@ export default {
     },
     // 全选
     allChecked(e) {
+      debugger
       const that = this
       const selectAllStatus = !!e.mp.detail.value[0]
       // let selectAllStatus = that.isAllSelect;
@@ -530,6 +465,11 @@ export default {
         }
       }
       that.countmoney = carmoney
+    },
+    onShopDetails(item){
+      uni.navigateTo({
+        url: `/pages/shop/details/index?id=${item.productId}`
+      })
     }
   }
 }
@@ -560,18 +500,24 @@ export default {
       > image {
         width: 150upx;
         height: 150upx;
+        border-radius: 5upx;
+        border: 1upx solid rgba(0, 0, 0, 0.05);
       }
     }
     .cu-item {
       border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
-      padding: 10upx 0;
+      padding: 20upx 0;
       .content-info {
         width: calc(100% - 280upx);
         .name {
           width: 100%;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
           overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
         .cart-quantity {
           position: absolute;
@@ -579,7 +525,7 @@ export default {
           bottom: 20upx;
           .quantity, .decrease, .increase {
             padding: 10upx 20upx;
-            border: 1upx solid #282828;
+            border: 1upx solid #8799a3;
           }
           & .disable {
             border: 1upx solid #dedede;
@@ -594,5 +540,24 @@ export default {
       }
     }
   }
+  .cu-bar {
+    .checkbox-wrap {
+      width:210upx !important;
+      .checkbox-all{
+        display: inline-block;
+        > checkbox {
+          z-index: 5;
+        }
+      }
+      .text {
+        vertical-align: middle;
+      }
+    }
+    .price-wrap{
+      text-align:left;
+      width: 122px !important;
+    }
+  }
+  
 }
 </style>
