@@ -4,25 +4,22 @@ import { weappPay } from '@/libs/wechat'
 
 export function cancelOrderHandle(orderId) {
   return new Promise((resolve, reject) => {
-    wx.showModal({
+    uni.showModal({
       title: '提示',
       content: '确认取消该订单?',
       success(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
-          cancelOrder(orderId)
-            .then(res => {
-              wx.showToast({
-                title: '取消成功', icon: 'success', duration: 2000
-              })
-              resolve(res)
+          cancelOrder(orderId).then(res => {
+            uni.showToast({
+              title: '取消成功', icon: 'success', duration: 2000
             })
-            .catch(err => {
-              wx.showToast({
-                title: '取消失败', icon: 'none', duration: 2000
-              })
-              reject(err)
+            resolve(res)
+          }).catch(err => {
+            uni.showToast({
+              title: '取消失败', icon: 'none', duration: 2000
             })
+            reject(err)
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -33,19 +30,17 @@ export function cancelOrderHandle(orderId) {
 
 export function takeOrderHandle(orderId) {
   return new Promise((resolve, reject) => {
-    takeOrder(orderId)
-      .then(res => {
-        wx.showToast({
-          title: '收货成功', icon: 'success', duration: 2000
-        })
-        resolve(res)
+    takeOrder(orderId).then(res => {
+      uni.showToast({
+        title: '收货成功', icon: 'success', duration: 2000
       })
-      .catch(err => {
-        wx.showToast({
-          title: '收货失败', icon: 'none', duration: 2000
-        })
-        reject(err)
+      resolve(res)
+    }).catch(err => {
+      uni.showToast({
+        title: '收货失败', icon: 'none', duration: 2000
       })
+      reject(err)
+    })
   })
 }
 
@@ -56,13 +51,13 @@ export function delOrderHandle(orderId) {
       opts() {
         delOrder(orderId)
           .then(res => {
-            wx.showToast({
+            uni.showToast({
               title: '删除成功', icon: 'success', duration: 2000
             })
             resolve(res)
           })
           .catch(err => {
-            wx.showToast({
+            uni.showToast({
               title: '删除失败', icon: 'none', duration: 2000
             })
             reject(err)

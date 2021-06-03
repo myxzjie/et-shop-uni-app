@@ -176,11 +176,6 @@ export default {
           width: 60upx
         }
       }
-      .slice {
-        // -webkit-box-align: center;
-        // -webkit-align-items: center;
-        // align-items: center;
-      }
     }
   }
 .wrap-box {

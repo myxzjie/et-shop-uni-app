@@ -17,12 +17,12 @@
             v-if="cart.productInfo.attrInfo"
             class="attribute padding-tb-sm"
           >{{ cart.productInfo.attrInfo.suk }}</view>
-          <view class="price text-xl text-red">￥{{ cart.truePrice }}</view>
+          <view class="price text-xl text-red margin-top-sm">￥{{ cart.truePrice }}</view>
           <view
             v-if="evaluate == 3"
-            class="evaluate"
+            class="evaluate cu-btn line-cyan sm margin-top-sm"
             @click="$router.push({ path: '/pages/shop/GoodsEvaluate/main',query:{id:cart.unique} })"
-          >评价</view>
+          ><text class="cuIcon-comment margin-right-xs"></text>评价</view>
         </view>
       </view>
     </view>

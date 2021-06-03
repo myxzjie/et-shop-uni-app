@@ -1,11 +1,12 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
-      <view slot="content">{{ BaseName }}</view>
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view class="my-order">
-        <view class="header bg-cyan padding">
+        <view class="header padding">
           <view class="picTxt flex flex-wrap align-between">
             <view class="text">
               <view class="name">订单信息</view>
@@ -16,7 +17,7 @@
             </view>
           </view>
         </view>
-        <view class="nav flex flex-wrap row-around padding-tb-sm">
+        <view class="nav flex flex-wrap row-around padding-tb-sm solid">
           <!-- <van-tabs :active="active" @change="onChange">
         <van-tab title="待付款" class="item" >
           <view>待付款</view>
@@ -84,7 +85,7 @@
             </view>
             <view
               class="padding-sm"
-              @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+              @tap="onOrderDetails(order.orderId)"
             >
               <view
                 v-for="(cart,cartInfoIndex) in order.cartInfo"
@@ -152,13 +153,13 @@
                 <view class="margin-left-sm" />
                 <view
                   class="cu-btn bg-cyan round sm"
-                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                  @tap="onOrderDetails(order.orderId)"
                 >立即付款</view>
               </template>
               <template v-if="order._status._type == 1 || order._status._type == 9">
                 <view
                   class="cu-btn bg-cyan round sm"
-                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                  @tap="onOrderDetails(order.orderId)"
                 >查看详情</view>
               </template>
               <template v-if="order._status._type == 2">
@@ -184,13 +185,13 @@
                 <!--</view>-->
                 <view
                   class="cu-btn bg-cyan round sm"
-                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                  @tap="onOrderDetails(order.orderId)"
                 >去评价</view>
               </template>
               <template v-if="order._status._type === 4">
                 <view
                   class="cu-btn bg-cyan round sm"
-                  @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+                  @tap="onOrderDetails(order.orderId)"
                 >查看订单</view>
               </template>
             </view>
@@ -202,7 +203,7 @@
           </view>
         </view>
         <Loading :loaded="loaded" :loading="loading" />
-        <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" />
+        <!-- <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" /> -->
 
         <van-dialog
           use-slot
@@ -397,6 +398,11 @@ export default {
       }
     },
     toPay() {},
+    onOrderDetails(orderId) {
+      uni.navigateTo({
+        url: `/pages/order/details/index?id=${orderId}`
+      })
+    },
     onWriteOff(order) {
       const that = this
       that.qrcode = ''
@@ -471,5 +477,131 @@ export default {
   height: 4rem;
   padding: 0.5rem;
   margin: 0.7rem auto 0.5rem auto;
+}
+
+.my-order .header .picTxt .text {
+  // color: rgba(255, 255, 255, 0.8);
+  /* font-size: 0.26rem; */
+  font-family: 'GuildfordProBook 5';
+}
+
+.my-order .header .picTxt .text .name {
+  /* font-size: 0.34rem; */
+  font-weight: bold;
+  // color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.my-order .header .picTxt .pictrue {
+  width: 1.22rem;
+  height: 1.09rem;
+}
+
+.my-order .header .picTxt .pictrue img {
+  width: 100%;
+  height: 100%;
+}
+
+.my-order .nav {
+  background-color: #fff;
+  /* width: 6.9rem; */
+  /* height: 1.4rem; */
+  border-radius: 0.06rem;
+  margin: 0 auto 0 auto;
+}
+
+.my-order .nav .item {
+  text-align: center;
+  /* font-size: 0.26rem; */
+  color: #282828;
+  padding: 0.29rem 0 0.2rem 0;
+}
+
+.my-order .nav .item.on {
+  font-weight: bold;
+  border-bottom: 0.05rem solid #73CBB6;
+}
+
+.my-order .nav .item .num {
+  margin-top: 0.1rem;
+}
+
+.my-order .list .item {
+  background-color: #fff;
+}
+
+.my-order .list .item .title {
+  /* height: 0.84rem; */
+  padding: 0 0.3rem;
+  border-bottom: 0.01rem solid #eee;
+  /* font-size: 0.28rem; */
+  color: #282828;
+}
+
+.my-order .list .item .title .sign {
+  /* font-size: 0.24rem; */
+  padding: 0 0.07rem;
+  /* height: 0.36rem; */
+  margin-right: 0.15rem;
+}
+
+.my-order .list .item .item-info .pictrue img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.06rem;
+}
+
+.my-order .list .item .item-info .text {
+  width: 4.86rem;
+  /* font-size: 0.28rem; */
+  color: #999;
+  margin-top: 0.06rem;
+}
+
+.my-order .list .item .item-info .text .name {
+  width: 3.06rem;
+  color: #282828;
+}
+
+.my-order .list .item .item-info .text .money {
+  text-align: right;
+}
+
+.my-order .list .item .totalPrice {
+  /* font-size: 0.26rem; */
+  color: #282828;
+  text-align: right;
+  /* margin: 0.27rem 0 0 0.3rem; */
+  /* padding: 0 0.3rem 0.3rem 0; */
+  /* border-bottom: 0.01rem solid #eee; */
+}
+
+.my-order .list .item .totalPrice .money {
+  /* font-size: 0.28rem; */
+  font-weight: bold;
+}
+
+.my-order .list .item .bottom .bnt {
+  width: 1.76rem;
+  height: 0.6rem;
+  text-align: center;
+  line-height: 0.6rem;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 0.27rem;
+}
+
+.my-order .list .item .bottom .bnt.cancelBnt {
+  border: 1px solid #ddd;
+  color: #aaa;
+}
+
+.my-order .list .item .bottom .bnt.default {
+  color: #444;
+  border: 1px solid #444;
+}
+
+.my-order .list .item .bottom .bnt~.bnt {
+  margin-left: 0.17rem;
 }
 </style>

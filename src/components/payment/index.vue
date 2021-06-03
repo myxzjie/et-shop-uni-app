@@ -59,13 +59,13 @@
           >
             <view class="iconfont icon-yuezhifu1"></view>
             <view class="content text-left padding-left-sm">
-              
+
               <view class="text">
                 <view class="name">线下支付</view>
                 <view class="info">选择线下付款方式</view>
               </view>
             </view>
-           
+
           </view> -->
 
         </view>

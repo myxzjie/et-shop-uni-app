@@ -94,7 +94,7 @@ export function postOrderRefund(data) {
  * @returns {*}
  */
 export function takeOrder(uni) {
-  return request.post('/order/take', { uni })
+  return request({ url: '/order/take', method: 'post', data: { uni }})
 }
 
 /**

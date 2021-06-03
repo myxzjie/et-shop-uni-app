@@ -194,24 +194,7 @@
                 @click="$router.push({ path: '/pages/order/GoodsReturn/main',query:{id:orderInfo.orderId } })"
               >申请退款</view>
             </template> -->
-          <template v-if="status.type == 2">
-            <view
-              class="bnt default"
-              @click="
-                $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-              "
-            >查看物流</view>
-            <!-- <view class="bnt bg-color-red" @click="takeOrder">确认收货</view> -->
-            <view class="bnt bg-color-red" @click="onWriteOff">核销码</view>
-          </template>
-          <template v-if="status.type == 3 && orderInfo.deliveryType == 'express'">
-            <view
-              class="bnt default"
-              @click="
-                $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-              "
-            >查看物流</view>
-          </template>
+
           <template v-if="status.type == 4">
             <view class="bnt cancel" @click="delOrder">删除订单</view>
             <view
@@ -237,15 +220,15 @@
     </scroll-view>
 
     <view v-if="!refundOrder && offlineStatus" class="cu-bar bg-white tabbar border shop foot">
-      <template v-if="status.type == 0">
+      <block v-if="status.type == 0">
         <view class="btn-group" />
         <view class="btn-group">
           <button class="cu-btn bg-orange round shadow-blur" @tap="cancelOrder">取消订单</button>
           <button class="cu-btn bg-red round shadow-blur" @tap="onPay">立即付款</button>
         </view>
-      </template>
+      </block>
 
-      <template v-if="status.type == 1">
+      <block v-if="status.type == 1">
         <view class="btn-group" />
         <view class="btn-group">
           <view />
@@ -254,7 +237,42 @@
             @tap="onRefundOrder"
           >申请退款</view>
         </view>
-      </template>
+      </block>
+
+      <block v-if="status.type == 2">
+        <view class="btn-group" />
+        <view class="btn-group">
+          <view
+            class="cu-btn bg-orange round shadow-blur"
+            @tap="
+              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
+            "
+          >查看物流</view>
+          <view class="cu-btn bg-cyan round shadow-blur" @tap="takeOrder">确认收货</view>
+          <!-- <view class="bnt bg-color-red" @click="onWriteOff">核销码</view> -->
+        </view>
+      </block>
+
+      <block v-if="status.type == 3 && orderInfo.deliveryType == 'express'">
+        <view class="btn-group" />
+        <view class="btn-group">
+          <view
+            class="cu-btn bg-orange round shadow-blur"
+            @tap="
+              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
+            "
+          >查看物流</view>
+          <!-- <view
+            v-if="evaluate == 3"
+            class="evaluate"
+            @click="$router.push({ path: '/pages/shop/GoodsEvaluate/main',query:{id:cart.unique} })"
+          >评价</view> -->
+          <view class="cu-btn bg-cyan round shadow-blur" @tap="onEvaluate">
+            <text class="cuIcon-comment margin-right-xs"></text>
+            评价
+          </view>
+        </view>
+      </block>
     </view>
 
     <payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @change="toPay" />
@@ -271,7 +289,7 @@ import Payment from '@/components/payment/index'
 // import { isWeixin, copyClipboard } from '@utils'
 import { mapGetters } from 'vuex'
 import mixins from '@/mixins/index'
-
+import order from '@/mixins/order'
 import {
   cancelOrderHandle,
   takeOrderHandle,
@@ -286,7 +304,7 @@ export default {
     Payment
     // DataFormat
   },
-  mixins: [mixins],
+  mixins: [mixins, order],
   data() {
     return {
       offlinePayStatus: 2,
@@ -391,8 +409,9 @@ export default {
         })
     },
     takeOrder() {
-      takeOrderHandle(this.orderInfo.orderId).finally(() => {
-        this.getDetail()
+      const that = this
+      that.takeOrderHandle(that.orderInfo.orderId).finally(() => {
+        that.getDetail()
       })
     },
     onWriteOff() {
@@ -489,6 +508,9 @@ export default {
     },
     onPay() {
       this.pay = true
+    },
+    onEvaluate(){
+      this.orderInfo.cartInfo.unique
     },
     async toPay(type) {
       const that = this
