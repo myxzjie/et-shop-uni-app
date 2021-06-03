@@ -203,9 +203,10 @@ import orderProduct from '@/components/order-product/index'
 // import CouponListWindow from '@components/CouponListWindow'
 import { postOrderConfirm, postOrderComputed, createOrder } from '@/api/order'
 import AddressPop from '@/components/address/address-pop'
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 // import { weappPay } from '@libs/wechat'
 // import { isWeixin } from '@utils'
+import mixins from '@/mixins/index'
 
 // const _isWeixin = isWeixin()
 export default {
@@ -214,6 +215,7 @@ export default {
     // CouponListWindow,
     AddressPop
   },
+  mixins: [mixins],
   data() {
     return {
       ids: '',
@@ -246,9 +248,10 @@ export default {
       images: {
         line: 'https://shop.cdn.dev56.com/assets/images/line.jpg'
       }
+      // userInfo: {},
     }
   },
-  //   computed: mapGetters(['userInfo']),
+  // computed: mapGetters(['userInfo']),
   watch: {
     useIntegral() {
       this.computedPrice()
@@ -257,8 +260,6 @@ export default {
       this.computedPrice()
     }
   },
-
-  mounted() {},
   onLoad(option) {
     const that = this
     that.ids = option.ids
@@ -269,6 +270,7 @@ export default {
   onShow() {
     const that = this
     that.getCartInfo()
+    // that.getUserInfo()
   },
   methods: {
     addressType: function(index) {
@@ -329,6 +331,7 @@ export default {
     },
     addressTap() {
       const that = this
+      debugger
       that.showAddress = true
       if (!that.addressLoaded) {
         that.addressLoaded = true
@@ -354,7 +357,7 @@ export default {
       this.active = index
     },
     changeAddress(addressInfo) {
-      this.addressInfo = Object.assign({},addressInfo)
+      this.addressInfo = Object.assign({}, addressInfo)
     },
     createOrder() {
       const shipping_type = this.shipping_type

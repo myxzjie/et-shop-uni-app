@@ -2,8 +2,7 @@
   <view>
     <cu-custom
       :is-back="true"
-      bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg"
-      bg-color="bg-gradual-green"
+      bg-color="bg-gradual-olive"
     >
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
@@ -68,13 +67,10 @@
 
 <script>
 import { orderDetail, getRefundReason, postOrderRefund } from '@/api/order'
-// import { trim } from '@utils'
-// import { VUE_APP_API_URL } from '@config'
+import { trim } from '@/utils/index'
 
 export default {
-  components: {
-    // VueCoreImageUpload
-  },
+  components: {},
   data() {
     return {
       url: `/upload/image`,
@@ -88,9 +84,6 @@ export default {
       refund_reason_wap_explain: '',
       refund_reason_wap_img: []
     }
-  },
-  mounted() {
-    // this.id = this.$route.query.id || 0
   },
   onLoad(option) {
     this.id = option.id || 0
@@ -124,7 +117,14 @@ export default {
     submit() {
       const refund_reason_wap_explain = trim(this.refund_reason_wap_explain)
       const text = this.reason
-      if (!text) return this.$dialog.toast({ mes: '请选择退款原因' })
+      if (!text) {
+        uni.showToast({
+          title: '请选择退款原因',
+          icon: 'success',
+          duration: 2000
+        })
+        return
+      }
       postOrderRefund({
         text,
         uni: this.orderInfo.orderId,
@@ -133,7 +133,7 @@ export default {
       })
         .then(res => {
           console.log(res, 2222)
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'success',
             duration: 2000
@@ -143,7 +143,11 @@ export default {
           }, 1500)
         })
         .catch(err => {
-          this.$dialog.error(err.response.data.msg)
+          uni.showToast({
+            title: err.response.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
         })
     }
   }

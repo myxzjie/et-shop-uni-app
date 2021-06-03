@@ -118,7 +118,7 @@ export function express(params) {
  * @returns {*}
  */
 export function payOrder(uni, paytype, from) {
-  return request.post('order/pay', { uni, paytype, from })
+  return request({ url: '/order/pay', method: 'post', data: { uni, paytype, from }})
 }
 /**
  * 订单核销

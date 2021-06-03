@@ -2,15 +2,14 @@
   <view>
     <cu-custom
       :is-back="true"
-      bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg"
-      bg-color="bg-gradual-green"
+      bg-color="bg-gradual-olive"
     >
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
 
     <scroll-view scroll-y class="scrollPage">
-      <view class="padding-sm bg-gradual-green flex flex-wrap align-center" :class="refundOrder ? 'on' : ''">
+      <view class="margin-top-sm padding-sm flex flex-wrap align-center" :class="refundOrder ? 'on' : ''">
         <view class="data" :class="refundOrder ? 'on' : ''">
           <view class="state">{{ orderInfo._status._msg }}</view>
           <view>
@@ -242,7 +241,7 @@
         <view class="btn-group" />
         <view class="btn-group">
           <button class="cu-btn bg-orange round shadow-blur" @tap="cancelOrder">取消订单</button>
-          <button class="cu-btn bg-red round shadow-blur" @tap="pay">立即付款</button>
+          <button class="cu-btn bg-red round shadow-blur" @tap="onPay">立即付款</button>
         </view>
       </template>
 
@@ -258,6 +257,7 @@
       </template>
     </view>
 
+    <payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @change="toPay" />
   </view>
 </template>
 
@@ -265,10 +265,13 @@
 import orderProduct from '@/components/order-product/index'
 // import OrderGoods from '@components/OrderGoods'
 import { orderDetail, orderQrcode } from '@/api/order'
+import Payment from '@/components/payment/index'
 // import Payment from '@components/Payment'
 // import DataFormat from '@components/DataFormat'
 // import { isWeixin, copyClipboard } from '@utils'
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import mixins from '@/mixins/index'
+
 import {
   cancelOrderHandle,
   takeOrderHandle,
@@ -278,11 +281,12 @@ import {
 // import { wechatEvevt } from "@libs/wechat";
 export default {
   components: {
-    orderProduct
+    orderProduct,
     // OrderGoods,
-    // Payment,
+    Payment
     // DataFormat
   },
+  mixins: [mixins],
   data() {
     return {
       offlinePayStatus: 2,
@@ -323,19 +327,15 @@ export default {
       }
     }
   },
-  // computed: {
-  //   refundOrder() {
-  //     return this.orderInfo.refund_status > 0
-  //   },
-  //   ...mapGetters(['userInfo'])
-  // },
+  computed: {
+    refundOrder() {
+      return this.orderInfo.refund_status > 0
+    }
+    // ...mapGetters(['userInfo'])
+  },
   // inject: ['app'],
   onLoad(option) {
     this.id = option.id
-  },
-  mounted() {
-    // this.id = this.$route.query.id
-    // this.getDetail();
   },
   onShow() {
     this.getDetail()
@@ -487,9 +487,12 @@ export default {
           })
         })
     },
+    onPay() {
+      this.pay = true
+    },
     async toPay(type) {
-      var that = this
-      await payOrderHandle(this.orderInfo.orderId, type, that.from)
+      const that = this
+      await payOrderHandle(that.orderInfo.orderId, type, that.from)
       that.getDetail()
     }
   }

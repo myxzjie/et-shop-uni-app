@@ -1,5 +1,9 @@
 import stringify from '@/utils/querystring'
 
+export function trim(value) {
+  return String.prototype.trim.call(value)
+}
+
 export function parseRoute(location) {
   if (typeof location === 'string') return location
 
