@@ -33,9 +33,8 @@ export function redirectTo(params = {}) {
   const options = currentPage.options // 如果要获取url中所带的参数可以查看options
   params = Object.assign(params, options)
   const url = '/' + redirect(params)
-  uni.reLaunch({
-    url: url
-  })
+  // uni.reLaunch({ url: url })
+  uni.navigateTo({ url: url })
 }
 
 export function authLoginTo() {

@@ -88,10 +88,10 @@
               <view class="content-info margin-lr-xs">
                 <view class="name text-grey">{{ item.productInfo.storeName }}</view>
                 <view v-if="item.productInfo.attrInfo" class="text-grey padding-top-xs">属性：{{ item.productInfo.attrInfo.suk }}</view>
-                <view class="price text-red padding-top-xs"></view>
+                <view class="price text-red padding-top-xs" />
                 <view class="cart-quantity flex flex-wrap ">
                   <view class="cu-btn bg-red sm" @tap="delInvalidGoods">
-                  <text class="cuIcon-delete"></text>删除
+                    <text class="cuIcon-delete" />删除
                   </view>
                 </view>
               </view>
@@ -110,60 +110,15 @@
             <text class="text-xl text-red">￥{{ countmoney }}</text>
           </view>
           <view v-else class="bg-orange submit" @tap="onCollectAll">
-            <view class="cuIcon-favorfill"></view>收藏
+            <view class="cuIcon-favorfill" />收藏
           </view>
           <view v-if="footerswitch === false" class="bg-red submit" @tap="placeOrder">立即订购</view>
           <view v-else class="bg-red submit" @tap="onCartDelete">
-            <view class="cuIcon-delete"></view>删除
+            <view class="cuIcon-delete" />删除
           </view>
         </view>
       </view>
     </view>
-
-    <!-- <view class="shoppingCart">
-      <view v-if="validList.length > 0 || cartList.invalid.length > 0">
-        <view v-if="cartList.invalid.length > 0" class="invalidGoods">
-          <view class="goodsNav acea-row row-between-wrapper">
-            <view @click="goodsOpen">
-              <text
-                class="iconfont"
-                :class="goodsHidden === true ? 'icon-xiangyou' : 'icon-xiangxia'"
-              />失效商品
-            </view>
-            <view class="del" @click="delInvalidGoods">
-              <text class="iconfont icon-shanchu1" />清空
-            </view>
-          </view>
-          <view class="goodsList" :hidden="goodsHidden">
-            <view v-for="(item, cartListinvalidIndex) in cartList.invalid" :key="cartListinvalidIndex">
-              <view
-                v-if="item.productInfo"
-                class="item acea-row row-between-wrapper"
-                @click="$router.push({ path: '/pages/shop/GoodsCon/main',query:{id:item.productId }})"
-              >
-                <view class="invalid acea-row row-center-wrapper">失效</view>
-                <view class="pictrue">
-                  <img v-if="item.productInfo.attrInfo" :src="item.productInfo.attrInfo.image">
-                  <img v-else :src="item.productInfo.image">
-                </view>
-                <view class="text acea-row row-column-between">
-                  <view class="line1">{{ item.productInfo.storeName }}</view>
-                  <view
-                    v-if="item.productInfo.attrInfo"
-                    class="infor line1"
-                  >属性：{{ item.productInfo.attrInfo.suk }}</view>
-                  <view class="acea-row row-between-wrapper">
-                    <view class="end">该商品已下架</view>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-
-    </view> -->
-
   </view>
 </template>
 <script>
@@ -324,7 +279,7 @@ export default {
         return
       }
       uni.navigateTo({
-        url: '/pages/order/submit/index?ids='+ids.join(',')
+        url: '/pages/order/submit/index?ids=' + ids.join(',')
       })
     },
     manage: function() {
@@ -466,7 +421,7 @@ export default {
       }
       that.countmoney = carmoney
     },
-    onShopDetails(item){
+    onShopDetails(item) {
       uni.navigateTo({
         url: `/pages/shop/details/index?id=${item.productId}`
       })
@@ -558,6 +513,6 @@ export default {
       width: 122px !important;
     }
   }
-  
+
 }
 </style>

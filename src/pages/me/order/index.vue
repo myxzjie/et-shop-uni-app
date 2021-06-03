@@ -71,16 +71,13 @@
             <view class="num">{{ orderData.completeCount || 0 }}</view>
           </view>
         </view>
-        <view class="list margin-top-sm">
+        <view class="margin-top-sm padding-sm bg-white">
           <view v-for="(order,orderListIndex) in orderList" :key="orderListIndex" class="order-wrap bg-white margin-bottom-sm">
-            <view class="title acea-row row-between-wrapper">
-              <view class="flex flex-wraprow-middle padding-sm">
-                <text
-                  v-if="order.combinationId > 0"
-                  class="sign cart-color acea-row row-center-wrapper"
-                >拼团</text>
-                <text v-if="order.seckillId > 0" class="sign cart-color acea-row row-center-wrapper">秒杀</text>
-                <text v-if="order.bargainId > 0" class="sign cart-color acea-row row-center-wrapper">砍价</text>
+            <view class="title flex flex-wrap align-between">
+              <view class="flex flex-wrap row-middle padding-sm">
+                <text v-if="order.combinationId > 0" class="cu-tag line-cyan">拼团</text>
+                <text v-if="order.seckillId > 0" class="cu-tag line-cyan">秒杀</text>
+                <text v-if="order.bargainId > 0" class="cu-tag line-cyan">砍价</text>
                 <text class="margin-left-sm">{{ order.addTime|dateFormat }}</text>
               </view>
               <view class="font-color-red">{{ getStatus(order) }}</view>

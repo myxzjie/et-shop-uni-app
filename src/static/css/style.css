@@ -830,7 +830,7 @@ page {
 }
 
 /*地址弹窗*/
-.address-window {
+/* .address-window {
   background-color: #fff;
   position: fixed;
   bottom: 0;
@@ -923,7 +923,7 @@ page {
 .address-window .pictrue .image {
   width: 100%;
   height: 100%;
-}
+} */
 
 /*轮播图*/
 .swiper {

@@ -3,6 +3,7 @@
     <cu-custom bg-color="bg-gradual-olive">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
+
     <scroll-view scroll-y class="scrollPage">
       <view class="cu-bar search bg-white">
         <view class="cu-avatar round bg-white">
@@ -53,6 +54,7 @@
         </view>
       </view>
 
+      <!-- <u-notice-bar type="error" mode="horizontal" :volume-icon="true" :more-icon="true" :close-icon="false" :list="notices" @tap="onNotice(item)"></u-notice-bar> -->
       <view class="cu-bar notification-bar">
         <view class="cu-avatar round bg-white">
           <text class="cuIcon-notificationfill text-sm text-olive" />
@@ -172,7 +174,8 @@ export default {
       hot: [],
       firstList: [],
       promotion: [],
-      coupon: []
+      coupon: [],
+      notices: []
     }
   },
   mounted() {
@@ -186,6 +189,7 @@ export default {
         that.banner = data.banner
         that.navigations = data.menus
         that.roll = data.roll
+        that.setNotices(data.roll)
         that.bast = data.bastList
         that.hot = data.likeInfo
         that.firstList = data.firstList
@@ -225,6 +229,12 @@ export default {
       uni.navigateTo({
         url: item.wxapp_url
       })
+    },
+    setNotices(list) {
+      const that = this
+      for (let i = 0; i < list.length; i++) {
+        that.notices.push(list[i].info)
+      }
     },
     onShopDetails(item) {
       const url = '/pages/shop/details/index?id=' + item.id

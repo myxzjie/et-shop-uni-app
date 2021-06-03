@@ -75,7 +75,11 @@ export default {
     }
   },
   onLoad(option) {
-    this.active = option.active
+    const that = this
+    if (option.active) {
+      const current = parseInt(option.active)
+      that.changeTab(current)
+    }
   },
   onShow() {},
   methods: {

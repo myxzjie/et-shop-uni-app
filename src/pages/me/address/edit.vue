@@ -249,7 +249,7 @@ export default {
           const beforePage = pages[pages.length - 2]
           uni.navigateBack({
             success: () => {
-              beforePage.onShow() // 执行前一个页面的onLoad方法
+              // beforePage.onShow() // 执行前一个页面的onLoad方法
             }
           })
         })

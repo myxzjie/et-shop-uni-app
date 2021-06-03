@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom :is-back="true" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
@@ -806,7 +806,7 @@ export default {
     },
     // 购物车
     onCart() {
-      uni.switchTab({
+      uni.navigateTo({
         url: '/pages/cart/index'
       })
     },

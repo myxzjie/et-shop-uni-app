@@ -2,8 +2,7 @@
   <view>
     <cu-custom
       :is-back="true"
-      bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg"
-      bg-color="bg-gradual-green"
+      bg-color="bg-gradual-olive"
     >
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
@@ -187,14 +186,23 @@
       </view>
       <view class="bg-red submit" @tap="createOrder">立即结算</view>
     </view>
+
+    <address-pop
+      ref="address"
+      v-model="showAddress"
+      :checked="addressInfo.id"
+      @change="changeAddress"
+      @redirect="addressRedirect"
+    />
+
   </view>
 </template>
 
 <script>
 import orderProduct from '@/components/order-product/index'
 // import CouponListWindow from '@components/CouponListWindow'
-// import AddressWindow from '@components/AddressWindow'
 import { postOrderConfirm, postOrderComputed, createOrder } from '@/api/order'
+import AddressPop from '@/components/address/address-pop'
 // import { mapGetters } from 'vuex'
 // import { weappPay } from '@libs/wechat'
 // import { isWeixin } from '@utils'
@@ -202,13 +210,13 @@ import { postOrderConfirm, postOrderComputed, createOrder } from '@/api/order'
 // const _isWeixin = isWeixin()
 export default {
   components: {
-    orderProduct
+    orderProduct,
     // CouponListWindow,
-    // AddressWindow
+    AddressPop
   },
   data() {
     return {
-      ids: undefined,
+      ids: '',
       offlinePayStatus: 2,
       from: 'routine',
       // from: _isWeixin ? "weixin" : "weixinh5",
@@ -249,15 +257,19 @@ export default {
       this.computedPrice()
     }
   },
+
+  mounted() {},
   onLoad(option) {
     const that = this
     that.ids = option.ids
-    that.getCartInfo()
     if (option.pinkid !== undefined) {
       that.pinkId = option.pinkid
     }
   },
-  mounted() {},
+  onShow() {
+    const that = this
+    that.getCartInfo()
+  },
   methods: {
     addressType: function(index) {
       if (index && !this.system_store.id) {
@@ -315,21 +327,22 @@ export default {
           })
         })
     },
-    addressTap: function() {
-      this.showAddress = true
-      if (!this.addressLoaded) {
-        this.addressLoaded = true
-        this.$refs.mychild.getAddressList()
+    addressTap() {
+      const that = this
+      that.showAddress = true
+      if (!that.addressLoaded) {
+        that.addressLoaded = true
+        that.$refs.address.getAddressList()
       }
     },
     addressRedirect() {
       this.addressLoaded = false
       this.showAddress = false
     },
-    couponTap: function() {
+    couponTap() {
       this.showCoupon = true
     },
-    changeCoupon: function(coupon) {
+    changeCoupon(coupon) {
       if (!coupon) {
         this.usableCoupon = { couponTitle: '不使用优惠券', id: 0 }
       } else {
@@ -341,10 +354,9 @@ export default {
       this.active = index
     },
     changeAddress(addressInfo) {
-      this.addressInfo = addressInfo
+      this.addressInfo = Object.assign({},addressInfo)
     },
     createOrder() {
-      debugger
       const shipping_type = this.shipping_type
       if (!this.active) {
         uni.showToast({
