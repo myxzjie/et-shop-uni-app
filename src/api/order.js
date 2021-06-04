@@ -102,7 +102,7 @@ export function takeOrder(uni) {
  * @returns {*}
  */
 export function delOrder(uni) {
-  return request({url:'/order/del', method:'post', data:{ uni }, power: true})
+  return request({ url: '/order/del', method: 'post', data: { uni }, power: true })
 }
 
 /**
@@ -129,9 +129,9 @@ export function orderVerific(verify_code, is_confirm) {
 }
 
 export function orderQrcode(params) {
-  return request.post('/order/qrcode', params)
+  return request({ url: '/order/qrcode', method: 'post', params })
 }
 
 export function orderWriteOff(params) {
-  return request.post('/order/write-off', params)
+  return request.post({ url: '/order/write-off', method: 'post', params })
 }

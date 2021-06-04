@@ -21,7 +21,7 @@
           </view>
           <view v-else class="attribute padding-tb-sm" />
           <view class="flex flex-wrap align-between">
-            <view class="price text-xl text-red margin-top-sm">￥{{ cart.truePrice }}</view>
+            <view class="price text-xl text-red" :class="cart.productInfo.attrInfo?'': 'margin-top-sm'">￥{{ cart.truePrice }}</view>
             <view
               v-if="evaluate == 3"
               class="evaluate cu-btn line-cyan margin-top-sm"
@@ -65,6 +65,8 @@ export default {
       > .image {
         width: 160upx;
         height: 160upx;
+        border: 1upx solid #eee;
+        border-radius: 5upx;
       }
     }
     .content {

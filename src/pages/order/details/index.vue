@@ -82,10 +82,10 @@
           <view class="item flex flex-wrap row-between">
             <view>订单编号：</view>
             <view class="conter acea-row row-middle row-right">
-              {{ orderInfo.orderId }}
+              <text class="margin-right-xs">{{ orderInfo.orderId }}</text>
               <text
-                class="copy copy-data"
-                @click="copyClipboard(orderInfo.orderId)"
+                class="copy cu-btn line-green sm"
+                @tap="copyClipboard(orderInfo.orderId)"
               >复制</text>
             </view>
           </view>
@@ -113,32 +113,32 @@
           </view>
         </view>
 
-        <view v-if="orderInfo.status != 0">
-          <view v-if="orderInfo.deliveryType === 'express'" class="wrapper">
-            <view class="item acea-row row-between">
+        <block v-if="orderInfo.status != 0">
+          <view v-if="orderInfo.deliveryType === 'express'" class="wrap-box margin-top bg-white padding">
+            <view class="item flex flex-wrap row-between">
               <view>配送方式：</view>
               <view class="conter">发货</view>
             </view>
-            <view class="item acea-row row-between">
+            <view class="item flex flex-wrap row-between padding-top">
               <view>快递公司：</view>
               <view class="conter">{{ orderInfo.deliveryName || "" }}</view>
             </view>
-            <view class="item acea-row row-between">
+            <view class="item flex flex-wrap row-between padding-top">
               <view>快递号：</view>
               <view class="conter">{{ orderInfo.deliveryId || "" }}</view>
             </view>
           </view>
 
-          <view v-else class="wrapper">
-            <view class="item acea-row row-between">
+          <view v-else class="wrap-box margin-top bg-white padding">
+            <view class="item flex flex-wrap row-between">
               <view>配送方式：</view>
               <view class="conter">送货</view>
             </view>
-            <view class="item acea-row row-between">
+            <view class="item flex flex-wrap row-between padding-top">
               <view>配送人：</view>
               <view class="conter">{{ orderInfo.deliveryName || "" }}</view>
             </view>
-            <view class="item acea-row row-between">
+            <view class="item flex flex-wrap row-between padding-top">
               <view>配送电话：</view>
               <view class="conter acea-row row-middle row-right">
                 {{ orderInfo.deliveryId || "" }}
@@ -146,7 +146,7 @@
               </view>
             </view>
           </view>
-        </view>
+        </block>
         <!--     退款订单详情 -->
         <view v-if="refundOrder" class="wrapper">
           <view class="item acea-row row-between">
@@ -180,7 +180,7 @@
             <view>运费：</view>
             <view class="conter">￥{{ orderInfo.payPostage }}</view>
           </view>
-          <view class="actual-pay flex flex-wrap row-right">
+          <view class="actual-pay flex flex-wrap row-right margin-top-sm padding-top-sm">
             实付款：
             <text class="money text-xl text-red">￥{{ orderInfo.payPrice }}</text>
           </view>
@@ -219,7 +219,7 @@
             "
           >查看物流</view>
           <view class="cu-btn bg-cyan round shadow-blur" @tap="takeOrder">确认收货</view>
-          <!-- <view class="bnt bg-color-red" @click="onWriteOff">核销码</view> -->
+          <!-- <view class="cu-btn bg-cyan round shadow-blur" @tap="onWriteOff">核销码</view> -->
         </view>
       </block>
 
@@ -261,6 +261,24 @@
     </view>
 
     <payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @change="toPay" />
+
+    <view class="cu-modal bottom-modal" :class="isQrcode ? 'show' : ''" @tap="qrcodeClose">
+      <view class="cu-dialog" @tap.stop="">
+        <view class="cu-bar bg-white">
+          <view class="action text-green" />
+          <view class="action">订单核销二维码</view>
+          <view class="action text-blue" @tap="qrcodeClose">
+            <text class="cuIcon-close" />
+          </view>
+        </view>
+        <view class="margin-top-sm padding-bottom">
+          <view class="qrcode-box">
+            <image v-if="qrcode !== ''" :src="qrcode" class="qrcode" mode="aspectFill" show-menu-by-longpress />
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>
 
@@ -271,7 +289,7 @@ import { orderDetail, orderQrcode } from '@/api/order'
 import Payment from '@/components/payment/index'
 // import Payment from '@components/Payment'
 // import DataFormat from '@components/DataFormat'
-// import { isWeixin, copyClipboard } from '@utils'
+// import { isWeixin } from '@utils'
 import { mapGetters } from 'vuex'
 import mixins from '@/mixins/index'
 import order from '@/mixins/order'
@@ -292,6 +310,7 @@ export default {
   mixins: [mixins, order],
   data() {
     return {
+      isQrcode: false,
       offlinePayStatus: 2,
       orderTypeName: '普通订单',
       orderTypeNameStatus: true,
@@ -344,7 +363,16 @@ export default {
     this.getDetail()
   },
   methods: {
-    // copyClipboard,
+    copyClipboard(orderId) {
+      uni.setClipboardData({
+        data: orderId,
+        success: function(res) {
+          uni.showToast({
+            title: '复制成功'
+          })
+        }
+      })
+    },
     onRefundOrder() {
       const that = this
       uni.navigateTo({
@@ -407,10 +435,17 @@ export default {
       that.qrcode = ''
       orderQrcode({ id: that.orderInfo.id, orderId: that.orderInfo.orderId }).then(res => {
         that.qrcode = res.data
-        that.show = true
+        that.isQrcode = true
       }).catch(error => {
-        that.$dialog.$dialog.message(error.response.data.msg)
+        uni.showToast({
+          title: error.response.data.msg,
+          icon: 'none',
+          duration: 2000
+        })
       })
+    },
+    qrcodeClose(){
+      this.isQrcode = false
     },
     delOrder() {
       this.delOrderHandle(this.orderInfo.orderId).then(() => {
