@@ -102,7 +102,7 @@ export function takeOrder(uni) {
  * @returns {*}
  */
 export function delOrder(uni) {
-  return request.post('/order/del', { uni })
+  return request({url:'/order/del', method:'post', data:{ uni }, power: true})
 }
 
 /**

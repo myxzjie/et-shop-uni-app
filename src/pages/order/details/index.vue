@@ -185,39 +185,6 @@
             <text class="money text-xl text-red">￥{{ orderInfo.payPrice }}</text>
           </view>
         </view>
-
-        <view v-if="!refundOrder && offlineStatus" class="footer acea-row row-right row-middle">
-          <!-- <template v-if="status.type == 0">
-              <view class="bnt cancel" @click="cancelOrder">取消订单</view>
-              <view class="bnt bg-color-red" @click="pay = true">立即付款</view>
-            </template> -->
-          <!-- <template v-if="status.type == 1">
-              <view
-                class="bnt cancel"
-                @click="$router.push({ path: '/pages/order/GoodsReturn/main',query:{id:orderInfo.orderId } })"
-              >申请退款</view>
-            </template> -->
-
-          <template v-if="status.type == 4">
-            <view class="bnt cancel" @click="delOrder">删除订单</view>
-            <view
-              class="bnt default"
-              @click="
-                $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-              "
-            >查看物流</view>
-          </template>
-          <template v-if="status.type == 6">
-            <view
-              class="bnt bg-color-red"
-              @click="
-                $router.push({ path: '/pages/activity/GroupRule/main',query:{id:orderInfo.pinkId} })
-              "
-            >查看拼团</view>
-          </template>
-        </view>
-        <!---->
-
       </view>
       <view class="cu-tabbar-height" />
     </scroll-view>
@@ -265,6 +232,30 @@
               $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
             "
           >查看物流</view>
+        </view>
+      </block>
+
+      <block v-if="status.type == 4">
+        <view class="btn-group" />
+        <view class="btn-group">
+          <view class="cu-btn bg-red round shadow-blur" @tap="delOrder">删除订单</view>
+          <view
+            class="cu-btn bg-orange round shadow-blur"
+            @tap="
+              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
+            "
+          >查看物流</view>
+        </view>
+      </block>
+      <block v-if="status.type == 6">
+        <view class="btn-group" />
+        <view class="btn-group">
+          <view
+            class="cu-btn bg-cyan round shadow-blur"
+            @tap="
+              $router.push({ path: '/pages/activity/GroupRule/main',query:{id:orderInfo.pinkId} })
+            "
+          >查看拼团</view>
         </view>
       </block>
     </view>
@@ -388,10 +379,13 @@ export default {
       }
     },
     goBack() {
-      const history = this.app.history
-      const last = history[history.length - 1] || {}
-      if (last.name === 'MyOrder') return this.$router.back()
-      else return this.$router.replace({ path: '/order/list/' })
+      uni.navigateTo({
+        url: '/pages/me/order/index'
+      })
+      // const history = this.app.history
+      // const last = history[history.length - 1] || {}
+      // if (last.name === 'MyOrder') return this.$router.back()
+      // else return this.$router.replace({ path: '/order/list/' })
     },
     cancelOrder() {
       cancelOrderHandle(this.orderInfo.orderId)
@@ -419,12 +413,12 @@ export default {
       })
     },
     delOrder() {
-      delOrderHandle(this.orderInfo.orderId).then(() => {
+      this.delOrderHandle(this.orderInfo.orderId).then(() => {
         setTimeout(() => this.goBack(), 300)
       })
     },
     setOfflinePayStatus: function(status) {
-      var that = this
+      const that = this
       that.offlinePayStatus = status
       if (status === 1 && that.orderTypeNameStatus === true) {
         that.payType.push('offline')

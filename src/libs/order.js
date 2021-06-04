@@ -28,44 +28,44 @@ export function cancelOrderHandle(orderId) {
   })
 }
 
-export function takeOrderHandle(orderId) {
-  return new Promise((resolve, reject) => {
-    takeOrder(orderId).then(res => {
-      uni.showToast({
-        title: '收货成功', icon: 'success', duration: 2000
-      })
-      resolve(res)
-    }).catch(err => {
-      uni.showToast({
-        title: '收货失败', icon: 'none', duration: 2000
-      })
-      reject(err)
-    })
-  })
-}
+// export function takeOrderHandle(orderId) {
+//   return new Promise((resolve, reject) => {
+//     takeOrder(orderId).then(res => {
+//       uni.showToast({
+//         title: '收货成功', icon: 'success', duration: 2000
+//       })
+//       resolve(res)
+//     }).catch(err => {
+//       uni.showToast({
+//         title: '收货失败', icon: 'none', duration: 2000
+//       })
+//       reject(err)
+//     })
+//   })
+// }
 
-export function delOrderHandle(orderId) {
-  return new Promise((resolve, reject) => {
-    dialog.confirm({
-      mes: '确认删除该订单?',
-      opts() {
-        delOrder(orderId)
-          .then(res => {
-            uni.showToast({
-              title: '删除成功', icon: 'success', duration: 2000
-            })
-            resolve(res)
-          })
-          .catch(err => {
-            uni.showToast({
-              title: '删除失败', icon: 'none', duration: 2000
-            })
-            reject(err)
-          })
-      }
-    })
-  })
-}
+// export function delOrderHandle(orderId) {
+//   return new Promise((resolve, reject) => {
+//     dialog.confirm({
+//       mes: '确认删除该订单?',
+//       opts() {
+//         delOrder(orderId)
+//           .then(res => {
+//             uni.showToast({
+//               title: '删除成功', icon: 'success', duration: 2000
+//             })
+//             resolve(res)
+//           })
+//           .catch(err => {
+//             uni.showToast({
+//               title: '删除失败', icon: 'none', duration: 2000
+//             })
+//             reject(err)
+//           })
+//       }
+//     })
+//   })
+// }
 
 export function payOrderHandle(orderId, type, from) {
   return new Promise((resolve, reject) => {

@@ -95,6 +95,6 @@ export function postOrderProduct(unique) {
 /**
  * 提交评价页面；
  */
- export function postOrderComment(data) {
-  return request({ url:'/order/comment', method:'post', data,  power: true })
+export function postOrderComment(data) {
+  return request({ url: '/order/comment', method: 'post', data, power: true })
 }

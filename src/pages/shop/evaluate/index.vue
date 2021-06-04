@@ -7,7 +7,7 @@
     <view class="evaluate-con evaluate-wrap">
       <view v-if="orderCon.productInfo" class="flex flex-wrap row-between padding bg-white">
         <view class="pictrue">
-          <image :src="orderCon.productInfo.image" class="image"/>
+          <image :src="orderCon.productInfo.image" class="image" />
         </view>
         <view class="content row-between padding-sm">
           <view class="name ellipsis-line">{{ orderCon.productInfo.storeName }}</view>
@@ -21,20 +21,20 @@
         <view
           v-for="(item, scoreListIndexw) in scoreList"
           :key="scoreListIndexw"
-          class="item acea-row row-middle"
+          class="item flex flex-wrap row-middle"
         >
           <view>{{ item.name }}</view>
           <view class="stars padding-sm text-xxl">
             <text
-              v-for="(itemn, starsIndexn) in item.stars"
-              :key="starsIndexn"
+              v-for="(itemn, index) in item.stars"
+              :key="index"
               class="margin-left-sm"
               :class="
-                item.index >= starsIndexn
+                item.index >= index
                   ? 'cuIcon-favorfill text-yellow'
                   : 'cuIcon-favor text-gray'
               "
-              @click="stars(starsIndexn, scoreListIndexw)"
+              @click="stars(index, scoreListIndexw)"
             />
           </view>
           <text class="evaluate">
@@ -79,9 +79,9 @@
           </VueCoreImageUpload>-->
           </view>
         </view>
-         <view class="cu-bar btn-group margin-sm">
-            <button class="cu-btn bg-green shadow-blur round lg" @tap="submit">立即评价</button>
-          </view>
+        <view class="cu-bar btn-group margin-sm">
+          <button class="cu-btn bg-green shadow-blur round lg" @tap="submit">立即评价</button>
+        </view>
       </view>
     </view>
   </view>
@@ -186,22 +186,22 @@ export default {
         pics: this.uploadPictures.join(','),
         comment: expect
       }).then(() => {
-          uni.showToast({
-            title: '评价成功',
-            icon: 'success',
-            duration: 2000
-          })
-          const id = this.orderCon.orderId
-          uni.navigateTo({
-            url: `/pages/order/details/index?id=${id}`
-          })
-        }).catch(res => {
-          uni.showToast({
-            title: res.msg,
-            icon: 'none',
-            duration: 2000
-          })
+        uni.showToast({
+          title: '评价成功',
+          icon: 'success',
+          duration: 2000
         })
+        const id = this.orderCon.orderId
+        uni.navigateTo({
+          url: `/pages/order/details/index?id=${id}`
+        })
+      }).catch(res => {
+        uni.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 2000
+        })
+      })
     }
   }
 }
@@ -219,7 +219,6 @@ export default {
     width: calc(100% - 160upx);
   }
 
-
   .score .textarea {
     border-radius: 5upx;
     margin-top: 20upx;
@@ -234,8 +233,3 @@ export default {
 }
 </style>
 
-<style scoped>
-.evaluate-con .score .textarea .list .pictrue.uploadBnt {
-  border: 1px solid #ddd;
-}
-</style>
