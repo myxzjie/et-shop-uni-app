@@ -73,7 +73,10 @@
         </view>
 
         <!--商品-->
-        <order-product :evaluate="status.type || 0" :cart-info="orderInfo.cartInfo || []" />
+        <order-product
+          :evaluate="status.type || 0"
+          :cart-info="orderInfo.cartInfo || []"
+        />
 
         <view class="wrap-box margin-top bg-white padding">
           <view class="item flex flex-wrap row-between">
@@ -262,15 +265,6 @@
               $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
             "
           >查看物流</view>
-          <!-- <view
-            v-if="evaluate == 3"
-            class="evaluate"
-            @click="$router.push({ path: '/pages/shop/GoodsEvaluate/main',query:{id:cart.unique} })"
-          >评价</view> -->
-          <view class="cu-btn bg-cyan round shadow-blur" @tap="onEvaluate">
-            <text class="cuIcon-comment margin-right-xs"></text>
-            评价
-          </view>
         </view>
       </block>
     </view>
@@ -508,9 +502,6 @@ export default {
     },
     onPay() {
       this.pay = true
-    },
-    onEvaluate(){
-      this.orderInfo.cartInfo.unique
     },
     async toPay(type) {
       const that = this

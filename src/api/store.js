@@ -84,3 +84,17 @@ export function cartDelete(ids) {
 export function getSearchKeyword() {
   return request({ url: '/search/keyword' })
 }
+
+/**
+ * 评价页面获取单个产品详情
+ */
+export function postOrderProduct(unique) {
+  return request({ url: '/order/product', method: 'post', data: { unique }, power: true })
+}
+
+/**
+ * 提交评价页面；
+ */
+ export function postOrderComment(data) {
+  return request({ url:'/order/comment', method:'post', data,  power: true })
+}

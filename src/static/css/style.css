@@ -4752,53 +4752,6 @@ page {
 }
 
 /*商品评价*/
-.evaluate-con .score {
-  background-color: #fff;
-  border-top: 1px solid #f5f5f5;
-  font-size: 0.28rem;
-  color: #282828;
-  padding: 0.48rem 0.3rem 0.65rem 0.3rem;
-}
-
-.evaluate-con .score .item~.item {
-  margin-top: 0.25rem;
-}
-
-.evaluate-con .score .item .starsList {
-  padding: 0 0.35rem 0 0.4rem;
-}
-
-.evaluate-con .score .item .starsList .iconfont {
-  font-size: 0.4rem;
-  color: #aaa;
-}
-
-.evaluate-con .score .item .starsList .iconfont~.iconfont {
-  margin-left: 0.2rem;
-}
-
-.evaluate-con .score .item .evaluate {
-  color: #aaa;
-  font-size: 0.24rem;
-}
-
-.evaluate-con .score .textarea {
-  width: 6.9rem;
-  background-color: #fafafa;
-  border-radius: 0.1rem;
-  margin-top: 0.48rem;
-}
-
-.evaluate-con .score .textarea textarea {
-  font-size: 0.28rem;
-  padding: 0.38rem 0.3rem 0 0.3rem;
-  width: 100%;
-  height: 1.6rem;
-}
-
-.evaluate-con .score .textarea textarea::placeholder {
-  color: #bbb;
-}
 
 .evaluate-con .score .textarea .list {
   margin-top: 0.25rem;
@@ -4810,7 +4763,7 @@ page {
   height: 1.4rem;
   margin: 0 0 0.35rem 0.25rem;
   position: relative;
-  font-size: 0.22rem;
+  /* font-size: 0.22rem; */
   color: #bbb;
 }
 

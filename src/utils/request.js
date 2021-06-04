@@ -59,9 +59,9 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       if (error) {
         console.error(error)
       }
+      reject(data)
     }).catch(error => {
       const [err, res] = error
-      debugger
       console.error(res)
       reject(err)
     })

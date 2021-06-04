@@ -16,13 +16,18 @@
           <view
             v-if="cart.productInfo.attrInfo"
             class="attribute padding-tb-sm"
-          >{{ cart.productInfo.attrInfo.suk }}</view>
-          <view class="price text-xl text-red margin-top-sm">￥{{ cart.truePrice }}</view>
-          <view
-            v-if="evaluate == 3"
-            class="evaluate cu-btn line-cyan sm margin-top-sm"
-            @click="$router.push({ path: '/pages/shop/GoodsEvaluate/main',query:{id:cart.unique} })"
-          ><text class="cuIcon-comment margin-right-xs"></text>评价</view>
+          >
+            {{ cart.productInfo.attrInfo.suk }}
+          </view>
+          <view v-else class="attribute padding-tb-sm" />
+          <view class="flex flex-wrap align-between">
+            <view class="price text-xl text-red margin-top-sm">￥{{ cart.truePrice }}</view>
+            <view
+              v-if="evaluate == 3"
+              class="evaluate cu-btn line-cyan margin-top-sm"
+              @tap="onEvaluate(cart.unique)"
+            >评价</view>
+          </view>
         </view>
       </view>
     </view>
@@ -38,6 +43,13 @@ export default {
     cartInfo: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    onEvaluate(unique) {
+      uni.navigateTo({
+        url: `/pages/shop/evaluate/index?id=${unique}`
+      })
     }
   }
 }
