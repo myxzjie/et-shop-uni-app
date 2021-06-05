@@ -261,51 +261,31 @@
     </view>
 
     <payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @change="toPay" />
-
-    <view class="cu-modal bottom-modal" :class="isQrcode ? 'show' : ''" @tap="qrcodeClose">
-      <view class="cu-dialog" @tap.stop="">
-        <view class="cu-bar bg-white">
-          <view class="action text-green" />
-          <view class="action">订单核销二维码</view>
-          <view class="action text-blue" @tap="qrcodeClose">
-            <text class="cuIcon-close" />
-          </view>
-        </view>
-        <view class="margin-top-sm padding-bottom">
-          <view class="qrcode-box">
-            <image v-if="qrcode !== ''" :src="qrcode" class="qrcode" mode="aspectFill" show-menu-by-longpress />
-          </view>
-        </view>
-      </view>
-    </view>
+    <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose"></qr-code>
 
   </view>
 </template>
 
 <script>
 import orderProduct from '@/components/order-product/index'
+import QrCode from '@/components/order-product/qrcode'
 // import OrderGoods from '@components/OrderGoods'
 import { orderDetail, orderQrcode } from '@/api/order'
 import Payment from '@/components/payment/index'
-// import Payment from '@components/Payment'
-// import DataFormat from '@components/DataFormat'
 // import { isWeixin } from '@utils'
 import { mapGetters } from 'vuex'
 import mixins from '@/mixins/index'
 import order from '@/mixins/order'
 import {
   cancelOrderHandle,
-  takeOrderHandle,
-  delOrderHandle,
   payOrderHandle
 } from '@/libs/order'
 // import { wechatEvevt } from "@libs/wechat";
 export default {
   components: {
     orderProduct,
-    // OrderGoods,
+    QrCode,
     Payment
-    // DataFormat
   },
   mixins: [mixins, order],
   data() {
@@ -444,7 +424,7 @@ export default {
         })
       })
     },
-    qrcodeClose(){
+    qrcodeClose() {
       this.isQrcode = false
     },
     delOrder() {

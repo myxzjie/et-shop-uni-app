@@ -170,8 +170,8 @@
                   "
                 >查看物流</view>
                 <view class="margin-left-sm" />
-                <!-- <view class="cu-btn bg-cyan round sm" @click="takeOrder(order)">确认收货</view> -->
-                <view class="cu-btn bg-cyan round sm" @click="onWriteOff(order)">核销码</view>
+                <!-- <view class="cu-btn bg-cyan round sm" @tap="takeOrder(order)">确认收货</view> -->
+                <view class="cu-btn bg-cyan round sm" @tap="onWriteOff(order)">核销码</view>
               </template>
               <template v-if="order._status._type == 3">
                 <!--<view-->
@@ -203,37 +203,29 @@
           </view>
         </view>
         <Loading :loaded="loaded" :loading="loading" />
-        <!-- <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" /> -->
-
-        <van-dialog
-          use-slot
-          title="订单核销二维码"
-          :show="show"
-          async-close
-          z-index="50"
-          @confirm="beforeClose"
-        >
-          <view class="qrcode-box">
-            <img v-if="qrcode !== ''" :src="qrcode" class="qrcode" show-menu-by-longpress>
-          </view>
-        </van-dialog>
+        <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" />
+        <!-- <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose"></qr-code> -->
+        
       </view>
     </scroll-view>
   </view>
 </template>
 <script>
+import moment from 'moment'
+import { mapGetters } from 'vuex'
+import order from '@/mixins/order'
+import mixins from '@/mixins/index'
+import Loading from '@/components/loading'
+import QrCode from '@/components/order-product/qrcode'
 import { getOrderData, getOrderList, orderQrcode } from '@/api/order'
 // import {
 //   cancelOrderHandle,
 //   payOrderHandle,
 //   takeOrderHandle
 // } from '@/libs/order'
-import Loading from '@/components/loading'
 // import Payment from '@components/Payment'
-// import DataFormat from '@components/DataFormat'
-import { mapGetters } from 'vuex'
-// import { isWeixin, dataFormat } from '@utils'
-import moment from 'moment'
+// import { isWeixin } from '@utils'
+
 const STATUS = [
   '待付款',
   '待发货',
@@ -249,10 +241,11 @@ const STATUS = [
 
 export default {
   components: {
-    Loading
+    Loading,
     // Payment,
-    // DataFormat
+    QrCode
   },
+  mixins: [mixins, order],
   filters: {
     dateFormat(value) {
       value = +value * 1000
@@ -281,27 +274,11 @@ export default {
       pay: false,
       payType: ['yue', 'weixin'],
       // from: isWeixin() ? 'weixin' : 'weixinh5',
-      show: false,
+      isQrcode: false,
       qrcode: '',
       images: {
         noOrder: 'https://shop.cdn.dev56.com/assets/images/noOrder.png'
       }
-    }
-  },
-  computed: mapGetters(['userInfo']),
-  watch: {
-    $route(n) {
-      if (n.name === NAME) {
-        const type = parseInt(this.$route.query.type) || 0
-        this.active = type
-        if (this.type !== type) {
-          this.changeType(type)
-        }
-        this.getOrderData()
-      }
-    },
-    type() {
-
     }
   },
   onLoad(option) {
@@ -330,9 +307,10 @@ export default {
       })
     },
     takeOrder(order) {
-      takeOrderHandle(order.orderId).finally(() => {
-        this.reload()
-        this.getOrderData()
+      const that = this
+      that.takeOrderHandle(order.orderId).finally(() => {
+        that.reload()
+        that.getOrderData()
       })
     },
     reload() {
@@ -408,19 +386,20 @@ export default {
       that.qrcode = ''
       orderQrcode({ id: order.id, orderId: order.orderId }).then(res => {
         that.qrcode = res.data
-        that.show = true
+        that.isQrcode = true
       }).catch(error => {
-        that.$dialog.$dialog.message(error.response.data.msg)
+        uni.showToast({
+          title: error.response.data.msg,
+          icon: 'none',
+          duration: 2000
+        })
       })
+    },
+    qrcodeClose() {
+      this.isQrcode = false
     },
     onDialogClose() {
       this.show = false
-    },
-    beforeClose(event) {
-      if (event.type === 'confirm') {
-        this.show = false
-      } else if (event.type === 'cancel') {
-      }
     },
     onChange(event) {
       wx.showToast({
@@ -468,15 +447,6 @@ export default {
 .noCart .pictrue img {
   width: 100%;
   height: 100%;
-}
-.qrcode-box {
- text-align: center;
-}
-.qrcode-box .qrcode{
-  width: 4rem;
-  height: 4rem;
-  padding: 0.5rem;
-  margin: 0.7rem auto 0.5rem auto;
 }
 
 .my-order .header .picTxt .text {
