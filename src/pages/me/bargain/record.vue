@@ -1,7 +1,8 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
-      <view slot="content">{{ BaseName }}</view>
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view class="bargain-record">

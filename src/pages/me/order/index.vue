@@ -170,8 +170,8 @@
                   "
                 >查看物流</view>
                 <view class="margin-left-sm" />
-                <!-- <view class="cu-btn bg-cyan round sm" @tap="takeOrder(order)">确认收货</view> -->
-                <view class="cu-btn bg-cyan round sm" @tap="onWriteOff(order)">核销码</view>
+                <view class="cu-btn bg-cyan round sm" @tap="takeOrder(order)">确认收货</view>
+                <!-- <view class="cu-btn bg-cyan round sm" @tap="onWriteOff(order)">核销码</view> -->
               </template>
               <template v-if="order._status._type == 3">
                 <!--<view-->
@@ -203,9 +203,9 @@
           </view>
         </view>
         <Loading :loaded="loaded" :loading="loading" />
-        <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" />
-        <!-- <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose"></qr-code> -->
-        
+        <!-- <Payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @checked="toPay" /> -->
+        <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose" />
+
       </view>
     </scroll-view>
   </view>
@@ -245,7 +245,6 @@ export default {
     // Payment,
     QrCode
   },
-  mixins: [mixins, order],
   filters: {
     dateFormat(value) {
       value = +value * 1000
@@ -260,6 +259,7 @@ export default {
       // )
     }
   },
+  mixins: [mixins, order],
   data() {
     return {
       active: 1,

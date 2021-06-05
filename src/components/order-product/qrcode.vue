@@ -29,13 +29,13 @@ export default {
       default: ''
     }
   },
-  data(){
+  data() {
     return {}
   },
   methods: {
     qrcodeClose() {
       this.$emit('close')
-    },
+    }
   }
 }
 </script>

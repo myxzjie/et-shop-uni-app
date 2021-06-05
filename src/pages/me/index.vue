@@ -11,10 +11,10 @@
               <view class="text-white padding-left">
                 <view>
                   <view class="name text-lg">{{ userInfo.nickname }}</view>
-                  <view class="flex flex-wrap row-middle">
+                  <view class="flex flex-wrap row-middle margin-top-xs">
                     <view v-if="userInfo.vip" class="member flex flex-wrap row-middle">
                       <image :src="userInfo.vipIcon" mode="widthFix" />
-                      {{ userInfo.vipName }}
+                      <text class="margin-left-xs">{{ userInfo.vipName }}</text>
                     </view>
                     <view v-if="userInfo.roleGrade" class="member flex flex-wrap row-middle">
                       {{ userInfo.roleGradeName }}
@@ -26,21 +26,21 @@
                   class="id"
                   url="/pages/user/PersonalData/main"
                 >
-                  ID：{{ userInfo.uid || 0
-                  }}
-                  <text class="cuIcon-phone" />
+                  ID: {{ userInfo.uid || 0 }}
+                  <text class="cuIcon-phone text-red margin-lr-xs" />
+                  {{userInfo.phone}}
                 </navigator>
-                <navigator v-else class="binding" url="/pages/user/BindingPhone/main">
+                <navigator v-else class="bind-phone margin-top-xs" url="/pages/me/bind/phone">
                   <text>绑定手机号</text>
                 </navigator>
               </view>
             </view>
             <view>
-              <navigator url="/pages/user/PersonalData/main" hover-class="none">
+              <!-- <navigator url="/pages/user/PersonalData/main" hover-class="none">
                 <text
                   class="cuIcon-settingsfill text-white"
                 />
-              </navigator>
+              </navigator> -->
             </view>
           </view>
         </view>
@@ -359,14 +359,24 @@ export default {
         height: 160upx;
       }
     }
-    .binding {
-      margin-top:10upx;
-      padding: 3upx 10upx;
-      background-color: #ca1f10;
-      border-radius: 50px;
-      font-size: 18upx;
-      border: 1px solid #e8695e;
-      color: #ffffff;
+    .bind-phone {
+      position: relative;
+      z-index: 100;
+      text {
+        margin-top:10upx;
+        padding: 5upx 10upx;
+        background-color: #ca1f10;
+        border-radius: 50px;
+        font-size: 20upx;
+        border: 1px solid #e8695e;
+        color: #ffffff;
+      }
+    }
+    .member{
+      > image{
+        width: 30upx;
+        height:30upx;
+      }
     }
   }
   .gif-wave {

@@ -261,7 +261,7 @@
     </view>
 
     <payment v-model="pay" :types="payType" :balance="userInfo.nowMoney" @change="toPay" />
-    <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose"></qr-code>
+    <qr-code :dialog="isQrcode" :qrcode="qrcode" @close="qrcodeClose" />
 
   </view>
 </template>

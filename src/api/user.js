@@ -77,7 +77,7 @@ export function loginMobile(data) {
  * @param data object 用户手机号
  */
 export function registerVerify(data) {
-  return request.post('/register/verify', data, { login: false })
+  return request({ url: '/register/verify', method: 'POST', data, power: false })
 }
 
 /**
@@ -353,7 +353,7 @@ export function getLogout() {
  * 绑定手机号
  * */
 export function bindingPhone(data) {
-  return request.post('binding', data)
+  return request({ url: '/binding', method: 'post', data })
 }
 
 /*

@@ -1,12 +1,13 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
-      <view slot="content">{{ BaseName }}</view>
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view class="bargain bg-red">
+      <view class="bargain bg-gray">
         <!-- 在header上加 on 为请求支援 -->
-        <view :class="[bargainPartake != userInfo.uid ? 'header on' : 'header']">
+        <view class="text-blue" :class="[bargainPartake != userInfo.uid ? 'header on' : 'header']">
           <view class="people padding-tb">{{ lookCount }}人查看 丨 {{ shareCount }}人分享 丨 {{ userCount }}人参与</view>
           <!-- 帮助砍价、帮砍成功：-->
           <!-- <view v-if="bargainPartake != userInfo.uid" class="pictxt acea-row row-center-wrapper">

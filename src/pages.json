@@ -94,6 +94,9 @@
 			"path": "pages/me/bargain/record"
 		},
 		{
+			"path": "pages/me/bind/phone"
+		},
+		{
 			"path": "pages/collection/index"
 		},
 		{
