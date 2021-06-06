@@ -137,7 +137,6 @@
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom",
 		"usingComponents": {
-			"van-dialog": "/wxcomponents/@vant/weapp/dist/dialog/index"
 		}
 	}
 	

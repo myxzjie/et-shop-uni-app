@@ -71,7 +71,7 @@
             </view>
           </text>
         </view> -->
-        <image src="@/static/wave.gif" mode="scaleToFill" class="gif-wave" />
+        <image src="https://shop.cdn.dev56.com/assets/images/wave.gif" mode="scaleToFill" class="gif-wave" />
       </view>
 
       <view class="padding flex text-center text-grey bg-white shadow-warp">
@@ -328,7 +328,7 @@ export default {
 
 <style lang="scss" scoped>
 .u-center {
-  background-image: url('/static/bg.jpg');
+  background-image: url('https://shop.cdn.dev56.com/assets/images/bg.jpg');
   // background-size: cover;
   // height: 550rpx;
   // display: flex;

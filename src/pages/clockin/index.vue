@@ -2,8 +2,7 @@
   <view>
     <cu-custom
       :is-back="true"
-      bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg"
-      bg-color="bg-gradual-green"
+      bg-color="bg-gradual-olive"
     >
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
@@ -11,7 +10,7 @@
 
     <scroll-view scroll-y class="scrollPage">
       <view class="clockin">
-        <view class="header flex flex-wrap align-between padding bg-gradual-green">
+        <view class="header flex flex-wrap align-between padding ">
           <view class="left flex flex-wrap align-between">
             <view class="pictrue">
               <image class="image" :src="userInfo.avatar" />

@@ -144,7 +144,7 @@ export default {
         })
         .catch(err => {
           uni.showToast({
-            title: err.response.data.msg,
+            title: err.msg,
             icon: 'none',
             duration: 2000
           })

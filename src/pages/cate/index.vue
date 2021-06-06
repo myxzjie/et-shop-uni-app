@@ -87,9 +87,9 @@ export default {
       verticalNavTop: 0,
       load: true,
       banner: [
-        { id: 1, url: '/static/banner/banner-01.jpg' },
-        { id: 2, url: '/static/banner/banner-02.jpg' },
-        { id: 3, url: '/static/banner/banner-03.jpg' }
+        { id: 1, url: 'https://shop.cdn.dev56.com/assets/images/banner/banner-01.jpg' },
+        { id: 2, url: 'https://shop.cdn.dev56.com/assets/images/banner/banner-02.jpg' },
+        { id: 3, url: 'https://shop.cdn.dev56.com/assets/images/banner/banner-03.jpg' }
       ]
     }
   },

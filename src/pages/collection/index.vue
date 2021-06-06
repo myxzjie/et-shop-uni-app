@@ -1,8 +1,13 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
-      <view slot="content">{{ BaseName }}</view>
+    <cu-custom
+      :is-back="true"
+      bg-color="bg-gradual-olive"
+    >
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
     </cu-custom>
+    
     <view v-if="collectProductList.length > 0" class="collection margin-top bg-white">
       <navigator
         v-for="(item, index) in collectProductList"
