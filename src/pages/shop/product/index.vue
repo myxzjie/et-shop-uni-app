@@ -101,8 +101,9 @@ export default {
   },
   data() {
     return {
-      id: '',
+      id: 0,
       title: '',
+      keyword: '',
       loading: false,
       loaded: false,
       hostProduct: [],
@@ -131,7 +132,8 @@ export default {
   },
   onLoad(option) {
     const that = this
-    that.id = option.id
+    that.id = option.id || 0
+    that.keyword = option.wk
     that.title = option.title
     that.query.sid = that.id
     that.loadProductList()
@@ -145,18 +147,18 @@ export default {
       if (that.loaded === true || that.loading === true) return
       that.loading = true
       that.queryParams()
-      // if (id !== this.query.sid) {
-      //   // this.query.keyword = ''
-      //   this.loaded = false
-      //   this.loading = false
-      //   this.query.page = 1
-      //   this.query.sid = id
-      //   this.title = that.title
-      //   this.nows = false
-      //   this.productList = []
-      //   this.price = 0
-      //   this.stock = 0
-      // }
+      if (that.id !== this.query.sid || this.query.sid === 0) {
+        this.query.keyword = that.keyword
+        this.loaded = false
+        this.loading = false
+        this.query.page = 1
+        this.query.sid = id
+        this.title = that.title
+        this.nows = false
+        this.productList = []
+        this.price = 0
+        this.stock = 0
+      }
       getProducts(that.query).then(res => {
         that.loading = false
         that.productList.push.apply(that.productList, res.data)

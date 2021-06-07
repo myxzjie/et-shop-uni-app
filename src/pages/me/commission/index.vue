@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
+    <cu-custom>
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">

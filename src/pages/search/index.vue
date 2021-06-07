@@ -1,27 +1,12 @@
 <template>
   <view>
-    <view class="cu-custom" :style="[{height:CustomBar + 'px'}]">
-      <view class="cu-bar fixed bg-gradual-green" :style="[{height: CustomBar+'px','padding-top':StatusBar+'px'}]">
-        <view 
-          class="action border-custom" 
-          delta="1" 
-          style="width: 120rpx; height: 60rpx;"
-          >
-          <text class="cuIcon-back" />
-          <text class="cuIcon-homefill" />
-        </view>
-        <view class="content" :style="[{top: StatusBar+'px'}]">操作条</view>
-      </view>
-    </view>
-<!-- 
-  :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]" -->
-    <!-- <cu-custom
-      :is-back="true"
-      bg-color="bg-gradual-olive"
-    >
+    <cu-custom :is-back="true">
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
-    </cu-custom> -->
+    </cu-custom>
+<!-- 
+  :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]" -->
+    
 
     <view class="cu-bar search bg-white">
       <view class="search-form round">
@@ -81,7 +66,7 @@ export default {
     },
     toSearch(wk) {
       this.search = wk
-      uni.navigateTo({ url: '/pages/shop/GoodsList/main?s=wk' })
+      uni.navigateTo({ url: `/pages/shop/product/index?wk=${wk}` })
     },
     loadSearchKeyword() {
       getSearchKeyword().then(res => {

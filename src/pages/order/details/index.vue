@@ -189,7 +189,7 @@
       <view class="cu-tabbar-height" />
     </scroll-view>
 
-    <view v-if="!refundOrder && offlineStatus" class="cu-bar bg-white tabbar border shop foot">
+    <view v-if="(!refundOrder && offlineStatus)" class="cu-bar bg-white tabbar border shop foot">
       <block v-if="status.type == 0">
         <view class="btn-group" />
         <view class="btn-group">

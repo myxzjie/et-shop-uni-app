@@ -14,16 +14,14 @@
             v-for="(cart,cartInfoIndex) in order.cartInfo"
             :key="cartInfoIndex"
             class="item flex flex-wrap align-between solid-bottom padding-tb-xs"
-            @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
+            @tap="onOrderDetails(order.orderId)"
           >
             <view class="pictrue">
               <image
                 :src="cart.productInfo.image"
                 class="image"
                 mode="widthFill"
-                @click.stop="
-                  $router.push({ path: '/pages/shop/GoodsCon/main',query: { id: cart.productInfo.id } })
-                "
+                @tap.stop="onShopDetails(cart.productInfo.id)"
               />
             </view>
             <view class="content padding-sm">
@@ -91,6 +89,16 @@ export default {
         this.loading = false
         this.loaded = res.data.length < limit
         this.page++
+      })
+    },
+    onOrderDetails(orderId) {
+      uni.navigateTo({
+        url: `/pages/order/details/index?id=${orderId}`
+      })
+    },
+    onShopDetails(id){
+      uni.navigateTo({
+        url: `/pages/shop/details/index?id=${id}`
       })
     }
   },
