@@ -764,49 +764,27 @@ page {
   line-height: 0.86rem;
 }
 
-.goodWrapper .item {
-  margin-left: 0.3rem;
-  padding-right: 0.3rem;
-  border-bottom: 0.02rem solid #f0f0f0;
-  height: 1.8rem;
-}
-
-.goodWrapper .item .pictrue {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
-.goodWrapper .item .pictrue .image {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.06rem;
-}
-
-.goodWrapper .item .text {
-  width: 5.37rem;
-  position: relative;
-}
 
 .goodWrapper .item .text .name {
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   color: #282828;
   width: 4.53rem;
 }
 
 .goodWrapper .item .text .num {
-  font-size: 0.26rem;
+  /* font-size: 0.26rem; */
   color: #868686;
 }
 
 .goodWrapper .item .text .attr {
-  font-size: 0.2rem;
+  /* font-size: 0.2rem; */
   color: #868686;
   margin-top: 0.07rem;
 }
 
 .goodWrapper .item .text .money {
-  font-size: 0.26rem;
-  margin-top: 0.17rem;
+  /* font-size: 0.26rem; */
+  /* margin-top: 0.17rem; */
 }
 
 .goodWrapper .item .text .evaluate {
@@ -5221,36 +5199,6 @@ page {
 }
 
 /*退货列表*/
-.return-list .goodWrapper {
-  background-color: #fff;
-  margin-bottom: 0.13rem;
-  position: relative;
-}
-
-.return-list .goodWrapper .orderNum {
-  padding: 0 0.3rem;
-  border-bottom: 1px solid #eee;
-  height: 0.87rem;
-  line-height: 0.87rem;
-  font-size: 0.3rem;
-  color: #282828;
-}
-
-.return-list .goodWrapper .item {
-  border-bottom: 0;
-}
-
-.return-list .goodWrapper .totalSum {
-  padding: 0 0.3rem 0.32rem 0.3rem;
-  text-align: right;
-  font-size: 0.26rem;
-  color: #282828;
-}
-
-.return-list .goodWrapper .totalSum .price {
-  font-size: 0.28rem;
-  font-weight: bold;
-}
 
 .return-list .goodWrapper .iconfont {
   position: absolute;

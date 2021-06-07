@@ -1,7 +1,7 @@
 <template>
   <view>
-    <cu-custom bg-image="/static/sylb2244.jpeg" bg-color="bg-gradual-green">
-      <view slot="content">{{ BaseName }}</view>
+    <cu-custom :is-back="true">
+      <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view class="my-account">

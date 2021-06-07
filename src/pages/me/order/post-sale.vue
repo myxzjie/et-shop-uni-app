@@ -5,44 +5,45 @@
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view ref="container" class="return-list">
-        <view v-for="(order,orderListIndex) in orderList" :key="orderListIndex" class="goodWrapper">
+      <view class="return-list">
+        <view v-for="(order,orderListIndex) in orderList" :key="orderListIndex" class="padding bg-white margin-bottom-sm">
           <view v-if="order._status._type === -1" class="iconfont icon-tuikuanzhong powder" />
           <view v-if="order._status._type === -2" class="iconfont icon-yituikuan" />
-          <view class="orderNum">订单号：{{ order.orderId }}</view>
+          <view class="orderNum solid-bottom padding-bottom">订单号: {{ order.orderId }}</view>
           <view
             v-for="(cart,cartInfoIndex) in order.cartInfo"
             :key="cartInfoIndex"
-            class="item acea-row row-between-wrapper"
+            class="item flex flex-wrap align-between solid-bottom padding-tb-xs"
             @click="$router.push({ path: '/pages/order/OrderDetails/main',query:{id:order.orderId} })"
           >
             <view class="pictrue">
-              <img
+              <image
                 :src="cart.productInfo.image"
                 class="image"
+                mode="widthFill"
                 @click.stop="
                   $router.push({ path: '/pages/shop/GoodsCon/main',query: { id: cart.productInfo.id } })
                 "
-              >
+              />
             </view>
-            <view class="text">
-              <view class="acea-row row-between-wrapper">
-                <view class="name line1">{{ cart.productInfo.storeName }}</view>
-                <view class="num">x {{ cart.cartNum }}</view>
+            <view class="content padding-sm">
+              <view class="flex flex-wrap align-between">
+                <view class="name ellipsis-line">{{ cart.productInfo.storeName }}</view>
+                <view class="num margin-top-xs text-gary"> 数量: x{{ cart.cartNum }}</view>
               </view>
               <view
                 v-if="cart.productInfo.attrInfo"
-                class="attr line1"
+                class="attr ellipsis-line margin-top-xs"
               >{{ cart.productInfo.attrInfo.suk }}</view>
-              <view v-else class="attr line1">{{ cart.productInfo.storeName }}</view>
-              <view class="money">￥{{ cart.productInfo.price }}</view>
+              <!-- <view v-else class="attr line1">{{ cart.productInfo.storeName }}</view> -->
+              <view class="money margin-top-xs text-red text-lg">￥{{ cart.productInfo.price }}</view>
             </view>
           </view>
-          <view class="totalSum">
+          <view class="totalSum margin-top-sm text-right">
             共{{ order.cartInfo.length || 0 }}件商品，总金额
-            <span
-              class="font-color-red price"
-            >￥{{ order.payPrice }}</span>
+            <text
+              class="text-red price"
+            >￥{{ order.payPrice }}</text>
           </view>
         </view>
         <view v-if="orderList.length === 0 && page > 1" class="noCart">
@@ -98,3 +99,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.item {
+  .pictrue {
+    .image {
+      width: 160upx;
+      height: 160upx;
+      border-radius: 5upx;
+      border: 1upx solid #eee;
+    }
+  }
+  .content {
+    width: calc(100% - 160upx);
+  }
+}
+</style>

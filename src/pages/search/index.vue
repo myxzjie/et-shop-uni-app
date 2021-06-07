@@ -1,19 +1,27 @@
 <template>
   <view>
-    <!-- <view class="cu-custom" style="height:{{CustomBar}}px;">
-      <view class="cu-bar fixed bg-gradual-green" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-        <navigator class="action border-custom" open-type="navigateBack" delta="1" hover-class="none" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+    <view class="cu-custom" :style="[{height:CustomBar + 'px'}]">
+      <view class="cu-bar fixed bg-gradual-green" :style="[{height: CustomBar+'px','padding-top':StatusBar+'px'}]">
+        <view 
+          class="action border-custom" 
+          delta="1" 
+          style="width: 120rpx; height: 60rpx;"
+          >
           <text class="cuIcon-back" />
           <text class="cuIcon-homefill" />
-        </navigator>
-        <view class="content" style="top:{{StatusBar}}px;">操作条</view>
+        </view>
+        <view class="content" :style="[{top: StatusBar+'px'}]">操作条</view>
       </view>
-    </view> -->
-
-    <cu-custom :is-back="isBack" bg-image="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" bg-color="bg-gradual-green">
-      <view v-if="isBack" slot="backText">返回</view>
-      <view slot="content">{{ BaseName }}</view>
-    </cu-custom>
+    </view>
+<!-- 
+  :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]" -->
+    <!-- <cu-custom
+      :is-back="true"
+      bg-color="bg-gradual-olive"
+    >
+      <block slot="backText">返回</block>
+      <block slot="content">{{ BaseName }}</block>
+    </cu-custom> -->
 
     <view class="cu-bar search bg-white">
       <view class="search-form round">
