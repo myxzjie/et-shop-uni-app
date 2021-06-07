@@ -169,8 +169,7 @@ export default {
   components: {
     CountDown
   },
-  props: {},
-  data: function() {
+  data() {
     return {
       headerImg: '',
       timeList: [],

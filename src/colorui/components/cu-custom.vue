@@ -2,8 +2,11 @@
   <view>
     <view class="cu-custom" :style="[{height:CustomBar + 'px'}]">
       <view class="cu-bar fixed" :style="style" :class="[bgImage!=''?'none-bg text-white bg-img':'',bgColor]">
-        <view v-if="isBack" class="action border-custom" 
-          :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]">
+        <view
+          v-if="isBack"
+          class="action border-custom"
+          :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]"
+        >
           <text class="cuIcon-back" @tap="backPage" />
           <!-- <slot name="backText" /> -->
           <text class="cuIcon-homefill" @tap="homePage" />

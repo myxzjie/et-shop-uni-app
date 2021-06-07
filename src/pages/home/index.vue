@@ -88,7 +88,7 @@
             <text class="text-red text-xs">NEW~</text>
           </view>
           <view class="action">
-            <navigator class="shadow" url="/pages/shop/mark/index?type=3" hover-class="none">
+            <navigator class="shadow" url="/pages/shop/product/sales?type=3" hover-class="none">
               更多
               <text class="cuIcon-right" />
             </navigator>
@@ -104,7 +104,7 @@
             精品推荐
           </view>
           <view class="action">
-            <navigator class="shadow" url="/pages/shop/mark/index?type=1" hover-class="none">
+            <navigator class="shadow" url="/pages/shop/product/sales?type=1" hover-class="none">
               更多
               <text class="cuIcon-right" />
             </navigator>
@@ -121,7 +121,7 @@
             <text class="text-red text-xs">HOT~</text>
           </view>
           <view class="action">
-            <navigator class="shadow" url="/pages/shop/mark/index?type=2" hover-class="none">
+            <navigator class="shadow" url="/pages/shop/product/sales?type=2" hover-class="none">
               更多
               <text class="cuIcon-right" />
             </navigator>

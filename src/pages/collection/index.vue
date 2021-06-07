@@ -7,7 +7,7 @@
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
-    
+
     <view v-if="collectProductList.length > 0" class="collection margin-top bg-white">
       <navigator
         v-for="(item, index) in collectProductList"

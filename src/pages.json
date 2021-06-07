@@ -22,7 +22,7 @@
 			"path": "pages/shop/product/index"
 		},
 		{
-			"path": "pages/shop/mark/index"
+			"path": "pages/shop/product/sales"
 		},
 		{
 			"path": "pages/shop/promotion/index"

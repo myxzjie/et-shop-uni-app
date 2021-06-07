@@ -28,7 +28,7 @@
                 >
                   ID: {{ userInfo.uid || 0 }}
                   <text class="cuIcon-phone text-red margin-lr-xs" />
-                  {{userInfo.phone}}
+                  {{ userInfo.phone }}
                 </navigator>
                 <navigator v-else class="bind-phone margin-top-xs" url="/pages/me/bind/phone">
                   <text>绑定手机号</text>

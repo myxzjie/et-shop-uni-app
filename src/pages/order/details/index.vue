@@ -12,9 +12,6 @@
       <view class="margin-top-sm padding-sm flex flex-wrap align-center" :class="refundOrder ? 'on' : ''">
         <view class="data" :class="refundOrder ? 'on' : ''">
           <view class="state">{{ orderInfo._status._msg }}</view>
-          <view>
-            <data-format :data="orderInfo.addTime" />
-          </view>
         </view>
       </view>
 
@@ -92,7 +89,9 @@
           <view class="item flex flex-wrap row-between padding-top">
             <view>下单时间：</view>
             <view class="conter">
-              <data-format :data="orderInfo.addTime" />
+              <text>
+                {{ orderInfo.addTime|dateFormat }}
+              </text>
             </view>
           </view>
           <view class="item flex flex-wrap row-between padding-top">

@@ -4,9 +4,8 @@
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
-<!-- 
+    <!--
   :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]" -->
-    
 
     <view class="cu-bar search bg-white">
       <view class="search-form round">

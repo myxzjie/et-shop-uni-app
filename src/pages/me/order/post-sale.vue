@@ -20,7 +20,7 @@
               <image
                 :src="cart.productInfo.image"
                 class="image"
-                mode="widthFill"
+                mode="widthFix"
                 @tap.stop="onShopDetails(cart.productInfo.id)"
               />
             </view>
@@ -96,7 +96,7 @@ export default {
         url: `/pages/order/details/index?id=${orderId}`
       })
     },
-    onShopDetails(id){
+    onShopDetails(id) {
       uni.navigateTo({
         url: `/pages/shop/details/index?id=${id}`
       })

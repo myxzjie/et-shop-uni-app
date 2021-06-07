@@ -59,8 +59,7 @@ export default {
   components: {
     Loading
   },
-  props: {},
-  data: function() {
+  data() {
     return {
       combinationList: [],
       status: false, // 砍价列表是否获取完成 false 未完成 true 完成
