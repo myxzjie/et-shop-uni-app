@@ -29,7 +29,7 @@
       </view>
     </view> -->
 
-    <van-dialog
+    <!-- <van-dialog
       use-slot
       title="获取微信手机号"
       :show="show"
@@ -59,7 +59,6 @@
           <input v-model="phoneInfo.phoneNumber" type="text" placeholder="手机号">
           <view class="uni-label">
             <button class="btn-phone" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取微信手机</button>
-            <!-- <view v-else id='msg-type' >{{CountdownBt}}秒</view> -->
           </view>
         </view>
 
@@ -74,7 +73,7 @@
           </view>
         </view>
       </view>
-    </van-dialog>
+    </van-dialog> -->
   </view>
 </template>
 
