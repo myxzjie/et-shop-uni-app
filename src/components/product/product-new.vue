@@ -8,18 +8,18 @@
         <swiper-item class="swiper-slide">
           <view class="product-swiper-item p-xs margin-bottom-sm mb-sm" @tap="onShopDetails(item)">
             <view class="title flex-sub bg-grey padding-xs margin-xs radius">
-              <image :src="item.image" class="image" />
+              <image :src="item.image" class="image" mode="widthFix" />
             </view>
             <view class="flex-sub bg-white padding-xs margin-xs radius">
               <view class="content">
-                <view class="text text-df">{{ item.storeName }}</view>
-                <view class="price margin-top-sm">
-                  <text class="sale-price text-xl text-red text-bold ">￥{{ item.price }}</text>
-                  <text class="raw-price margin-left-xs">￥{{ item.otPrice || 0 }}</text>
+                <view class="text text-xs">{{ item.storeName }}</view>
+                <view class="price margin-top-xs ">
+                  <text class="sale-price text-red">￥{{ item.price }}</text>
                 </view>
-                <view class="sales">
-                  <text class="sale-volume">已售{{ item.sales }}{{ item.unitName }}</text>
-                </view>
+                <view class="sales text-sm text-gray flex flex-wrap align-between">
+                  <text class="raw-price">￥{{ item.otPrice || 0 }}</text>
+                  <text class="sale-volume">已售 {{ item.sales }}{{ item.unitName }}</text>
+                  </view>
               </view>
             </view>
           </view>

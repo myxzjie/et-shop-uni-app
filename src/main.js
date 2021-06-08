@@ -8,14 +8,17 @@ import cuCustom from './colorui/components/cu-custom'
 // import uniPop from '@/components/uni-pop'
 import { resURL } from '@/utils/config'
 import schema from 'async-validator'
+import share from '@/mixins/share';
 
 import * as filters from '@/filters/index'
+
 
 // import
 // Vue.component('uni-pop', uniPop)
 
 Vue.use(uView)
 // Vue.use(vant)
+Vue.mixin(share)
 
 Vue.prototype.$http = http
 Vue.prototype.$store = store
