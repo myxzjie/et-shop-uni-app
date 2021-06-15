@@ -17,61 +17,56 @@
             </view>
           </view>
         </view>
-        <view class="nav flex flex-wrap row-around padding-tb-sm solid">
-          <!-- <van-tabs :active="active" @change="onChange">
-        <van-tab title="待付款" class="item" >
-          <view>待付款</view>
-           <view class="num">{{ orderData.unpaidCount || 0 }}</view>
-        </van-tab>
-        <van-tab title="待发货" class="item">
-          <view>待发货</view>
-          <view class="num">{{ orderData.unshippedCount || 0 }}</view>
-        </van-tab>
-        <van-tab title="标签 3" class="item">内容 3</van-tab>
-        <van-tab title="标签 4" class="item">内容 4</van-tab>
-      </van-tabs>
-      <view></view> -->
-          <view
-            class="item"
-            :class="{ on: type === 0 }"
-            @click="changeType(0)"
-          >
-            <view>待付款</view>
-            <view class="num">{{ orderData.unpaidCount || 0 }}</view>
+        
+
+        <scroll-view scroll-x class="bg-white nav">
+          <view class="flex text-center">
+            <view
+              class="cu-item flex-sub"
+              :class="type === 0 ? 'text-cyan cur' : ''"
+              @tap="changeType(0)"
+            >
+              <view>待付款</view>
+              <view>{{ orderData.unpaidCount || 0 }}</view>
+            </view>
+            <view
+              class="cu-item flex-sub"
+              :class="type === 1 ? 'text-cyan cur' : ''"
+              @tap="changeType(1)"
+            >
+              <view>待发货</view>
+              <view>{{ orderData.unshippedCount || 0 }}</view>
+            </view>
+
+            <view
+              class="cu-item flex-sub"
+              :class="type === 2 ? 'text-cyan cur' : ''"
+              @tap="changeType(2)"
+            >
+              <view>待收货</view>
+              <view>{{ orderData.receivedCount || 0 }}</view>
+            </view>
+
+            <view
+              class="cu-item flex-sub"
+              :class="type === 3 ? 'text-cyan cur' : ''"
+              @tap="changeType(3)"
+            >
+              <view>待评价</view>
+              <view>{{ orderData.evaluatedCount || 0 }}</view>
+            </view>
+
+            <view
+              class="cu-item flex-sub"
+              :class="type === 4 ? 'text-cyan cur' : ''"
+              @tap="changeType(4)"
+            >
+              <view>已完成</view>
+              <view>{{ orderData.completeCount || 0 }}</view>
+            </view>
           </view>
-          <view
-            class="item"
-            :class="{ on: type === 1 }"
-            @click="changeType(1)"
-          >
-            <view>待发货</view>
-            <view class="num">{{ orderData.unshippedCount || 0 }}</view>
-          </view>
-          <view
-            class="item"
-            :class="{ on: type === 2 }"
-            @click="changeType(2)"
-          >
-            <view>待收货</view>
-            <view class="num">{{ orderData.receivedCount || 0 }}</view>
-          </view>
-          <view
-            class="item"
-            :class="{ on: type === 3 }"
-            @click="changeType(3)"
-          >
-            <view>待评价</view>
-            <view class="num">{{ orderData.evaluatedCount || 0 }}</view>
-          </view>
-          <view
-            class="item"
-            :class="{ on: type === 4 }"
-            @click="changeType(4)"
-          >
-            <view>已完成</view>
-            <view class="num">{{ orderData.completeCount || 0 }}</view>
-          </view>
-        </view>
+        </scroll-view>
+
         <view class="margin-top-sm padding-sm bg-white">
           <view v-for="(order,orderListIndex) in orderList" :key="orderListIndex" class="order-wrap bg-white margin-bottom-sm">
             <view class="title flex flex-wrap align-between">
@@ -280,7 +275,7 @@ export default {
     }
   },
   onLoad(option) {
-    this.type = option.type
+    this.type = parseInt(option.type) || 0
   },
   onShow() {
     this.getOrderData()
@@ -301,7 +296,6 @@ export default {
       const that = this
       getOrderData().then(res => {
         this.orderData = res.data
-        that.$forceUpdate()
       })
     },
     takeOrder(order) {
@@ -433,6 +427,16 @@ export default {
   }
   .bottom {
      border-top: 1px solid #eee;
+  }
+}
+
+.nav {
+  .cu-item {
+    height: inherit;
+    display: inline-block;
+    line-height: initial;
+    margin: 0 10upx;
+    padding: 20upx 20upx;
   }
 }
 
