@@ -411,7 +411,11 @@ export default {
             })
           })
           .catch(err => {
-            this.$dialog.error(err.response.data.msg)
+            uni.showToast({
+              title: err.response.data.msg,
+              icon: 'none',
+              duration: 2000
+            })
           })
       }
     }

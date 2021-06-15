@@ -246,7 +246,7 @@ export default {
         that.getSeckillList()
         that.$nextTick(function() {
           that.sticky = true
-          wx.hideLoading()
+          uni.hideLoading()
         })
       })
     },
@@ -265,7 +265,7 @@ export default {
         that.status = res.data.length < that.limit
         that.seckillList.push.apply(that.seckillList, res.data)
         that.page++
-        wx.hideLoading()
+        uni.hideLoading()
       })
     },
     goDetail(id) {

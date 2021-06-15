@@ -378,9 +378,12 @@ export default {
         //   });
       } else {
         if (!this.mapKey) {
-          return this.$dialog.error(
-            '暂无法使用查看地图，请配置您的腾讯地图key'
-          )
+          uni.showToast({
+              title: '暂无法使用查看地图，请配置您的腾讯地图key',
+              icon: 'none',
+              duration: 2000
+            })
+          return
         }
         this.mapShow = true
       }

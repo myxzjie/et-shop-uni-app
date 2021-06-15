@@ -291,7 +291,7 @@ export default {
       } else {
         const data = {}
         data.productId = that.storeInfo.productId
-        data.cartNum = that.attr.productSelect.cart_num
+        data.cartNum = that.attr.productSelect.cartNum
         data.uniqueId = that.attr.productSelect.unique
         data.secKillId = that.storeInfo.id
         data.new = 1
@@ -300,7 +300,11 @@ export default {
             url: '/pages/order/submit/index?ids=' + res.data.cartId
           })
         }).catch(err => {
-          this.$dialog.error(err.response.data.msg)
+          uni.showToast({
+            title: err.msg,
+            icon: 'none',
+            duration: 2000
+          })
         })
       }
     }

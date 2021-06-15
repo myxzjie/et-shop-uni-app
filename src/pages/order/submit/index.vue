@@ -275,7 +275,11 @@ export default {
   methods: {
     addressType: function(index) {
       if (index && !this.system_store.id) {
-        return this.$dialog.error('暂无门店信息，您无法选择到店自提！')
+        uni.showToast({
+          title: '暂无门店信息，您无法选择到店自提！',
+          icon: 'none',
+          duration: 2000
+        })
       }
       this.shipping_type = index
     },
@@ -420,8 +424,7 @@ export default {
         mark: this.mark || '',
         shippingType: parseInt(shipping_type) + 1
       }).then((res) => {
-        debugger
-        wx.hideLoading()
+        uni.hideLoading()
         const data = res.data
         switch (data.status) {
           case 'ORDER_EXIST':
@@ -471,8 +474,8 @@ export default {
         }
       })
         .catch((err) => {
-          wx.hideLoading()
-          wx.showToast({
+          uni.hideLoading()
+          uni.showToast({
             title: err.response.data.msg || '创建订单失败',
             icon: 'none',
             duration: 2000

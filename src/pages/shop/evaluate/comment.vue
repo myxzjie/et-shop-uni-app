@@ -154,7 +154,14 @@ export default {
       this.scoreList[indexw].index = indexn
     },
     imageuploaded(res) {
-      if (res.errno !== 0) return this.$dialog.error(res.msg || '上传图片失败')
+      if (res.errno !== 0) {
+        uni.showToast({
+          title: res.msg || '上传图片失败',
+          icon: 'none',
+          duration: 2000
+        })
+        return 
+      }
       this.uploadPictures.push(res.data[0])
     },
     async submit() {

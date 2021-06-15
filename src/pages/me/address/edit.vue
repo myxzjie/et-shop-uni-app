@@ -254,7 +254,6 @@ export default {
           })
         })
       } catch (e) {
-        // this.$dialog.error(e.msg)
         uni.showToast({
           title: e.message,
           icon: 'none',

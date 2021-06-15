@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom bg-color="bg-gradual-olive">
+    <cu-custom :is-back="true" bg-color="bg-gradual-olive">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">

@@ -97,17 +97,27 @@ export default {
       this.reason = this.reasonList[e.mp.detail.value]
     },
     imageuploaded(res) {
-      if (res.status !== 200) { return this.$dialog.error(res.msg || '上传图片失败') }
+      if (res.status !== 200) { 
+        uni.showToast({
+          title: res.msg || '上传图片失败',
+          icon: 'none',
+          duration: 2000
+        })
+        return 
+      }
       this.refund_reason_wap_img.push(res.data.url)
     },
     getOrderDetail() {
       const that = this
       orderDetail(that.id).then(res => {
         that.orderInfo = res.data
-      })
-        .catch(err => {
-          this.$dialog.error(err.response.data.msg || '获取订单失败')
+      }).catch(err => {
+        uni.showToast({
+          title: err.response.data.msg || '获取订单失败',
+          icon: 'none',
+          duration: 2000
         })
+      })
     },
     getRefundReason() {
       getRefundReason().then(res => {
