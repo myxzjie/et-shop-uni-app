@@ -265,7 +265,7 @@ export default {
     font-weight: 300;
     color: #fff;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-    background-image: url(https://image.weilanwl.com/color2.0/index.jpg);
+    background-image: url(https://shop.cdn.dev56.com/assets/images/bg.jpg);
     background-size: cover;
     justify-content: center;
     flex-direction: column;

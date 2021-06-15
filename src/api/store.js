@@ -98,3 +98,17 @@ export function postOrderProduct(unique) {
 export function postOrderComment(data) {
   return request({ url: '/order/comment', method: 'post', data, power: true })
 }
+
+/**
+ * 产品评论列表
+ */
+export function getReplyList(id, q) {
+  return request({ url: `/reply/list/${id}`, data: q, power: true })
+}
+
+/**
+ * 产品评价数量和好评度
+ */
+export function getReplyConfig(id) {
+  return request({ url: `/reply/config/${id}`, power: true })
+}

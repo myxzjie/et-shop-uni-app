@@ -19,7 +19,7 @@
                 <view class="sales text-sm text-gray flex flex-wrap align-between">
                   <text class="raw-price">￥{{ item.otPrice || 0 }}</text>
                   <text class="sale-volume">已售 {{ item.sales }}{{ item.unitName }}</text>
-                  </view>
+                </view>
               </view>
             </view>
           </view>

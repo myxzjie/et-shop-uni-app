@@ -77,18 +77,18 @@
         </view>
       </view>
 
-      <view v-if="replyCount" class="userEvaluation">
-        <view class="title acea-row row-between-wrapper">
+      <view v-if="replyCount" class="bg-white margin-top-sm padding-sm userEvaluation">
+        <view class="title flex flex-wrap align-between solid-bottom padding-bottom-xs">
           <view>用户评价({{ replyCount }})</view>
           <view
             class="praise"
-            @click="$router.push({ path: '/pages/shop/EvaluateList/main',query:{id}})"
+            @tap="onEvaluate(id)"
           >
-            <span class="font-color-red">{{ replyChance }}%</span>好评率
-            <span class="iconfont icon-jiantou" />
+            <text class="text-red margin-right-xs">{{ replyChance }}%</text>好评率
+            <text class="cuIcon-right" />
           </view>
         </view>
-        <user-evaluation :reply="reply" />
+        <evaluation :reply="reply" />
       </view>
 
       <view class="bg-white margin-tb-sm">
@@ -194,7 +194,7 @@
             <!-- <a class="iconfont icon-dadianhua01 font-color-red" :href="'tel:' + system_store.phone"></a> -->
           </view>
         </view>
-        <view v-if="replyCount" class="userEvaluation">
+        <!-- <view v-if="replyCount" class="userEvaluation">
           <view class="title acea-row row-between-wrapper">
             <view>用户评价({{ replyCount }})</view>
             <view
@@ -205,9 +205,9 @@
               <span class="iconfont icon-jiantou" />
             </view>
           </view>
-          <user-evaluation :reply="reply" />
-        </view>
-        <view class="superior">
+          <evaluation :reply="reply" />
+        </view> -->
+        <!-- <view class="superior">
           <view class="title acea-row row-center-wrapper">
             <img :src="images.ling">
             <view class="titleTxt">优品推荐</view>
@@ -231,7 +231,7 @@
               </swiper>
             </view>
           </template>
-        </view>
+        </view> -->
         <!-- <view class="product-intro">
           <view class="title">产品介绍</view>
           <view class="conter" v-html="storeInfo.description" />
@@ -385,6 +385,7 @@ import ProductSwiper from '@/components/product/product-swiper'
 import ProductWindow from '@/components/shop/product-window'
 import cartDialog from '@/pages/shop/details/components/cart-dialog'
 // import UserEvaluation from '@components/UserEvaluation'
+import evaluation from '@/components/evaluation/index'
 // import CouponPop from '@components/CouponPop'
 // import StorePoster from '@components/StorePoster'
 // import ShareInfo from '@components/ShareInfo'
@@ -409,8 +410,8 @@ export default {
   components: {
     ProductSwiper,
     ProductWindow,
-    cartDialog
-    // UserEvaluation,
+    cartDialog,
+    evaluation
     // CouponPop,
     // StorePoster,
     // ShareInfo
@@ -909,12 +910,18 @@ export default {
     },
     listenerActionClose: function() {
       this.posters = false
+    },
+    onEvaluate(id) {
+      uni.navigateTo({
+        url: `/pages/shop/evaluate/index?id=${id}`
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .cu-modal {
   z-index:1020;
   .pictrue {

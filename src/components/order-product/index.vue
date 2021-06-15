@@ -48,7 +48,7 @@ export default {
   methods: {
     onEvaluate(unique) {
       uni.navigateTo({
-        url: `/pages/shop/evaluate/index?id=${unique}`
+        url: `/pages/shop/evaluate/comment?id=${unique}`
       })
     }
   }

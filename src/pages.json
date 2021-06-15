@@ -34,6 +34,9 @@
 			"path": "pages/shop/evaluate/index"
 		},
 		{
+			"path": "pages/shop/evaluate/comment"
+		},
+		{
 			"path": "pages/cart/index"
 		},
 		{

@@ -96,9 +96,7 @@
                   <image
                     v-if="cart.combinationId === 0 && cart.bargainId === 0 &&cart.seckillId === 0"
                     :src="cart.productInfo.image"
-                    @click.stop="
-                      $router.push({ path: '/pages/shop/GoodsCon/main',query:{id:cart.productInfo.id} })
-                    "
+                    @tap.stop="onShopDetails(cart.productInfo.id)"
                   />
                   <image
                     v-else-if="cart.combinationId > 0"
@@ -379,6 +377,11 @@ export default {
     onOrderDetails(orderId) {
       uni.navigateTo({
         url: `/pages/order/details/index?id=${orderId}`
+      })
+    },
+    onShopDetails(id) {
+      uni.navigateTo({
+        url: `/pages/shop/details/index?id=${id}`
       })
     },
     onWriteOff(order) {

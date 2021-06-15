@@ -323,38 +323,14 @@ page {
   border-top: 1px solid #f5f5f5;
 }
 
-.evaluateWtapper .evaluateItem .pic-text {
-  font-size: 0.26rem;
-  color: #282828;
-  height: 0.95rem;
-  padding: 0 0.3rem;
-}
-
-.evaluateWtapper .evaluateItem .pic-text .pictrue {
-  width: 0.56rem;
-  height: 0.56rem;
-  margin-right: 0.2rem;
-}
-
-.evaluateWtapper .evaluateItem .pic-text .pictrue .image {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-.evaluateWtapper .evaluateItem .pic-text .name {
-  max-width: 4.5rem;
-  margin-right: 0.15rem;
-}
-
 .evaluateWtapper .evaluateItem .time {
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #82848f;
   padding: 0 0.3rem;
 }
 
 .evaluateWtapper .evaluateItem .evaluate-infor {
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   color: #282828;
   margin-top: 0.19rem;
   padding: 0 0.3rem;
@@ -377,7 +353,7 @@ page {
 }
 
 .evaluateWtapper .evaluateItem .reply {
-  font-size: 0.26rem;
+  /* font-size: 0.26rem; */
   color: #454545;
   background-color: #f7f7f7;
   border-radius: 0.05rem;
@@ -4695,11 +4671,11 @@ page {
 
 /*商品评分*/
 .evaluate-list .generalComment {
-  height: 0.94rem;
-  padding: 0 0.3rem;
-  background-color: #fff;
-  font-size: 0.28rem;
-  color: #808080;
+  /* height: 0.94rem; */
+  /* padding: 0 0.3rem; */
+  /* background-color: #fff; */
+  /* font-size: 0.28rem; */
+  /* color: #808080; */
 }
 
 .evaluate-list .generalComment .evaluate {
@@ -4707,18 +4683,18 @@ page {
 }
 
 .evaluate-list .nav {
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #282828;
-  padding: 0 0.3rem 0.15rem 0.3rem;
+  /* padding: 0 0.3rem 0.15rem 0.3rem; */
   background-color: #fff;
   border-bottom: 1px solid #f5f5f5;
 }
 
 .evaluate-list .nav .item {
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #282828;
   border-radius: 0.06rem;
-  height: 0.54rem;
+  /* height: 0.54rem; */
   padding: 0 0.2rem;
   background-color: #f4f4f4;
   line-height: 0.54rem;

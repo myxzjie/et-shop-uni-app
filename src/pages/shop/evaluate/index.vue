@@ -4,232 +4,148 @@
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
-    <view class="evaluate-con evaluate-wrap">
-      <view v-if="orderCon.productInfo" class="flex flex-wrap row-between padding bg-white">
-        <view class="pictrue">
-          <image :src="orderCon.productInfo.image" class="image" />
-        </view>
-        <view class="content row-between padding-sm">
-          <view class="name ellipsis-line">{{ orderCon.productInfo.storeName }}</view>
-          <view class="money margin-top-xs">
-            <view class="text-lg text-red">￥{{ orderCon.productInfo.price }}</view>
-            <view class="num text-gray margin-top-xs">数量: x{{ orderCon.cartNum }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="score padding solid-top bg-white">
-        <view
-          v-for="(item, scoreListIndexw) in scoreList"
-          :key="scoreListIndexw"
-          class="item flex flex-wrap row-middle"
-        >
-          <view>{{ item.name }}</view>
-          <view class="stars padding-sm text-xxl">
-            <text
-              v-for="(itemn, index) in item.stars"
-              :key="index"
-              class="margin-left-sm"
-              :class="
-                item.index >= index
-                  ? 'cuIcon-favorfill text-yellow'
-                  : 'cuIcon-favor text-gray'
-              "
-              @click="stars(index, scoreListIndexw)"
-            />
-          </view>
-          <text class="evaluate">
-            {{
-              item.index === -1 ? "" : item.index + 1 + "分"
-            }}
-          </text>
-        </view>
-        <view class="textarea">
-          <textarea v-model="expect" placeholder="商品满足你的期待么？说说你的想法，分享给想买的他们吧~" />
-          <view class="list acea-row row-middle">
-            <view
-              v-for="(item, uploadPicturesIndex) in uploadPictures"
-              :key="uploadPicturesIndex"
-              class="pictrue"
-            >
-              <img :src="item">
-              <span
-                class="iconfont icon-guanbi1 font-color-red"
-                @click="uploadPictures.splice(uploadPicturesIndex, 1)"
-              />
+
+    <scroll-view scroll-y class="scrollPage">
+      <view class="evaluate-list">
+        <view class="header">
+          <view class="generalComment acea-row row-between-wrapper bg-white padding-sm">
+            <view class="acea-row row-middle font-color-red">
+              <view class="evaluate">评分</view>
+              <view class="stars">
+                <text
+                  v-for="star in replyData.replySstar|toInt"
+                  class="cuIcon-favorfill text-yellow"
+                />
+              </view>
             </view>
-          <!-- <VueCoreImageUpload
-            class="btn btn-primary"
-            :crop="false"
-            compress="80"
-            @imageuploaded="imageuploaded"
-            :headers="headers"
-            :max-file-size="5242880"
-            :credentials="false"
-            inputAccept="image/*"
-            inputOfFile="file"
-            :url="url"
-            v-if="uploadPictures.length < 8"
+            <view>
+              <text class="text-red">{{ replyData.replyChance || 0 }}%</text>好评率
+            </view>
+          </view>
+
+          <!-- <view class="nav acea-row row-middle padding">
+            <view
+              v-for="(item, navListIndex) in navList"
+              :key="navListIndex"
+              class="acea-row row-center-wrapper"
+              @click="changeType(navListIndex)"
+            >
+              <view
+                v-if="item.num"
+                class="item"
+                :class="currentActive === navListIndex ? 'bg-color-red' : ''"
+              >
+                {{ item.evaluate }}({{ item.num }})
+              </view>
+            </view>
+          </view> -->
+
+        </view>
+        <scroll-view scroll-x class="bg-white nav" scroll-with-animation :scroll-left="scrollLeft">
+          <view
+            v-for="(item, index) in navList"
+            :key="index"
+            class="cu-item"
+            :class="index === currentActive ? 'text-green cur' : ''"
+            :data-id="index"
+            @tap="changeType(index)"
           >
-            <view
-              class="pictrue uploadBnt acea-row row-center-wrapper row-column"
-            >
-              <span class="iconfont icon-icon25201"></span>
-              <view>上传图片</view>
-            </view>
-          </VueCoreImageUpload>-->
+            {{ item.evaluate }}({{ item.num }})
           </view>
+        </scroll-view>
+        <view class="bg-white padding">
+          <evaluation :reply="reply" />
         </view>
-        <view class="cu-bar btn-group margin-sm">
-          <button class="cu-btn bg-green shadow-blur round lg" @tap="submit">立即评价</button>
-        </view>
+        <loading :loaded="loadend" :loading="loading" />
       </view>
-    </view>
+    </scroll-view>
   </view>
 </template>
-
 <script>
-import { postOrderProduct, postOrderComment } from '@/api/store'
-import { trim } from '@/utils/index'
-// import { VUE_APP_API_URL } from '@config'
-import { required } from '@/utils/validate'
-import { validatorDefaultCatch } from '@/utils/dialog'
+import evaluation from '@/components/evaluation/index'
+// import UserEvaluation from '@/components/UserEvaluation'
+import { getReplyConfig, getReplyList } from '@/api/store'
+import Loading from '@/components/loading'
 
 export default {
-  components: {},
-  data() {
-    return {
-      orderCon: {
-        cartProduct: {
-          productInfo: {}
-        }
-      },
-      scoreList: [
-        {
-          name: '商品质量',
-          stars: ['', '', '', '', ''],
-          index: -1
-        },
-        {
-          name: '服务态度',
-          stars: ['', '', '', '', ''],
-          index: -1
-        }
-      ],
-      url: `/api/qiNiuContent`,
-      headers: {
-        Authorization: 'Bearer ' + this.$store.state.token
-      },
-      uploadPictures: [],
-      expect: '',
-      unique: ''
+  components: {
+    evaluation,
+    Loading
+  },
+  filters: {
+    toInt(value) {
+      if (value instanceof Number) return parseInt(value)
+      return value
     }
   },
-  watch: {
-    $route(n) {
-      if (n.name === NAME && this.unique !== n.params.id) {
-        this.unique = n.params.id
-        this.$set(this.scoreList[0], 'index', -1)
-        this.$set(this.scoreList[1], 'index', -1)
-        this.expect = ''
-        this.uploadPictures = []
-        this.getOrderProduct()
-      }
+  data() {
+    return {
+      productId: 0,
+      replyData: {},
+      navList: [
+        { evaluate: '全部', num: 0 },
+        { evaluate: '好评', num: 0 },
+        { evaluate: '中评', num: 0 },
+        { evaluate: '差评', num: 0 }
+      ],
+      currentActive: 0,
+      page: 1,
+      limit: 8,
+      reply: [],
+      loadTitle: '',
+      loading: false,
+      loadend: false
     }
   },
   onLoad(option) {
-    this.unique = option.id
+    this.productId = option.id
   },
   onShow() {
-    this.getOrderProduct()
+    this.getProductReplyCount()
+    this.getProductReplyList()
+  },
+  onReachBottom() {
+    !this.loading && this.getProductReplyList()
   },
   methods: {
-    getOrderProduct: function() {
+    getProductReplyCount: function() {
       const that = this
-      const unique = that.unique
-      postOrderProduct(unique).then(res => {
-        that.orderCon = res.data
+      getReplyConfig(that.productId).then(res => {
+        that.$set(that, 'replyData', res.data)
+        that.navList[0].num = res.data.sumCount
+        that.navList[1].num = res.data.goodCount
+        that.navList[2].num = res.data.inCount
+        that.navList[3].num = res.data.poorCount
       })
     },
-    stars: function(indexn, indexw) {
-      this.scoreList[indexw].index = indexn
-    },
-    imageuploaded(res) {
-      if (res.errno !== 0) return this.$dialog.error(res.msg || '上传图片失败')
-      this.uploadPictures.push(res.data[0])
-    },
-    async submit() {
-      const expect = trim(this.expect)
-      const product_score =
-          this.scoreList[0].index + 1 === 0 ? '' : this.scoreList[0].index + 1
-      const service_score =
-          this.scoreList[1].index + 1 === 0 ? '' : this.scoreList[1].index + 1
-      try {
-        await this.$validator({
-          product_score: [
-            required('请选择商品质量分数', {
-              type: 'number'
-            })
-          ],
-          service_score: [
-            required('请选择服务态度分数', {
-              type: 'number'
-            })
-          ]
-        }).validate({ product_score, service_score })
-      } catch (e) {
-        return validatorDefaultCatch(e)
-      }
-      postOrderComment({
-        productScore: product_score,
-        serviceScore: service_score,
-        unique: this.unique,
-        pics: this.uploadPictures.join(','),
-        comment: expect
-      }).then(() => {
-        uni.showToast({
-          title: '评价成功',
-          icon: 'success',
-          duration: 2000
-        })
-        const id = this.orderCon.orderId
-        uni.navigateTo({
-          url: `/pages/order/details/index?id=${id}`
-        })
-      }).catch(res => {
-        uni.showToast({
-          title: res.msg,
-          icon: 'none',
-          duration: 2000
-        })
+    getProductReplyList: function() {
+      const that = this
+      if (that.loading) return // 阻止下次请求（false可以进行请求）；
+      if (that.loadend) return // 阻止结束当前请求（false可以进行请求）；
+      that.loading = true
+      const q = { page: that.page, limit: that.limit, type: that.currentActive }
+      getReplyList(that.productId, q).then(res => {
+        that.loading = false
+        // apply();js将一个数组插入另一个数组;
+        that.reply.push.apply(that.reply, res.data)
+        that.loadend = res.data.length < that.limit // 判断所有数据是否加载完成；
+        that.page = that.page + 1
       })
+    },
+    changeType(index) {
+      const that = this
+      that.currentActive = index
+      that.page = 1
+      that.loadend = false
+      that.$set(that, 'reply', [])
+      that.getProductReplyList()
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.evaluate-wrap {
-  .pictrue{
-    .image{
-      width: 160upx;
-      height: 160upx;
-    }
-  }
-  .content {
-    width: calc(100% - 160upx);
-  }
-
-  .score .textarea {
-    border-radius: 5upx;
-    margin-top: 20upx;
-    textarea {
-      background: #eee;
-      padding: 10upx;
-      &:placeholder {
-        color: #bbb;
-      }
-    }
-  }
+<style scoped>
+.noCommodity {
+  height: 8rem;
+  background-color: #fff;
 }
 </style>
-
