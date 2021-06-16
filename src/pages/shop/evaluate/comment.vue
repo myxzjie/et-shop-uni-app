@@ -160,7 +160,7 @@ export default {
           icon: 'none',
           duration: 2000
         })
-        return 
+        return
       }
       this.uploadPictures.push(res.data[0])
     },

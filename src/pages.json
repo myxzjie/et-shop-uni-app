@@ -49,6 +49,9 @@
 			"path": "pages/order/refund/index"
 		},
 		{
+			"path": "pages/order/delivery/index"
+		},
+		{
 			"path": "pages/auth/login"
 		},
 		{

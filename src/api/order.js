@@ -110,7 +110,7 @@ export function delOrder(uni) {
  * @returns {*}
  */
 export function express(params) {
-  return request.post('order/express', params)
+  return request({url:'/order/express', method:'post', data:params})
 }
 
 /**

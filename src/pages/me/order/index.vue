@@ -17,7 +17,6 @@
             </view>
           </view>
         </view>
-        
 
         <scroll-view scroll-x class="bg-white nav">
           <view class="flex text-center">
@@ -158,9 +157,7 @@
               <template v-if="order._status._type == 2">
                 <view
                   class="cu-btn line-grey round sm"
-                  @click="
-                    $router.push({ path: '/pages/order/Logistics/main',query:{id:order.orderId}})
-                  "
+                  @tap="onDelivery(order.orderId)"
                 >查看物流</view>
                 <view class="margin-left-sm" />
                 <view class="cu-btn bg-cyan round sm" @tap="takeOrder(order)">确认收货</view>
@@ -376,6 +373,11 @@ export default {
     onShopDetails(id) {
       uni.navigateTo({
         url: `/pages/shop/details/index?id=${id}`
+      })
+    },
+    onDelivery(id) {
+      uni.navigateTo({
+        url: `/pages/order/delivery/index?id=${id}`
       })
     },
     onWriteOff(order) {

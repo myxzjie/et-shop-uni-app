@@ -213,9 +213,7 @@
         <view class="btn-group">
           <view
             class="cu-btn bg-orange round shadow-blur"
-            @tap="
-              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-            "
+            @tap="onDelivery(orderInfo.orderId)"
           >查看物流</view>
           <view class="cu-btn bg-cyan round shadow-blur" @tap="takeOrder">确认收货</view>
           <!-- <view class="cu-btn bg-cyan round shadow-blur" @tap="onWriteOff">核销码</view> -->
@@ -227,9 +225,7 @@
         <view class="btn-group">
           <view
             class="cu-btn bg-orange round shadow-blur"
-            @tap="
-              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-            "
+            @tap="onDelivery(orderInfo.orderId)"
           >查看物流</view>
         </view>
       </block>
@@ -240,9 +236,7 @@
           <view class="cu-btn bg-red round shadow-blur" @tap="delOrder">删除订单</view>
           <view
             class="cu-btn bg-orange round shadow-blur"
-            @tap="
-              $router.push({ path: '/pages/order/Logistics/main' ,query:{id:orderInfo.orderId }})
-            "
+            @tap="onDelivery(orderInfo.orderId)"
           >查看物流</view>
         </view>
       </block>
@@ -345,7 +339,7 @@ export default {
     copyClipboard(orderId) {
       uni.setClipboardData({
         data: orderId,
-        success: function(res) {
+        success: (res) => {
           uni.showToast({
             title: '复制成功'
           })
@@ -379,14 +373,19 @@ export default {
       } else {
         if (!this.mapKey) {
           uni.showToast({
-              title: '暂无法使用查看地图，请配置您的腾讯地图key',
-              icon: 'none',
-              duration: 2000
-            })
+            title: '暂无法使用查看地图，请配置您的腾讯地图key',
+            icon: 'none',
+            duration: 2000
+          })
           return
         }
         this.mapShow = true
       }
+    },
+    onDelivery(id) {
+      uni.navigateTo({
+        url: `/pages/order/delivery/index?id=${id}`
+      })
     },
     goBack() {
       uni.navigateTo({

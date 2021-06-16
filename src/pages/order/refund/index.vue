@@ -97,13 +97,13 @@ export default {
       this.reason = this.reasonList[e.mp.detail.value]
     },
     imageuploaded(res) {
-      if (res.status !== 200) { 
+      if (res.status !== 200) {
         uni.showToast({
           title: res.msg || '上传图片失败',
           icon: 'none',
           duration: 2000
         })
-        return 
+        return
       }
       this.refund_reason_wap_img.push(res.data.url)
     },
