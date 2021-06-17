@@ -11,7 +11,7 @@
           class="header acea-row row-between row-top"
         >
           <view class="pictrue">
-            <img :src="cart.productInfo.image" />
+            <img :src="cart.productInfo.image">
           </view>
           <view class="text acea-row row-between">
             <view class="name line2">{{ cart.productInfo.store_name }}</view>
@@ -21,11 +21,11 @@
             </view>
           </view>
         </view>
-        <view class="logisticsCon bg-white margin-bottom-sm" >
+        <view class="logisticsCon bg-white margin-bottom-sm">
           <view class="company flex flex-wrap align-between padding-sm">
             <view class="picTxt flex flex-wrap align-between">
               <view class="text-xxl">
-              <text class="cuIcon-deliver_fill text-olive" />
+                <text class="cuIcon-deliver_fill text-olive" />
               </view>
               <view class="text padding-left-sm">
                 <view>
@@ -41,8 +41,7 @@
             <view
               class="cu-btn line-olive sm"
               @tap="copyClipboard(orderInfo.deliveryId)"
-              >复制单号</view
-            >
+            >复制单号</view>
           </view>
           <view
             v-for="(express, expressListIndex) in expressList"
@@ -62,13 +61,13 @@
         <!-- 物流进度条 -->
         <view class="padding-sm bg-white">
           <view class="cu-timeline">
-          <view class="cu-time">物流跟踪</view>
-          <view class="cu-item text-olive cur" v-for="(item,index) in logisticsList" :key="index">
-            <view v-if="logisticsList.length>0" class="content bg-cyan shadow-blur">
-              <text>{{ item.acceptTime }}</text>
-              {{ item.acceptStation }}
+            <view class="cu-time">物流跟踪</view>
+            <view v-for="(item,index) in logisticsList" :key="index" class="cu-item text-olive cur">
+              <view v-if="logisticsList.length>0" class="content bg-cyan shadow-blur">
+                <text>{{ item.acceptTime }}</text>
+                {{ item.acceptStation }}
+              </view>
             </view>
-          </view>
           <!-- <view class="cu-item text-red cuIcon-attentionforbidfill">
             <view class="content bg-red shadow-blur">
               这是第一次，我家的铲屎官走了这么久。久到足足有三天！！
@@ -87,8 +86,7 @@
               <text>10:00</text> 【银河系】快件已到达银河系，准备发往月球
             </view>
           </view> -->
-        </view>
-
+          </view>
 
           <!--物流跟踪-->
           <view style="margin-bottom: 5px">
@@ -158,7 +156,7 @@
 </template>
 <script>
 // import Recommend from '@components/Recommend'
-import { express, orderDetail } from "@/api/order";
+import { express, orderDetail } from '@/api/order'
 
 export default {
   components: {
@@ -166,7 +164,7 @@ export default {
   },
   data() {
     return {
-      id: "",
+      id: '',
       cartInfo: [],
       orderInfo: {},
       expressList: [],
@@ -176,14 +174,14 @@ export default {
         //   message: "暂无数据",
         //   messageDate: "",
         // },
-      ],
-    };
+      ]
+    }
   },
   onLoad(option) {
-    this.id = option.id;
+    this.id = option.id
   },
   onShow() {
-    this.getExpress();
+    this.getExpress()
   },
   methods: {
     copyClipboard(deliveryId) {
@@ -191,39 +189,39 @@ export default {
         data: deliveryId,
         success: (res) => {
           uni.showToast({
-            title: "复制成功",
-          });
-        },
-      });
+            title: '复制成功'
+          })
+        }
+      })
     },
     getExpressInfo() {
       const params = {
         orderCode: this.id,
         shipperCode: this.orderInfo.deliverySn,
-        logisticCode: this.orderInfo.deliveryId,
-      };
+        logisticCode: this.orderInfo.deliveryId
+      }
       express(params)
         .then((res) => {
-          this.logisticsList = res.data.traces.reverse();
+          this.logisticsList = res.data.traces.reverse()
         })
         .catch((err) => {
           uni.showToast({
-            title: err.msg || "加载失败",
-            icon: "none",
-            duration: 2000,
-          });
-          return;
-        });
+            title: err.msg || '加载失败',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        })
     },
     getExpress() {
-      const that = this;
+      const that = this
       if (!that.id) {
         uni.showToast({
-          title: "订单不存在",
-          icon: "none",
-          duration: 2000,
-        });
-        return;
+          title: '订单不存在',
+          icon: 'none',
+          duration: 2000
+        })
+        return
       }
       that.loaded = false
       orderDetail(that.id)
@@ -231,9 +229,9 @@ export default {
           that.orderInfo = {
             deliveryId: res.data.deliveryId,
             deliveryName: res.data.deliveryName,
-            deliverySn: res.data.deliverySn,
-          };
-          that.getExpressInfo();
+            deliverySn: res.data.deliverySn
+          }
+          that.getExpressInfo()
           // const result = res.data.express.result || {};
           // this.cartInfo = res.data.order.cartInfo;
           // this.expressList = result.list || [];
@@ -241,14 +239,14 @@ export default {
         })
         .catch((err) => {
           uni.showToast({
-            title: err.msg || "加载失败",
-            icon: "none",
-            duration: 2000,
-          });
-        });
-    },
-  },
-};
+            title: err.msg || '加载失败',
+            icon: 'none',
+            duration: 2000
+          })
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>

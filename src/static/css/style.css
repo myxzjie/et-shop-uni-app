@@ -2964,38 +2964,6 @@ page {
   text-align: right;
 }
 
-.logistics .logisticsCon {
-  /* background-color: #fff; */
-  /* margin: 0.12rem 0; */
-}
-
-.logistics .logisticsCon .company {
-  /* height: 1.2rem; */
-  /* margin: 0 0 0.45rem 0.3rem; */
-  /* padding-right: 0.3rem; */
-  /* border-bottom: 1px solid #f5f5f5; */
-}
-
-.logistics .logisticsCon .company .picTxt {
-  /* width: 5.2rem; */
-}
-
-.logistics .logisticsCon .company .picTxt .iconfont {
-  /* width: 0.5rem; */
-  /* height: 0.5rem; */
-  /* background-color: #666;
-  text-align: center;
-  line-height: 0.5rem;
-  color: #fff; */
-  /* font-size: 0.35rem; */
-}
-
-.logistics .logisticsCon .company .picTxt .text {
-  /* width: 4.5rem; */
-  /* font-size: 0.26rem; */
-  /* color: #282828; */
-}
-
 .logistics .logisticsCon .company .picTxt .text .name {
   color: #999;
 }
@@ -4269,46 +4237,21 @@ page {
   background-color: #fff;
 }
 
-.product-con .assemble .item {
-  padding-right: 0.3rem;
-  margin-left: 0.3rem;
-  border-bottom: 1px solid #f0f0f0;
-  height: 1.32rem;
-}
-
-.product-con .assemble .item .pictxt {
-  width: 2.95rem;
-}
-
-.product-con .assemble .item .pictxt .text {
-  width: 1.94rem;
-}
-
-.product-con .assemble .item .pictxt .pictrue {
-  width: 0.8rem;
-  height: 0.8rem;
-}
-
-.product-con .assemble .item .pictxt .pictrue img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
 
 .product-con .assemble .item .right .lack {
-  font-size: 0.24rem;
+  font-size: 20upx;
   color: #333333;
   text-align: right;
 }
 
 .product-con .assemble .item .right .time {
-  font-size: 0.22rem;
+  font-size: 20upx;
   color: #82848f;
   margin-top: 0.05rem;
 }
 
 .product-con .assemble .item .right .spellBnt {
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #fff;
   width: 1.4rem;
   height: 0.5rem;
@@ -4423,12 +4366,12 @@ page {
 
 /*开团*/
 .group-con .header {
-  width: 100%;
-  height: 1.86rem;
+  /* width: 100%; */
+  /* height: 1.86rem; */
   background-color: #fff;
   border-top: 1px solid #f5f5f5;
-  padding: 0 0.3rem;
-  position: relative;
+  /* padding: 0 0.3rem; */
+  /* position: relative; */
 }
 
 .group-con .header .iconfont {
@@ -4437,17 +4380,6 @@ page {
   color: #ccc;
   right: 0.33rem;
   bottom: 0.2rem;
-}
-
-.group-con .header .pictrue {
-  width: 1.4rem;
-  height: 1.4rem;
-}
-
-.group-con .header .pictrue img {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.06rem;
 }
 
 .group-con .header .text {
@@ -4493,7 +4425,7 @@ page {
 
 .group-con .wrapper .title .name {
   margin: 0 0.45rem;
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   color: #282828;
 }
 
@@ -4509,7 +4441,7 @@ page {
   background-color: #ffcfcb;
   text-align: center;
   border-radius: 0.03rem;
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;
@@ -4518,7 +4450,7 @@ page {
 }
 
 .group-con .wrapper .tips {
-  font-size: 0.3rem;
+  /* font-size: 0.3rem; */
   font-weight: bold;
   text-align: center;
   margin-top: 0.3rem;
@@ -4539,12 +4471,6 @@ page {
   max-height: 20rem;
 }
 
-.group-con .wrapper .list .pictrue {
-  width: 0.94rem;
-  height: 0.94rem;
-  margin: 0 0 0.29rem 0.35rem;
-}
-
 .group-con .wrapper .list .pictrue img {
   width: 100%;
   height: 100%;
@@ -4557,18 +4483,18 @@ page {
 }
 
 .group-con .wrapper .lookAll {
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #282828;
   padding-top: 0.1rem;
 }
 
 .group-con .wrapper .lookAll .iconfont {
-  font-size: 0.25rem;
+  /* font-size: 0.25rem; */
   margin: 0.02rem 0 0 0.1rem;
 }
 
 .group-con .wrapper .teamBnt {
-  font-size: 0.3rem;
+  /* font-size: 0.3rem; */
   width: 6.2rem;
   height: 0.86rem;
   border-radius: 0.5rem;
@@ -4581,20 +4507,20 @@ page {
 .group-con .wrapper .cancel,
 .group-con .wrapper .lookOrder {
   text-align: center;
-  font-size: 0.24rem;
+  /* font-size: 0.24rem; */
   color: #282828;
   padding-top: 0.3rem;
 }
 
 .group-con .wrapper .cancel .iconfont {
-  font-size: 0.35rem;
+  /* font-size: 0.35rem; */
   color: #2c2c2c;
   vertical-align: -0.04rem;
   margin-right: 0.09rem;
 }
 
 .group-con .wrapper .lookOrder .iconfont {
-  font-size: 0.25rem;
+  /* font-size: 0.25rem; */
   color: #2c2c2c;
   margin-left: 0.1rem;
 }
@@ -4609,7 +4535,7 @@ page {
   margin-left: 0.3rem;
   height: 0.85rem;
   border-bottom: 1px solid #eee;
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   color: #282828;
 }
 
@@ -4619,7 +4545,7 @@ page {
 
 .group-con .group-recommend .title .more .iconfont {
   margin-left: 0.13rem;
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
 }
 
 .group-con .group-recommend .list {
@@ -4652,31 +4578,24 @@ page {
   line-height: 0.36rem;
   text-align: center;
   border-radius: 0 0.18rem 0.18rem 0;
-  font-size: 0.2rem;
+  /* font-size: 0.2rem; */
   color: #fff;
   background-image: linear-gradient(to right, #fb5445 0%, #e93323 100%);
   background-image: -moz-linear-gradient(to right, #fb5445 0%, #e93323 100%);
 }
 
 .group-con .group-recommend .list .item .name {
-  font-size: 0.28rem;
+  /* font-size: 0.28rem; */
   color: #333;
   margin-top: 0.18rem;
 }
 
 .group-con .group-recommend .list .item .money {
   font-weight: bold;
-  font-size: 0.26rem;
+  /* font-size: 0.26rem; */
 }
 
 /*商品评分*/
-.evaluate-list .generalComment {
-  /* height: 0.94rem; */
-  /* padding: 0 0.3rem; */
-  /* background-color: #fff; */
-  /* font-size: 0.28rem; */
-  /* color: #808080; */
-}
 
 .evaluate-list .generalComment .evaluate {
   margin-right: 0.07rem;

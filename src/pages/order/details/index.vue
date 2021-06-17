@@ -243,11 +243,10 @@
       <block v-if="status.type == 6">
         <view class="btn-group" />
         <view class="btn-group">
+          <view class="cu-btn bg-white round shadow-blur" />
           <view
             class="cu-btn bg-cyan round shadow-blur"
-            @tap="
-              $router.push({ path: '/pages/activity/GroupRule/main',query:{id:orderInfo.pinkId} })
-            "
+            @tap="onBuyGroupRule(orderInfo.pinkId)"
           >查看拼团</view>
         </view>
       </block>
@@ -353,6 +352,16 @@ export default {
       })
       // $router.push({ path: '/pages/order/GoodsReturn/main',query:{id:orderInfo.orderId } })
     },
+    onDelivery(id) {
+      uni.navigateTo({
+        url: `/pages/order/delivery/index?id=${id}`
+      })
+    },
+    onBuyGroupRule(id) {
+      uni.navigateTo({
+        url: `/pages/activity/buy-group/rule?id=${id}`
+      })
+    },
     showChang() {
       if (isWeixin()) {
         const config = {
@@ -381,11 +390,6 @@ export default {
         }
         this.mapShow = true
       }
-    },
-    onDelivery(id) {
-      uni.navigateTo({
-        url: `/pages/order/delivery/index?id=${id}`
-      })
     },
     goBack() {
       uni.navigateTo({

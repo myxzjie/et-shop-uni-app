@@ -43,7 +43,7 @@
             <view v-text="'已拼:' + storeInfo.sales + storeInfo.unitName" />
           </view>
         </view> -->
-        <view class="cu-bar notification-bar">
+        <view class="cu-bar notification-bar bg-white">
           <view class="cu-avatar bg-white">
             <text class="cuIcon-notificationfill text-sm text-olive" />
             <text class="text-sm padding-left-sm">已拼{{ storeInfo.sales }}{{ storeInfo.unitName }}</text>
@@ -87,31 +87,32 @@
         </view> -->
         <view class="assemble">
           <view v-for="(item, groupListindex) in groupList" :key="groupListindex">
-            <view v-if="groupListindex < groupListCount" class="item acea-row row-between-wrapper">
-              <view class="pictxt acea-row row-between-wrapper">
+            <view v-if="groupListindex < groupListCount" class="item acea-row row-between-wrapper padding-xs solid-bottom">
+              <view class="goup-user acea-row row-between-wrapper">
                 <view class="pictrue">
-                  <image :src="item.avatar" class="image" /></view>
-                <view class="text line1" v-text="item.nickname" />
+                  <image :src="item.avatar" class="image" />
+                </view>
+                <view class="name margin-left-sm" v-text="item.nickname" />
               </view>
-              <view class="right acea-row row-middle">
-                <view>
+              <view class="right acea-row row-middle ">
+                <view class="margin-right-sm">
                   <view class="lack">
                     还差
-                    <span class="font-color-red" v-text="item.count" />人成团
+                    <text class="text-red" v-text="item.count" />人成团
                   </view>
                   <count-down
                     :is-day="false"
                     :tip-text="'剩余 '"
-                    :day-text="''"
+                    :day-text="' '"
                     :hour-text="':'"
                     :minute-text="':'"
-                    :second-text="''"
+                    :second-text="' '"
                     :datatime="item.stopTime"
                   />
                 </view>
-                <view class="spellBnt" @click="groupRule(item.id)">
+                <view class="cu-btn bg-red round sm" @tap="groupRule(item.id)">
                   去拼单
-                  <span class="iconfont icon-jiantou" />
+                  <text class="cuIcon-right" />
                 </view>
               </view>
             </view>
@@ -172,7 +173,7 @@
               <text class="cuIcon-right" />
             </view>
           </view>
-          <UserEvaluation :reply="reply" />
+          <evaluation :reply="reply" />
         </view>
 
         <view class="padding bg-white">
@@ -219,9 +220,10 @@
 
 <script>
 import ProductSwiper from '@/components/product/product-swiper'
+import Evaluation from '@/components/evaluation/index'
 // import ProductConSwiper from '@components/ProductConSwiper'
-// import CountDown from '@components/CountDown'
-// import UserEvaluation from '@components/UserEvaluation'
+import CountDown from '@/components/count-down'
+
 // import ProductWindow from '@components/ProductWindow'
 // import StorePoster from '@components/StorePoster'
 import { getCombinationDetail } from '@/api/activity'
@@ -232,10 +234,10 @@ export default {
   components: {
     // // swiper,
     // // swiperSlide,
-    ProductSwiper
+    ProductSwiper,
+    Evaluation,
     // ProductConSwiper,
-    // CountDown,
-    // UserEvaluation,
+    CountDown,
     // ProductWindow,
     // StorePoster
   },
@@ -441,48 +443,60 @@ export default {
     text-decoration: line-through;
   }
 
-.notification-bar {
-  min-height: 60upx;
-  border-top: 1upx solid rgba(0, 0, 0, 0.05);
-  border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
-  .cu-avatar {
-    width: 170upx;
-    &:first-child {
-      margin-left: 0;
+  .notification-bar {
+    min-height: 60upx;
+    border-top: 1upx solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
+    .cu-avatar {
+      width: 170upx;
+      &:first-child {
+        margin-left: 0;
+      }
     }
-  }
-  .bar-swiper{
-    display: flex;
-    flex: 1;
-    .swiper {
-      width: 100%;
-      height: 60upx;
-      .swiper-slide {
-        .swiper-item {
-          border-left: 1upx solid rgba(0, 0, 0, 0.05);
-          padding: 10upx 20upx 0;
-          overflow: hidden;
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: flex;
-          -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
-          -webkit-box-align: center;
-          -webkit-align-items: center;
-          align-items: center;
-          -webkit-box-pack: justify;
-          -webkit-justify-content: space-between;
-          justify-content: space-between;
+    .bar-swiper{
+      display: flex;
+      flex: 1;
+      .swiper {
+        width: 100%;
+        height: 60upx;
+        .swiper-slide {
+          .swiper-item {
+            border-left: 1upx solid rgba(0, 0, 0, 0.05);
+            padding: 10upx 20upx 0;
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+          }
         }
       }
     }
   }
-}
 
-.group-rule {
-  border-bottom: 1upx solid #eee;
-  .title {
+  .group-rule {
     border-bottom: 1upx solid #eee;
+    .title {
+      border-bottom: 1upx solid #eee;
+    }
   }
-}
+
+  .assemble {
+    .item {
+      .pictrue {
+        .image {
+          width: 32upx;
+          height: 32upx;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
 </style>

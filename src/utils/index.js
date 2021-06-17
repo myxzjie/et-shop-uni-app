@@ -30,3 +30,31 @@ export function currentPage(params = {}) {
   const url = `/${currentPage.route}?${stringify(params)}`
   return url
 }
+
+export function parseQuery() {
+  var pages = getCurrentPages() // 获取加载的页面
+  var currentPage = pages[pages.length - 1] // 获取当前页面的对象
+  var url = currentPage.route // 当前页面url
+  var options = currentPage.options // 如果要获取url中所带的参数可以查看options
+  return options
+}
+
+export function handleQrCode() {
+  var urlSpread = parseQuery()['q']
+  if (urlSpread) {
+    // 通过海报二维码进来
+    urlSpread = urlSpread
+      .split('%3F')[1]
+      .replace(/%3D/g, ':')
+      .replace(/%26/g, ',')
+      .split(',')
+      .map((item, index) => {
+        item = item.split(':')
+        return `"${item[0]}":"${item[1]}"`
+      })
+      .join(',')
+    urlSpread = JSON.parse('{' + urlSpread + '}')
+    return urlSpread
+  }
+  return null
+}

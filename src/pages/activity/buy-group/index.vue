@@ -4,7 +4,7 @@
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
-    <view class="buy-group ">
+    <view class="buy-group">
       <view class="banner">
         <image src="https://shop.cdn.dev56.com/assets/images/group.png" class="image" />
       </view>
@@ -14,7 +14,6 @@
           v-for="(item, combinationListIndex) in combinationList"
           :key="combinationListIndex"
           class="item flex flex-wrap align-between padding"
-          @click="onBuyGroup(item.id)"
         >
           <view class="pictrue">
             <image class="image" :src="item.image" mode="widthFix" />
@@ -39,7 +38,10 @@
                   {{ item.people }}人团
                 </text>
               </view>
-              <view class="btn bg-cyan padding-tb-xs padding-lr-sm">
+              <view
+                class="btn bg-cyan padding-tb-xs padding-lr-sm"
+                @tap="onBuyGroup(item.id)"
+              >
                 去拼团
                 <text class="cuIcon-right" />
               </view>

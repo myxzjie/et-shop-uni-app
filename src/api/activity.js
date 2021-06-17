@@ -20,7 +20,7 @@ export function getCombinationDetail(id) {
  * @param {*} id
  */
 export function getCombinationPink(id) {
-  return request.get('/combination/pink/' + id)
+  return request({ url: `/combination/pink/${id}` })
 }
 
 /**

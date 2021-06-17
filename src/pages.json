@@ -121,6 +121,9 @@
 			"path": "pages/activity/buy-group/details"
 		},
 		{
+			"path": "pages/activity/buy-group/rule"
+		},
+		{
 			"path": "pages/activity/seckill/index"
 		},
 		{

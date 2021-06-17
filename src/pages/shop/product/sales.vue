@@ -5,11 +5,8 @@
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view>
-        <view class="et-topical et-topical-line">
-          <view class="et-topical-line-title">
-            <view>{{ name }}</view>
-          </view>
-        </view>
+
+        <tips-line :title="name" />
 
         <product-list :list="list" :is-sort="false" />
       </view>
@@ -18,10 +15,12 @@
 </template>
 
 <script>
+import TipsLine from '@/components/tips/tips-line'
 import productList from '@/components/product/product-list'
 import { getProductPromotion } from '@/api/store'
 export default {
   components: {
+    TipsLine,
     productList
   },
   data() {
@@ -80,27 +79,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.et-topical {
-  &-line {
-    display: flex;
-    margin: 1.5em auto;
-    width: 65%;
-    justify-content: center;
-    align-items: center;
-    &::before, &::after{
-      flex: 1;
-      background: var(--gray);
-      content: "";
-      height: 1upx;
-      margin: 0 20upx;
-    }
 
-    &-title {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-}
-
-</style>
