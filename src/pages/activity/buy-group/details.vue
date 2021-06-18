@@ -237,7 +237,7 @@ export default {
     ProductSwiper,
     Evaluation,
     // ProductConSwiper,
-    CountDown,
+    CountDown
     // ProductWindow,
     // StorePoster
   },
@@ -350,18 +350,16 @@ export default {
       // sTop.scrollTop = 0;
       this.posterImageStatus = !this.posterImageStatus
     },
-    groupRule: function(id) {
-      var that = this
-      that.$router.push({
-        path: '/pages/activity/GroupRule/main',
-        query: { id }
+    groupRule(id) {
+      const that = this
+      uni.navigateTo({
+        url: `/pages/activity/buy-group/rule?id=${id}`
       })
     },
-    goReply: function() {
-      var that = this
-      that.$router.push({
-        path: '/pages/shop/EvaluateList/main',
-        query: { id: that.storeInfo.product_id }
+    goReply() {
+      const that = this
+      uni.navigateTo({
+        url: `/pages/shop/evaluate/index?id=${that.storeInfo.productId}`
       })
     },
     setGroupListCount: function() {

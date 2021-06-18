@@ -95,29 +95,17 @@
                   <image
                     v-else-if="cart.combinationId > 0"
                     :src="cart.productInfo.image"
-                    @click.stop="
-                      $router.push({
-                        path: '/pages/activity/GroupDetails/main',query:{id:cart.combinationId}
-                      })
-                    "
+                    @tap.stop="onGroupDetails(cart.combinationId)"
                   />
                   <image
                     v-else-if="cart.bargainId > 0"
                     :src="cart.productInfo.image"
-                    @click.stop="
-                      $router.push({
-                        path: '/pages/activity/DargainDetails/main',query:{id:cart.bargainId}
-                      })
-                    "
+                    @tap.stop="onDargainDetails(cart.bargainId)"
                   />
                   <image
                     v-else-if="cart.seckillId > 0"
                     :src="cart.productInfo.image"
-                    @click.stop="
-                      $router.push({
-                        path: '/pages/activity/SeckillDetails/main',query:{id:cart.seckillId}
-                      })
-                    "
+                    @tap.stop="onSeckillDetails(cart.seckillId)"
                   />
                 </view>
                 <view class="content padding-left-sm ">
@@ -378,6 +366,21 @@ export default {
     onDelivery(id) {
       uni.navigateTo({
         url: `/pages/order/delivery/index?id=${id}`
+      })
+    },
+    onSeckillDetails(id){
+      uni.navigateTo({
+        url: `/pages/activity/seckill/details?id=${id}`
+      })
+    },
+    onDargainDetails(id){
+      uni.navigateTo({
+        url: `/pages/activity/bargain/details?id=${id}`
+      })
+    },
+    onGroupDetails(id){
+       uni.navigateTo({
+        url: `/pages/activity/buy-group/details?id=${id}`
       })
     },
     onWriteOff(order) {

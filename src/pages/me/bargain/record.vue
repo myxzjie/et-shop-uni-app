@@ -79,15 +79,14 @@ export default {
     !this.loadingList && this.getBargainUserList()
   },
   methods: {
-    goDetail: function(id) {
-      this.$router.push({
-        path: '/pages/activity/DargainDetails/main',
-        query: { id, partake: 0 }
+    goDetail(id) {
+      uni.navigateTo({
+        url: `/pages/activity/dargain/details?id=${id}&partake=0`
       })
     },
-    goList: function() {
-      this.$router.push({
-        path: '/pages/activity/GoodsBargain/main'
+    goList() {
+      uni.navigateTo({
+        url: '/pages/activity/dargain/index'
       })
     },
     getBargainUserList: function() {

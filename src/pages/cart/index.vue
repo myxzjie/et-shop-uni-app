@@ -47,7 +47,7 @@
             <view class="content align-between flex flex-wrap">
               <view class="padding-left-sm">
                 <checkbox-group @change="switchSelect(index)">
-                  <checkbox class="round" :class="item.checked?'checked':''" :checked="item.checked" value />
+                  <checkbox class="round sm" :class="item.checked?'checked':''" :checked="item.checked" value />
                 </checkbox-group>
               </view>
               <view
@@ -102,7 +102,7 @@
         <view class="cu-bar bg-white tabbar border shop foot">
           <view class="action checkbox-wrap">
             <checkbox-group class="checkbox-all" @change="allChecked">
-              <checkbox class="round" :class="isAllSelect && cartCount > 0 ?'checked':''" :checked="isAllSelect && cartCount > 0" value />
+              <checkbox class="round sm" :class="isAllSelect && cartCount > 0 ?'checked':''" :checked="isAllSelect && cartCount > 0" value />
             </checkbox-group>
             <text class="text margin-lr-xs text-df">全选 ({{ cartCount }})</text>
           </view>

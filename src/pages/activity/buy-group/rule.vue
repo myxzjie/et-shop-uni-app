@@ -219,18 +219,18 @@ export default {
       const that = this
       const data = { id: that.pinkId, cid: that.storeCombination.id }
       getCombinationRemove(data).then(res => {
-          uni.showToast({
-            title: res.msg,
-            icon: 'none',
-            duration: 2000
-          })
-        }).catch(res => {
-          uni.showToast({
-            title: res.msg,
-            icon: 'none',
-            duration: 2000
-          })
+        uni.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 2000
         })
+      }).catch(res => {
+        uni.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 2000
+        })
+      })
     },
     lookAll() {
       this.iShidden = !this.iShidden

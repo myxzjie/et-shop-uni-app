@@ -86,7 +86,7 @@
               @click="goPay"
             >立即支付</button>
 
-            <view class="cu-btn block round line-cyan margin-top-sm" @click="goList">抢更多商品</view>
+            <view class="cu-btn block round line-cyan margin-top-sm" @tap="goList">抢更多商品</view>
           </view>
           <view class="margin-bottom text-grey text-center">
             已有
@@ -264,14 +264,8 @@ export default {
       // partake == 0 不是分享
       if (this.partake === undefined || this.partake <= 0 || isNaN(this.partake)) {
         that.bargainPartake = that.userInfo.uid
-        console.log('>>1.bargainPartake:' + that.bargainPartake)
-        // that.$router.push({
-        //   path: "/pages/activity/DargainDetails/main",
-        //   query: { id: that.bargainId, partake: that.bargainPartake }
-        // });
       } else {
         that.bargainPartake = parseInt(this.partake)
-        console.log('>>2.bargainPartake:' + that.bargainPartake)
       }
       // that.getBargainHelpCountStart()
       that.getBargainDetail()
@@ -294,32 +288,28 @@ export default {
       data.uniqueId = ''
       data.bargainId = that.bargainId
       data.new = 1
-      postCartAdd(data)
-        .then(res => {
-          that.$router.push({
-            path: '/pages/order/OrderSubmission/main',
-            query: { ids: res.data.cartId }
-          })
+      postCartAdd(data).then(res => {
+        uni.navigateTo({
+          url: `/pages/order/submit/index?ids=${res.data.cartId}`
         })
-        .catch(err => {
-          uni.showToast({
-            title: err.response.data.msg,
-            icon: 'none',
-            duration: 2000
-          })
+      }).catch(err => {
+        uni.showToast({
+          title: err.response.data.msg,
+          icon: 'none',
+          duration: 2000
         })
-    },
-    goPoster: function() {
-      var that = this
-      that.getBargainShare(that.bargainId)
-      that.$router.push({
-        path: '/pages/activity/Poster/main',
-        query: { id: that.bargainId, type: 2 }
       })
     },
-    goList: function() {
-      this.$router.push({
-        path: '/pages/activity/GoodsBargain/main'
+    goPoster() {
+      const that = this
+      that.getBargainShare(that.bargainId)
+      uni.navigateTo({
+        url: `/pages/activity/poster/index?id=${that.bargainId}&type=2`
+      })
+    },
+    goList() {
+      uni.navigateTo({
+        url: '/pages/activity/bargain/index'
       })
     },
     // 砍价分享
@@ -433,7 +423,7 @@ export default {
         })
     },
     // 砍价帮
-    getBargainHelpList: function() {
+    getBargainHelpList() {
       var that = this
       if (that.helpListLoading === true) return
       if (that.helpListStatus === true) return
@@ -467,10 +457,6 @@ export default {
     //   getBargainHelpCount(data).then((res) => {
     //     console.log("getBargainHelpCount:",res)
     //   }).catch(() => {
-    //     // that.$router.push({
-    //     //   path: "/pages/activity/DargainDetails/main",
-    //     //   query: { id: that.bargainId, partake: that.userInfo.uid }
-    //     // });
     //   })
     // },
     getBargainHelpCount() {
@@ -489,10 +475,6 @@ export default {
         })
         .catch(() => {
           that.bargainPartake = that.userInfo.uid
-          // that.$router.push({
-          //   path: "/pages/activity/DargainDetails/main",
-          //   query: { id: that.bargainId, partake: that.userInfo.uid }
-          // });
         })
     },
     getBargainStartUser: function() {

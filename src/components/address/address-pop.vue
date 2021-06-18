@@ -75,7 +75,6 @@ export default {
     },
     goAddressPages() {
       uni.navigateTo({ url: '/pages/me/address/edit' })
-      // this.$router.push({ path: '/pages/user/address/AddAddress/main' })
       this.$emit('redirect')
     },
     tapAddress(index) {

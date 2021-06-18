@@ -89,7 +89,7 @@
   </view>
 </template>
 <script>
-import ProductRecommend from '@/components/shop/product-recommend'
+import ProductRecommend from '@/components/product/product-recommend'
 import { getProducts } from '@/api/store'
 // import debounce from 'lodash.debounce'
 import Loading from '@/components/loading'

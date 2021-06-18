@@ -183,6 +183,15 @@ checkbox .uni-checkbox-input {
 	height: 24px;
 }
 
+radio.sm .wx-radio-input,
+checkbox.sm .wx-checkbox-input,
+radio.sm .uni-radio-input,
+checkbox.sm .uni-checkbox-input {
+	margin: 0;
+	width: 16px;
+	height: 16px;
+}
+
 checkbox.round .wx-checkbox-input,
 checkbox.round .uni-checkbox-input {
 	border-radius: 100upx;
