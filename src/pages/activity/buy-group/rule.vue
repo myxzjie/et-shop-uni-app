@@ -182,10 +182,9 @@ export default {
       })
     },
     // goPoster() {
-    //   var that = this
-    //   this.$router.push({
-    //     path: '/pages/activity/Poster/main',
-    //     query: { id: that.pinkId, type: 1 }
+    //   const that = this
+    //   uni.navigateTo({
+    //     url: `/pages/activity/poster/index?id=${that.pinkId}&type=1`
     //   })
     // },
     goOrder() {

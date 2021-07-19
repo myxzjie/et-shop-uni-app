@@ -101,7 +101,7 @@ export default {
           that.loadingList = false
         })
         .catch(res => {
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000

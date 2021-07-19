@@ -226,21 +226,21 @@ export function getSpreadInfo() {
  * 推广人列表
  * */
 export function getSpreadUser(screen) {
-  return request({ url: '/spread/people', screen })
+  return request({ url: '/spread/people', method: 'POST', data: screen })
 }
 
 /*
  * 推广人订单
  * */
 export function getSpreadOrder(where) {
-  return request.post('/spread/order', where)
+  return request({url:'/spread/order', method:'POST', data:where})
 }
 
 /*
  * 资金明细（types|0=全部,1=消费,2=充值,3=返佣,4=提现）
  * */
 export function getCommissionInfo(q, types) {
-  return request.get('/spread/commission/' + types, q)
+  return request({ url: '/spread/commission/' + types, q })
 }
 
 /*

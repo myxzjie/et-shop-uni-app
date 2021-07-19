@@ -315,7 +315,7 @@ export default {
         this.page++
         this.loaded = res.data.length < this.limit
         this.loading = false
-        that.$forceUpdate()
+        // that.$forceUpdate()
       })
     },
     getStatus(order) {
@@ -368,18 +368,18 @@ export default {
         url: `/pages/order/delivery/index?id=${id}`
       })
     },
-    onSeckillDetails(id){
+    onSeckillDetails(id) {
       uni.navigateTo({
         url: `/pages/activity/seckill/details?id=${id}`
       })
     },
-    onDargainDetails(id){
+    onDargainDetails(id) {
       uni.navigateTo({
         url: `/pages/activity/bargain/details?id=${id}`
       })
     },
-    onGroupDetails(id){
-       uni.navigateTo({
+    onGroupDetails(id) {
+      uni.navigateTo({
         url: `/pages/activity/buy-group/details?id=${id}`
       })
     },

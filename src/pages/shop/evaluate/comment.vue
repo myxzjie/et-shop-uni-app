@@ -124,18 +124,6 @@ export default {
       unique: ''
     }
   },
-  watch: {
-    $route(n) {
-      if (n.name === NAME && this.unique !== n.params.id) {
-        this.unique = n.params.id
-        this.$set(this.scoreList[0], 'index', -1)
-        this.$set(this.scoreList[1], 'index', -1)
-        this.expect = ''
-        this.uploadPictures = []
-        this.getOrderProduct()
-      }
-    }
-  },
   onLoad(option) {
     this.unique = option.id
   },

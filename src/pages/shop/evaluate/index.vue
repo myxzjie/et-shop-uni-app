@@ -13,7 +13,8 @@
               <view class="evaluate">评分</view>
               <view class="stars">
                 <text
-                  v-for="star in replyData.replySstar|toInt"
+                  v-for="(star,index) in replyData.replySstar|toInt"
+                  :key="index"
                   class="cuIcon-favorfill text-yellow"
                 />
               </view>

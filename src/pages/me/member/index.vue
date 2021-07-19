@@ -75,7 +75,7 @@
                 <view>{{ item.finish ? "已满足条件" : "未满足条件" }}</view>
               </view>
               <view class="margin-top-sm">
-                <view class="cu-progress round sm">
+                <view class="cu-progress round sm striped">
                   <view class="bg-red" :style="[{ width: item.speed + '%' }]" />
                 </view>
               </view>

@@ -79,6 +79,9 @@
 			"path": "pages/me/commission/index"
 		},
 		{
+			"path": "pages/me/commission/details"
+		},
+		{
 			"path": "pages/me/integral/index"
 		},
 		{
@@ -101,6 +104,12 @@
 		},
 		{
 			"path": "pages/me/bind/phone"
+		},
+		{
+			"path": "pages/me/promoter/index"
+		},
+		{
+			"path": "pages/me/promoter/order"
 		},
 		{
 			"path": "pages/collection/index"

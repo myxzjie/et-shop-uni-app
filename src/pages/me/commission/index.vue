@@ -32,7 +32,7 @@
           <view class="cu-list grid col-2 no-border">
             <view class="cu-item">
               <view class="item-wrap margin-sm margin-bottom bg-white">
-                <navigator class="padding-tb" url="/pages/user/promotion/Poster/main">
+                <navigator class="padding-tb" url="/pages/me/card/index">
                   <view class="cuIcon-qr_code text-cyan" />
                   <view class="margin-tb">推广名片</view>
                 </navigator>
@@ -42,7 +42,7 @@
 
             <view class="cu-item">
               <view class="item-wrap margin-sm margin-bottom bg-white">
-                <navigator class="padding-tb" url="/pages/user/promotion/PromoterList/main">
+                <navigator class="padding-tb" url="/pages/me/promoter/index">
                   <view class="cuIcon-rankfill text-cyan" />
                   <view class="margin-tb">推广人统计</view>
                 </navigator>
@@ -51,7 +51,7 @@
 
             <view class="cu-item">
               <view class="item-wrap margin-sm margin-bottom bg-white">
-                <navigator class="padding-tb" url="/pages/user/promotion/CommissionDetails/main">
+                <navigator class="padding-tb" url="/pages/me/commission/details">
                   <view class="cuIcon-sponsorfill text-cyan" />
                   <view class="margin-tb">佣金明细</view>
                 </navigator>
@@ -61,7 +61,7 @@
 
             <view class="cu-item">
               <view class="item-wrap margin-sm margin-bottom bg-white">
-                <navigator class="padding-tb" url="/pages/user/promotion/PromoterOrder/main">
+                <navigator class="padding-tb" url="/pages/me/promoter/order">
                   <view class="cuIcon-form text-cyan" />
                   <view class="margin-tb">推广人订单</view>
                 </navigator>
@@ -69,14 +69,7 @@
             </view>
           </view>
         </view>
-        <!-- <view class="list acea-row row-between-wrapper margin">
-          <view
-            class="item acea-row row-center-wrapper row-column"
-            @click="$router.push('/pages/user/promotion/Poster/main')"
-          >
-            <span class="iconfont icon-erweima" />
-            <view>推广名片</view>
-          </view>
+        <!--
           <view
             class="item acea-row row-center-wrapper row-column"
             @click="$router.push('/pages/user/promotion/PromoterList/main')"

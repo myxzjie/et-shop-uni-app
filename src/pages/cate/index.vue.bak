@@ -71,7 +71,6 @@ export default {
       this.active = index
     },
     onProduct(item) {
-      // $router.push({path: '/pages/shop/GoodsList/main',query: { id: child.id, title: child.cateName }})
       const url = '/pages/shop/product/index?id=' + item.id + '&title=' + item.cateName
       uni.navigateTo({
         url: url

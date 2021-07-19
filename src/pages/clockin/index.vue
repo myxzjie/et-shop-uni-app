@@ -98,7 +98,7 @@
             <!-- <view
               v-if="signList.length > 0"
               class="Loads flex flex-wrap row-center"
-              @click="$router.push('/pages/user/signIn/SignRecord/main')"
+              @tap="onSignRecord()"
             >
               点击加载更多
               <text class="cuIcon-right" />
@@ -216,6 +216,11 @@ export default {
     },
     close() {
       this.active = false
+    },
+    onSignRecord() {
+      uni.navigateTo({
+        url: '/pages/user/signIn/SignRecord/main'
+      })
     }
   }
 }

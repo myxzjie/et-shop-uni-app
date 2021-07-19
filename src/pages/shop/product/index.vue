@@ -152,7 +152,7 @@ export default {
         this.loaded = false
         this.loading = false
         this.query.page = 1
-        this.query.sid = id
+        this.query.sid = that.id
         this.title = that.title
         this.nows = false
         this.productList = []

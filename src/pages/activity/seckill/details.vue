@@ -51,16 +51,6 @@
           <view class="conter padding-top-sm" v-html="storeInfo.description" />
         </view>
 
-        <!-- <view class="footerRush acea-row row-between-wrapper">
-          <view
-            class="customerSer acea-row row-center-wrapper row-column"
-            @click="$router.push({ path: '/pages/user/CustomerList/main' })"
-          >
-            <view class="iconfont icon-kefu" />
-            <view>客服</view>
-          </view>
-          <view class="bnt bg-color-red" @click="tapBuy">立即购买</view>
-        </view> -->
         <ProductWindow :attr="attr" @changeFun="changeFun" />
 
         <view class="cu-modal bottom-modal" :class="showModal ? 'show' : ''" @tap="hideModal">
