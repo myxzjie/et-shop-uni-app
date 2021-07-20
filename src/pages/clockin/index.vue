@@ -151,7 +151,8 @@ export default {
       day: ''
     }
   },
-  mounted: function() {
+  onLogin(option) {},
+  onShow() {
     this.signUser()
     this.signConfig()
     this.getSignList()

@@ -213,7 +213,6 @@ export default {
           uni.navigateTo({
             url: '/pages/me/commission/index'
           })
-          // this.$router.push({ path: '/pages/user/promotion/UserPromotion/main' })
         },
         error => {
           this.$dialog.message(error.msg)

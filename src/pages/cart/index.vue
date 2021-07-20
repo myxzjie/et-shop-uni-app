@@ -451,6 +451,11 @@ export default {
     }
   }
   .cart-list {
+    checkbox {
+      &:before {
+        right: 3px !important;
+      }
+    }
     .pictrue {
       > image {
         width: 150upx;
@@ -502,6 +507,9 @@ export default {
         display: inline-block;
         > checkbox {
           z-index: 5;
+          &:before {
+            right: 3px !important;
+          }
         }
       }
       .text {

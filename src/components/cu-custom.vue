@@ -7,9 +7,9 @@
           class="action border-custom"
           :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]"
         >
-          <text class="cuIcon-back" @tap="backPage" />
+          <text :style="[{'line-height':Custom.height+'px'}]" class="cuIcon-back" @tap="backPage" />
           <!-- <slot name="backText" /> -->
-          <text class="cuIcon-homefill" @tap="homePage" />
+          <text :style="[{'line-height':Custom.height+'px'}]" class="cuIcon-homefill" @tap="homePage" />
         </view>
         <view class="content" :style="[{top:StatusBar + 'px'}]">
           <slot name="content" />
@@ -58,12 +58,21 @@ export default {
   },
   methods: {
     backPage() {
-      if (getCurrentPages().length < 2 && typeof __wxConfig !== 'undefined') {
+      let delta = 1
+      const pages = getCurrentPages()
+
+      if (pages.length < 2 && typeof __wxConfig !== 'undefined') {
         const url = '/' + __wxConfig.pages[0]
         return uni.redirectTo({ url })
       }
+      
+      const beforePage = pages[pages.length - 2]
+      if(beforePage.route === 'pages/auth/login'){
+        delta = 2
+      }
+
       uni.navigateBack({
-        delta: 1
+        delta: delta
       })
     },
     homePage() {
