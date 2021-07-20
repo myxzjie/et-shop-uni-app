@@ -21,7 +21,7 @@
       </swiper>
       <view class="VerticalBox solid-top">
         <scroll-view
-          class="VerticalNav nav"
+          class="VerticalNav nav solid-right"
           scroll-y
           scroll-with-animation
           :scroll-top="verticalNavTop"
@@ -50,9 +50,9 @@
             v-for="(item, index) in list"
             :id="'main-' + index"
             :key="index"
-            class="item padding-top-sm margin-sm"
+            class="item margin-top-sm bg-white"
           >
-            <view class="cu-bar solid-bottom bg-white">
+            <view class="cu-bar solid-bottom ">
               <view class="action">
                 <text class="cuIcon-title text-green" /> {{ item.cateName }}</view>
             </view>
@@ -93,12 +93,14 @@ export default {
       ]
     }
   },
-  mounted() {
+  onLoad(options) {},
+  onShow() {
+    const that = this
     uni.showLoading({
       title: '加载中...',
       mask: true
     })
-    const that = this
+
     that.loadCategory()
     // const list = [{}]
     // for (let i = 0; i < 26; i++) {
@@ -181,7 +183,7 @@ export default {
   flex: 1;
   .item {
     &:first-child {
-      padding-top: 0;
+      margin-top: 0;
     }
   }
 }

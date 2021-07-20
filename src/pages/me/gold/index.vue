@@ -14,16 +14,16 @@
         </view>
 
         <view class="text-center">
-          <button class="cu-btn round bg-cyan sm" @click="toExchange">兑换核销金</button>
+          <button class="cu-btn round bg-cyan" @tap="toExchange">兑换核销金</button>
         </view>
         <view>
-          <view class="wrapper bg-white">
-            <view class="nav margin">
+          <view class="wrapper margin-top-sm">
+            <view class="nav">
               <view class="list">
                 <view
                   v-for="(item, listIndex) in list"
                   :key="listIndex"
-                  class="item acea-row row-between-wrapper"
+                  class="item margin-top-xs padding-sm bg-white acea-row row-between-wrapper"
                 >
                   <view>
                     <view class="state">{{ item.title }}</view>
@@ -33,7 +33,7 @@
                   <view v-if="item.pm == 0" class="num font-color-red">
                     -{{ item.number }}
                   </view>
-                  <view class="mark">描述: {{ item.mark }}</view>
+                  <view class="mark padding-top-sm text-sm">描述: {{ item.mark }}</view>
                 </view>
               </view>
             </view>
@@ -108,15 +108,18 @@ export default {
           })
 
           that.list.push.apply(that.list, res.data)
-          that.$forceUpdate()
         },
         err => {
-          that.$dialog.message(err.msg)
+          uni.showToast({
+            title: err.msg,
+            icon: 'none',
+            duration: 2000
+          })
         }
       )
     },
-    toExchange: function() {
-      this.$router.push({ path: '/pages/user/gold/gold-exchange/main' })
+    toExchange() {
+      uni.navigateTo({ url: '/pages/me/gold/cash' })
     }
   }
 }
@@ -175,15 +178,13 @@ export default {
 }
 
 .gold .wrapper .list {
-  background-color: #fff;
-  padding: 0.24rem 0.3rem;
+  // background-color: #fff;
+  // padding: 0.24rem 0.3rem;
 }
 
 .gold .wrapper .list .item {
-  /* height: 1.24rem; */
-  padding: 5rpx;
+  // padding: 5rpx;
   border-bottom: 1px solid #eee;
-  font-size: 0.24rem;
   color: #999;
 }
 
@@ -193,7 +194,6 @@ export default {
 }
 
 .gold .wrapper .list .item .state {
-  font-size: 0.28rem;
   color: #282828;
   margin-bottom: 0.08rem;
 
@@ -204,14 +204,11 @@ export default {
   display: block;
   width: 100%;
   text-align: left;
-  font-size: 0.28rem;
   color: #999;
-  padding: 15rpx 10rpx;
+  // padding: 15rpx 10rpx;
 }
 
 .gold .wrapper .list .item .num {
-  font-size: 0.36rem;
-  font-family: 'GuildfordProBook 5';
   color: #16ac57;
 }
 </style>

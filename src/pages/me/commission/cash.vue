@@ -51,7 +51,8 @@
           <view class="cu-form-group">
             <view class="title">提现</view>
             <input
-              v-model="post.money" name="money"
+              v-model="post.money"
+              name="money"
               :placeholder="'最低提现金额' + minPrice"
             >
           </view>
@@ -169,10 +170,10 @@ export default {
               money: money
             }
             that.save(save)
-          } catch ({errors, fields}) {
+          } catch ({ errors, fields }) {
             debugger
             uni.showToast({
-              title: e.message,
+              title: errors[0].message,
               icon: 'none',
               duration: 2000
             })

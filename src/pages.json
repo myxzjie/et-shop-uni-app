@@ -94,6 +94,9 @@
 			"path": "pages/me/gold/index"
 		},
 		{
+			"path": "pages/me/gold/cash"
+		},
+		{
 			"path": "pages/me/member/index"
 		},
 		{

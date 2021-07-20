@@ -19,7 +19,7 @@
     "build:quickapp-webview": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview vue-cli-service uni-build",
     "build:quickapp-webview-huawei": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview-huawei vue-cli-service uni-build",
     "build:quickapp-webview-union": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview-union vue-cli-service uni-build",
-    "staging:mp-weixin": "cross-env NODE_ENV=staging UNI_PLATFORM=mp-weixin vue-cli-service uni-build --minimize",
+    "staging:mp-weixin": "cross-env NODE_ENV=staging UNI_PLATFORM=mp-weixin UI_INPUT_DIR=dist/staging/mp-weixin vue-cli-service uni-build --minimize --mode staging",
     "dev:app-plus": "cross-env NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch",
     "dev:custom": "cross-env NODE_ENV=development uniapp-cli custom",
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",

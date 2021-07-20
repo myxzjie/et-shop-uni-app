@@ -118,11 +118,15 @@ export default {
     getInfo: function() {
       const that = this
       getSpreadInfo().then(
-        res => {
+        (res) => {
           that.Info = res.data
         },
-        function(err) {
-          that.$dialog.message(err.msg)
+        (err) => {
+          uni.showToast({
+            title: error.msg,
+            icon: 'none',
+            duration: 2000
+          })
         }
       )
     },

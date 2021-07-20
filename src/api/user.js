@@ -262,7 +262,7 @@ export function goldRecord(q) {
  * @param {*} data
  */
 export function goldExchange(data) {
-  return request.post('/gold/exchange', data)
+  return request({ url: '/gold/exchange', method: 'post', data: data })
 }
 
 /*

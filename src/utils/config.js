@@ -12,7 +12,8 @@ if (process.env.NODE_ENV === 'development') {
   baseURL = 'https://api.test.dev56.com/api'
 } else if (process.env.NODE_ENV === 'production') {
   // 生产环境
-  conf.baseURL = 'https://www.99jiuye.cn/api'
+  // conf.baseURL = 'https://www.99jiuye.cn/api'
+  baseURL = 'https://api.test.dev56.com/api'
 }
 
 const tokenKey = 'userToken'

@@ -60,17 +60,17 @@ export default {
     backPage() {
       let delta = 1
       const pages = getCurrentPages()
-
-      if (pages.length < 2 && typeof __wxConfig !== 'undefined') {
-        const url = '/' + __wxConfig.pages[0]
-        return uni.redirectTo({ url })
-      }
-      
       const beforePage = pages[pages.length - 2]
-      if(beforePage.route === 'pages/auth/login'){
+      if (beforePage.route === 'pages/auth/login') {
         delta = 2
       }
-
+      if (pages.length < 2 && typeof __wxConfig !== 'undefined') {
+        const url = '/' + __wxConfig.pages[0]
+        if (__wxConfig.pages[0] === 'pages/auth/login') {
+          url = '/pages/index/index'
+        }
+        return uni.redirectTo({ url })
+      }
       uni.navigateBack({
         delta: delta
       })
