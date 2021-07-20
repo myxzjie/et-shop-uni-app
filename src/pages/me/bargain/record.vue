@@ -37,14 +37,14 @@
               <view
                 v-if="item.status === 1"
                 class="cu-btn bg-gray round"
-                @click="getBargainUserCancel(item.bargainId)"
+                @tap="getBargainUserCancel(item.bargainId)"
               >取消活动</view>
               <view
                 v-if="item.status === 1"
                 class="cu-btn bg-cyan round margin-left-sm"
-                @click="goDetail(item.bargainId)"
+                @tap="goDetail(item.bargainId)"
               >继续砍价</view>
-              <view v-else class="cu-btn bg-cyan round margin-left-sm" @click="goList">重开一个</view>
+              <view v-else class="cu-btn bg-cyan round margin-left-sm" @tap="goList">重开一个</view>
             </view>
           </view>
         </view>
@@ -81,15 +81,15 @@ export default {
   methods: {
     goDetail(id) {
       uni.navigateTo({
-        url: `/pages/activity/dargain/details?id=${id}&partake=0`
+        url: `/pages/activity/bargain/details?id=${id}&partake=0`
       })
     },
     goList() {
       uni.navigateTo({
-        url: '/pages/activity/dargain/index'
+        url: '/pages/activity/bargain/index'
       })
     },
-    getBargainUserList: function() {
+    getBargainUserList() {
       var that = this
       if (that.loadingList) return
       if (that.status) return

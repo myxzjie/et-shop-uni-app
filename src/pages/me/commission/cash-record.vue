@@ -4,40 +4,39 @@
       <block slot="backText">返回</block>
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
-    <scroll-view scroll-y class="scrollPage">
-      <view ref="container" class="commission-details">
-        <view class="promoterHeader padding-sm">
-          <view class="headerCon acea-row row-between-wrapper">
-            <view>
-              <view class="name">佣金明细</view>
-              <view class="money">
-                ￥<span class="num">{{ commission || 0 }}</span>
-              </view>
+    <view ref="container" class="commission-details">
+      <view class="promoterHeader padding-sm">
+        <view class="headerCon acea-row row-between-wrapper">
+          <view>
+            <view class="name">提现记录</view>
+            <view class="money margin-top-sm">
+              总佣金 ￥<span class="num">{{ commission }}</span>
             </view>
           </view>
+          <text class="cuIcon-moneybag" />
         </view>
-        <view ref="content" class="sign-record">
-          <view class="list">
-            <view v-for="(item, infoIndex) in info" :key="infoIndex" class="item">
-              <view class="data padding-sm">{{ item.time }}</view>
-              <view v-for="(val, indexn) in item.list" :key="indexn" class="listn">
-                <view class="itemn padding-sm acea-row row-between-wrapper">
-                  <view>
-                    <view class="name line1">{{ val.title }}</view>
-                    <view class="margin-top-xs">{{ val.addTime }}</view>
-                  </view>
-                  <view v-if="val.pm == 1" class="num">+{{ val.number }}</view>
-                  <view v-if="val.pm == 0" class="num font-color-red">
-                    -{{ val.number }}
-                  </view>
+      </view>
+      <view ref="content" class="sign-record">
+        <view class="list">
+          <view v-for="(item, infoIndex) in info" :key="infoIndex" class="item">
+            <view class="data padding-sm padding-bottom-xs">{{ item.time }}</view>
+            <view v-for="(val, indexn) in item.list" :key="indexn" class="listn">
+              <view class="itemn padding-sm acea-row row-between-wrapper">
+                <view>
+                  <view class="name line1">{{ val.title }}</view>
+                  <view class="margin-top-xs">{{ val.addTime }}</view>
+                </view>
+                <view v-if="val.pm == 1" class="num">+{{ val.number }}</view>
+                <view v-if="val.pm == 0" class="num font-color-red">
+                  -{{ val.number }}
                 </view>
               </view>
             </view>
           </view>
         </view>
-        <Loading :loaded="loaded" :loading="loading" />
       </view>
-    </scroll-view>
+      <Loading :loaded="loaded" :loading="loading" />
+    </view>
   </view>
 </template>
 <script>
@@ -45,11 +44,10 @@ import { getCommissionInfo, getSpreadInfo } from '@/api/user'
 import Loading from '@/components/loading'
 
 export default {
-  name: 'CommissionDetails',
+  name: 'CashRecord',
   components: {
     Loading
   },
-  props: {},
   data() {
     return {
       info: [],
@@ -58,12 +56,12 @@ export default {
         page: 1,
         limit: 3
       },
-      types: 3,
+      types: 4,
       loaded: false,
       loading: false
     }
   },
-  onLoad() {},
+  onLoad(options) {},
   onShow() {
     this.getCommission()
     this.getIndex()
@@ -72,7 +70,7 @@ export default {
     this.loading === false && this.getIndex()
   },
   methods: {
-    getIndex() {
+    getIndex: function() {
       const that = this
       if (that.loading == true || that.loaded == true) return
       that.loading = true
@@ -80,12 +78,10 @@ export default {
         res => {
           that.loading = false
           that.loaded = res.data.length < that.where.limit
-          that.loadTitle = that.loaded ? '人家是有底线的' : '上拉加载更多'
           that.where.page = that.where.page + 1
           that.info.push.apply(that.info, res.data)
         },
         error => {
-          that.loading = false
           uni.showToast({
             title: error.msg,
             icon: 'none',

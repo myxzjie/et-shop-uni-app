@@ -82,6 +82,12 @@
 			"path": "pages/me/commission/details"
 		},
 		{
+			"path": "pages/me/commission/cash"
+		},
+		{
+			"path": "pages/me/commission/cash-record"
+		},
+		{
 			"path": "pages/me/integral/index"
 		},
 		{

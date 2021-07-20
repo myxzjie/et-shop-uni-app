@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom>
+    <cu-custom :is-back="true">
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
@@ -8,7 +8,7 @@
         <view class="header padding">
           <view class="name acea-row row-center-wrapper padding-top-xs">
             <view class="text-xl">总佣金</view>
-            <view class="record" @click="$router.push('/pages/user/promotion/CashRecord/main')">
+            <view class="record" @tap="onCashRecord">
               提现记录
               <span class="cuIcon-right" />
             </view>
@@ -26,7 +26,7 @@
           </view>
         </view>
         <view class="text-center">
-          <button class="cu-btn bg-cyan round sm" @click="toCash">立即提现</button>
+          <button class="cu-btn bg-cyan round" @tap="toCash">立即提现</button>
         </view>
         <view class="margin">
           <view class="cu-list grid col-2 no-border">
@@ -126,8 +126,11 @@ export default {
         }
       )
     },
-    toCash: function() {
-      this.$router.push({ path: '/pages/user/promotion/UserCash/main' })
+    onCashRecord() {
+      uni.navigateTo({ url: '/pages/me/commission/cash-record' })
+    },
+    toCash() {
+      uni.navigateTo({ url: '/pages/me/commission/cash' })
     }
   }
 }

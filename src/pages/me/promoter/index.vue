@@ -12,18 +12,17 @@
               <view>
                 <view class="name">推广人数</view>
                 <view>
-                  <text class="num">{{ first + second || 0 }}</text
-                  >人
+                  <text class="num">{{ first + second || 0 }}</text>人
                 </view>
               </view>
               <view v-if="spreadUser !== null">
                 <view class="prom-info">
-                  <view class="prom-row"
-                    >推荐人ID: <text class="userid">{{ spreadUser.uid }}</text></view
-                  >
-                  <view class="prom-row"
-                    >昵称: <text class="account">{{ spreadUser.account }}</text></view
-                  >
+                  <view
+                    class="prom-row"
+                  >推荐人ID: <text class="userid">{{ spreadUser.uid }}</text></view>
+                  <view
+                    class="prom-row"
+                  >昵称: <text class="account">{{ spreadUser.account }}</text></view>
                 </view>
               </view>
             </view>
@@ -117,7 +116,7 @@
             >
               <view class="picTxt flex flex-wrap align-between">
                 <view class="pictrue">
-                  <img :src="val.avatar" />
+                  <img :src="val.avatar">
                 </view>
                 <view class="text padding-left-sm">
                   <view class="name line1">{{ val.nickname }}</view>
@@ -140,12 +139,12 @@
   </view>
 </template>
 <script>
-import { getSpreadUser } from "@/api/user";
-import Loading from "@/components/loading";
+import { getSpreadUser } from '@/api/user'
+import Loading from '@/components/loading'
 
 export default {
   components: {
-    Loading,
+    Loading
   },
   data() {
     return {
@@ -154,8 +153,8 @@ export default {
         page: 1,
         limit: 15,
         grade: 0,
-        keyword: "",
-        sort: "",
+        keyword: '',
+        sort: ''
       },
       childCount: 2,
       numberCount: 2,
@@ -164,25 +163,25 @@ export default {
       loading: false,
       spreadUser: null,
       spreadList: [],
-      loadTitle: "",
-      first: "",
-      second: "",
+      loadTitle: '',
+      first: '',
+      second: '',
       images: {
-        sort1: "http://shop.cdn.dev56.com/assets/images/sort1.png",
-        sort2: "http://shop.cdn.dev56.com/assets/images/sort2.png",
-        sort3: "http://shop.cdn.dev56.com/assets/images/sort3.png",
-      },
-    };
+        sort1: 'http://shop.cdn.dev56.com/assets/images/sort1.png',
+        sort2: 'http://shop.cdn.dev56.com/assets/images/sort2.png',
+        sort3: 'http://shop.cdn.dev56.com/assets/images/sort3.png'
+      }
+    }
   },
   onLoad() {},
   onShow() {
-    this.getSpreadUsers();
+    this.getSpreadUsers()
   },
   onReachBottom() {
-    !this.loading && this.getSpreadUsers();
+    !this.loading && this.getSpreadUsers()
   },
   methods: {
-    handleScroll: function () {
+    handleScroll: function() {
       // var scrollTop =
       //   document.documentElement.scrollTop || document.body.scrollTop;
       // var offsetTop = document.querySelector(".header").clientHeight;
@@ -193,119 +192,119 @@ export default {
       // }
     },
     submitForm() {
-      this.screen.page = 0;
-      this.loaded = false;
-      this.loading = false;
-      this.spreadList = [];
-      this.getSpreadUsers();
+      this.screen.page = 0
+      this.loaded = false
+      this.loading = false
+      this.spreadList = []
+      this.getSpreadUsers()
     },
     getSpreadUsers() {
-      const that = this;
-      const screen = that.screen;
-      if (that.loaded || that.loading) return;
-      that.loading = true;
+      const that = this
+      const screen = that.screen
+      if (that.loaded || that.loading) return
+      that.loading = true
       getSpreadUser(screen).then(
         (res) => {
-          that.loading = false;
-          that.spreadList.push.apply(that.spreadList, res.data.list);
-          that.loaded = res.data.list.length < that.screen.limit; // 判断所有数据是否加载完成；
-          that.loadTitle = that.loaded ? "人家是有底线的" : "上拉加载更多";
-          that.screen.page = that.screen.page + 1;
-          that.first = res.data.total;
-          that.second = res.data.totalLevel;
-          that.spreadUser = res.data.spreadUser;
+          that.loading = false
+          that.spreadList.push.apply(that.spreadList, res.data.list)
+          that.loaded = res.data.list.length < that.screen.limit // 判断所有数据是否加载完成；
+          that.loadTitle = that.loaded ? '人家是有底线的' : '上拉加载更多'
+          that.screen.page = that.screen.page + 1
+          that.first = res.data.total
+          that.second = res.data.totalLevel
+          that.spreadUser = res.data.spreadUser
         },
         (error) => {
-          that.loading = false;
+          that.loading = false
           uni.showToast({
             title: error.msg,
-            icon: "none",
-            duration: 2000,
+            icon: 'none',
+            duration: 2000
           })
         },
         300
-      );
+      )
     },
     checkGrade(val) {
-      if (val == this.screen.grade) return;
+      if (val == this.screen.grade) return
       else {
-        this.screen.page = 1;
-        this.screen.grade = val;
-        this.loading = false;
-        this.loaded = false;
-        this.spreadList = [];
-        this.getSpreadUsers();
+        this.screen.page = 1
+        this.screen.grade = val
+        this.loading = false
+        this.loaded = false
+        this.spreadList = []
+        this.getSpreadUsers()
       }
     },
-    sort: function (types) {
-      const that = this;
+    sort: function(types) {
+      const that = this
       switch (types) {
-        case "childCount":
+        case 'childCount':
           if (that.childCount == 2) {
-            that.childCount = 1;
-            that.orderCount = 2;
-            that.numberCount = 2;
-            that.screen.sort = "childCount DESC";
+            that.childCount = 1
+            that.orderCount = 2
+            that.numberCount = 2
+            that.screen.sort = 'childCount DESC'
           } else if (that.childCount == 1) {
-            that.childCount = 3;
-            that.orderCount = 2;
-            that.numberCount = 2;
-            that.screen.sort = "childCount ASC";
+            that.childCount = 3
+            that.orderCount = 2
+            that.numberCount = 2
+            that.screen.sort = 'childCount ASC'
           } else if (that.childCount == 3) {
-            that.childCount = 2;
-            that.orderCount = 2;
-            that.numberCount = 2;
-            that.screen.sort = "";
+            that.childCount = 2
+            that.orderCount = 2
+            that.numberCount = 2
+            that.screen.sort = ''
           }
-          break;
-        case "numberCount":
+          break
+        case 'numberCount':
           if (that.numberCount == 2) {
-            that.numberCount = 1;
-            that.orderCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "numberCount DESC";
+            that.numberCount = 1
+            that.orderCount = 2
+            that.childCount = 2
+            that.screen.sort = 'numberCount DESC'
           } else if (that.numberCount == 1) {
-            that.numberCount = 3;
-            that.orderCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "numberCount ASC";
+            that.numberCount = 3
+            that.orderCount = 2
+            that.childCount = 2
+            that.screen.sort = 'numberCount ASC'
           } else if (that.numberCount == 3) {
-            that.numberCount = 2;
-            that.orderCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "";
+            that.numberCount = 2
+            that.orderCount = 2
+            that.childCount = 2
+            that.screen.sort = ''
           }
-          break;
-        case "orderCount":
+          break
+        case 'orderCount':
           if (that.orderCount == 2) {
-            that.orderCount = 1;
-            that.numberCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "orderCount DESC";
+            that.orderCount = 1
+            that.numberCount = 2
+            that.childCount = 2
+            that.screen.sort = 'orderCount DESC'
           } else if (that.orderCount == 1) {
-            that.orderCount = 3;
-            that.numberCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "orderCount ASC";
+            that.orderCount = 3
+            that.numberCount = 2
+            that.childCount = 2
+            that.screen.sort = 'orderCount ASC'
           } else if (that.orderCount == 3) {
-            that.orderCount = 2;
-            that.numberCount = 2;
-            that.childCount = 2;
-            that.screen.sort = "";
+            that.orderCount = 2
+            that.numberCount = 2
+            that.childCount = 2
+            that.screen.sort = ''
           }
-          break;
+          break
         default:
-          that.screen.sort = "";
+          that.screen.sort = ''
       }
 
-      this.screen.page = 0;
-      this.loaded = false;
-      this.loading = false;
-      this.spreadList = [];
-      this.getSpreadUsers();
-    },
-  },
-};
+      this.screen.page = 0
+      this.loaded = false
+      this.loading = false
+      this.spreadList = []
+      this.getSpreadUsers()
+    }
+  }
+}
 </script>
 
 <style>
