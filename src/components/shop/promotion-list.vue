@@ -4,7 +4,7 @@
       v-for="(item, promotionGoodIndex) in list"
       :key="promotionGoodIndex"
       class="item acea-row row-between-wrapper"
-      @click="onShopDetails(item)"
+      @tap="onShopDetails(item)"
     >
       <view class="pictrue">
         <image :src="item.image" class="image" /></view>
@@ -38,9 +38,8 @@ export default {
   },
   methods: {
     onShopDetails(item) {
-      const url = '/pages/shop/details/index?id=' + item.id
       uni.navigateTo({
-        url: url
+        url: `/pages/shop/details/index?id=${item.id}`
       })
     }
   }

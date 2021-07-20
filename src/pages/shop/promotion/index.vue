@@ -1,20 +1,30 @@
 <template>
-  <view class="quality-recommend">
-    <view class="title acea-row row-center-wrapper">
-      <view class="line" />
-      <view class="name">
-        <text class="iconfont icon-cuxiaoguanli" />促销单品
-      </view>
-      <view class="line" />
+  <view>
+    <cu-custom :is-back="true">
+      <block slot="backText">返回</block>
+      <view slot="content">{{ BaseName }}</view>
+    </cu-custom>
+    <divider-line title="促销单品"></divider-line>
+    <view class="quality-recommend">
+      <!-- <view class="title acea-row row-center-wrapper">
+        <view class="line" />
+        <view class="name">
+          <text class="iconfont icon-cuxiaoguanli" />促销单品
+        </view>
+        <view class="line" />
+      </view> -->
+      <promotion-list :list="list" />
     </view>
-    <promotion-list :list="list" />
   </view>
 </template>
 <script>
+import DividerLine from '@/components/divider-line'
 import promotionList from '@/components/shop/promotion-list'
 import { getProductPromotion } from '@/api/store'
+
 export default {
   components: {
+    DividerLine,
     promotionList
   },
   data() {

@@ -93,8 +93,7 @@ export default {
       ]
     }
   },
-  onLoad(options) {},
-  onShow() {
+  mounted() {
     const that = this
     uni.showLoading({
       title: '加载中...',

@@ -103,12 +103,12 @@ export default {
     save(data) {
       goldExchange(data).then(
         res => {
-           uni.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000
           })
-          uni.navigateTo({url:'/pages/me/gold/index'})
+          uni.navigateTo({ url: '/pages/me/gold/index' })
         },
         error => {
           uni.showToast({

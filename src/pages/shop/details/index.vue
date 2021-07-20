@@ -478,7 +478,9 @@ export default {
   // computed: mapGetters(['isLogin']),
   onLoad(option) {
     const that = this
-    this.id = option.id
+    that.id = option.id
+  },
+  onShow(){
     that.loadProductDetails()
   },
   mounted() {
