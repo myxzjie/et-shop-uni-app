@@ -1,5 +1,6 @@
 # et-shop-uni-app
 
+![好酒仓库](docs/images/gh.png '首页')
 
 好酒仓库小程序，基于uni-app、colorUi等开源组件开发
 

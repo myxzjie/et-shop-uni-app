@@ -13,9 +13,9 @@
             <text class="stock">库存: {{ attr.productSelect.stock }}</text>
           </view>
         </view>
-        <view class="iconfont icon-guanbi" @click="closeAttr" />
+        <view class="cuIcon-roundclose" @click="closeAttr" />
       </view>
-      <view class="productWinList">
+      <view class="productWinList" v-if="attr.productAttr">
         <view v-for="(item, indexw) in attr.productAttr" :key="indexw" class="item">
           <view class="title">{{ item.attrName }}</view>
           <view class="listn acea-row row-middle">

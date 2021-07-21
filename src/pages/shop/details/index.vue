@@ -305,24 +305,24 @@
             </view>
           </view>
           <view class="dialog-content padding">
-            <view class="flex flex-wrap row-between">
+            <view class="flex flex-nowrap row-left">
               <view class="pictrue">
                 <image :src="attr.productSelect.image" class="image" />
               </view>
-              <view class="content">
-                <view class="name">{{ attr.productSelect.storeName }}</view>
+              <view class="content padding-left-xs">
+                <view class="name ellipsis-line">{{ attr.productSelect.storeName }}</view>
                 <view class="sales text-left">
-                  <text class="price text-red text-xl">￥{{ attr.productSelect.price }}</text>
-                  <text class="stock margin-left">库存: {{ attr.productSelect.stock }}</text>
+                  <view class="price text-red text-df">￥{{ attr.productSelect.price }}</view>
+                  <view class="stock text-gray">库存: {{ attr.productSelect.stock }}</view>
                 </view>
               </view>
               <!-- <view class="cuIcon-roundclose" @click="hideModal" /> -->
             </view>
           </view>
 
-          <view class="attribute padding">
+          <view class="attribute padding" v-if="attr.productAttr.length>0">
             <view v-for="(item, indexw) in attr.productAttr" :key="indexw" class="item">
-              <view class="title text-left">{{ item.attrName }}</view>
+              <view class="title text-left text-gray">{{ item.attrName }}</view>
               <view class="flex flex-wrap row-middle">
                 <view
                   v-for="(itemn, indexn) in item.attrValue"
@@ -337,19 +337,19 @@
             </view>
           </view>
 
-          <view class="cart-quantity padding">
-            <view class="title text-left">数量</view>
-            <view class="flex flex-wrap row-left">
+          <view class="cart-quantity padding flex flex-wrap row-between">
+            <view class="title text-left text-gray">数量</view>
+            <view class="flex flex-wrap row-right">
               <view
                 class="decrease"
                 :class="attr.productSelect.cartNum <= 1 ? 'disable' : ''"
-                @click="ChangeCartNum(-1)"
+                @tap="ChangeCartNum(-1)"
               >-</view>
               <view class="quantity">{{ attr.productSelect.cartNum || 1 }}</view>
               <view
                 class="increase"
                 :class="attr.productSelect.cartNum >= attr.productSelect.stock? 'on': ''"
-                @click="ChangeCartNum(1)"
+                @tap="ChangeCartNum(1)"
               >+</view>
             </view>
           </view>
@@ -382,7 +382,7 @@
 <script>
 import ProductSwiper from '@/components/product/product-swiper'
 // import ProductSwiper from '@/components/shop/product-swiper'
-import ProductWindow from '@/components/shop/product-window'
+// import ProductWindow from '@/components/shop/product-window'
 import CartDialog from '@/pages/shop/details/components/cart-dialog'
 // import UserEvaluation from '@components/UserEvaluation'
 import evaluation from '@/components/evaluation/index'
@@ -409,7 +409,7 @@ import {
 export default {
   components: {
     ProductSwiper,
-    ProductWindow,
+    // ProductWindow,
     CartDialog,
     evaluation
     // CouponPop,
@@ -481,16 +481,13 @@ export default {
     that.id = option.id
   },
   onShow(){
-    that.loadProductDetails()
+    this.loadProductDetails()
   },
   mounted() {
     // Object.assign(this.$data, this.$options.data())
     // this.id = this.$route.query.id
     // this.productCon()
     // this.coupons();
-  },
-  onShow(e) {
-    this.loadProductDetails()
   },
   methods: {
     hideModal() {
@@ -602,6 +599,7 @@ export default {
           const { data } = res
           that.storeInfo = data.storeInfo
           that.attr.productAttr = data.productAttr
+          debugger
           that.productValue = data.productValue
           that.replyCount = data.replyCount
           that.replyChance = data.replyChance
@@ -939,12 +937,13 @@ export default {
     padding-top: 0;
   }
   .content {
-    .name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 100%;
-    }
+    overflow: hidden;
+    // .name {
+    //   overflow: hidden;
+    //   text-overflow: ellipsis;
+    //   white-space: nowrap;
+    //   width: 100%;
+    // }
   }
   .cuIcon-roundclose{
     font-size: 32upx;

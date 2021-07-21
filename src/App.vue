@@ -113,17 +113,17 @@ export default {
 </script>
 
 <style lang='scss'>
-  @import "./static/css/base.css";
-  @import './static/css/icon.scss';
+  @import "@/assets/css/base.css";
+  @import '@/assets/css/icon.scss';
 </style>
 <style lang='scss'>
-  @import "./static/css/reset.css";
+  @import "@/assets/css/reset.css";
 </style>
 <style lang='scss'>
-  @import "./static/css/style.css";
+  @import "@/assets/css/style.css";
 </style>
 <style>
-  @import './static/iconfont/iconfont.wxss';
+  @import '@/assets/iconfont/iconfont.wxss';
 </style>
 <style lang="scss">
 	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */

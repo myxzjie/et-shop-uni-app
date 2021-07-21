@@ -2869,6 +2869,10 @@ scroll-view.cu-steps .cu-item {
 	flex-wrap: wrap;
 }
 
+.flex-nowrap {
+	flex-wrap: nowrap;
+}
+
 .align-start {
 	align-items: flex-start;
 }
