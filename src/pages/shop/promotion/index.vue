@@ -4,7 +4,7 @@
       <block slot="backText">返回</block>
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
-    <divider-line title="促销单品"></divider-line>
+    <divider-line title="促销单品" />
     <view class="quality-recommend">
       <!-- <view class="title acea-row row-center-wrapper">
         <view class="line" />

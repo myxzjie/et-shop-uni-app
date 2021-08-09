@@ -320,7 +320,7 @@
             </view>
           </view>
 
-          <view class="attribute padding" v-if="attr.productAttr.length>0">
+          <view v-if="attr.productAttr.length>0" class="attribute padding">
             <view v-for="(item, indexw) in attr.productAttr" :key="indexw" class="item">
               <view class="title text-left text-gray">{{ item.attrName }}</view>
               <view class="flex flex-wrap row-middle">
@@ -480,7 +480,7 @@ export default {
     const that = this
     that.id = option.id
   },
-  onShow(){
+  onShow() {
     this.loadProductDetails()
   },
   mounted() {

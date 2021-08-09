@@ -1,5 +1,5 @@
 <script>
-// import auth from '@/utils/auth'
+import { checkSession } from '@/utils/auth'
 import { mapState } from 'vuex'
 import Vue from 'vue'
 export default {
@@ -13,7 +13,7 @@ export default {
     console.log('App Launch')
     const that = this
     uni.getSystemInfo({
-      success: function(e) {
+      success: (e) => {
         // #ifndef MP
         Vue.prototype.StatusBar = e.statusBarHeight
         if (e.platform === 'android') {
@@ -100,6 +100,8 @@ export default {
         uni.hideToast()
       }
     })
+
+    checkSession()
   },
   onShow() {
     console.log('App Show')

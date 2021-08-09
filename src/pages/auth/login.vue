@@ -12,12 +12,16 @@
       </view>
     </view>
     <view class="padding-xl">
-      <button
+      <!-- <button
         class="cu-btn bg-green shadow lg block"
         open-type="getUserInfo"
         @getuserinfo="getUserInfo"
-      >微信登录</button>
+      >微信登录</button> -->
       <!-- <button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo">微信授权登录</button> -->
+      <button
+        class="cu-btn bg-green shadow lg block"
+        @tap="getUserProfile"
+      >授权登录</button>
     </view>
 
     <!-- <view v-if="!hasLogin">
@@ -80,8 +84,8 @@
 <script>
 import { tokenKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
-import { wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
-import { redirectTo } from '@/utils/auth'
+import { wxappAuthLogin, wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
+import { redirectTo, appLogin, silentLogin } from '@/utils/auth'
 export default {
   data() {
     return {
@@ -139,10 +143,37 @@ export default {
   },
   methods: {
     ...mapMutations(['login', 'setSessionKey', 'setOpenid']),
+    getUserProfile(e) {
+      const that = this
+      const spread = null
+      appLogin(spread).then(res => {
+        if (res.status === 200) {
+          that.login('weixin')
+          uni.setStorageSync(tokenKey, res.data.token)
+          redirectTo()
+        } else if (res.status === 6000) {
+          that.show = true
+          return
+        } else if (res.status === 6002) {
+          that.register = true
+          that.userInfo = { encryptedData, iv, userInfo }
+          return
+        }
+      },
+      err => {
+        console.error(err)
+        uni.showToast({
+          title: '登录错误',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+    },
     getUserInfo(e) {
       const that = this
       // 数据
       const { encryptedData, iv, userInfo } = e.mp.detail
+      debugger
       that.authLogin(encryptedData, iv, userInfo)
     },
     getPhoneNumber(e) {
@@ -369,9 +400,6 @@ export default {
       width: 25px;
       height: 25px;
     }
-  }
-
-  .tab-bar-pic-active {
   }
 
   text {

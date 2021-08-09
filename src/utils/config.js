@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === 'development') {
   baseURL = 'https://api.test.dev56.com/api'
 }
 
+const sessionCodeKey = 'session-code'
 const tokenKey = 'userToken'
 const cartCheckedKey = 'cartChecked'
 
@@ -24,6 +25,7 @@ const cartCheckedKey = 'cartChecked'
 module.exports = {
   resURL: resURL,
   baseURL: baseURL,
+  sessionCodeKey: sessionCodeKey,
   tokenKey: tokenKey,
   cartCheckedKey: cartCheckedKey
 }

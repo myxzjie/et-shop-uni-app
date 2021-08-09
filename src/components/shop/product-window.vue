@@ -15,7 +15,7 @@
         </view>
         <view class="cuIcon-roundclose" @click="closeAttr" />
       </view>
-      <view class="productWinList" v-if="attr.productAttr">
+      <view v-if="attr.productAttr" class="productWinList">
         <view v-for="(item, indexw) in attr.productAttr" :key="indexw" class="item">
           <view class="title">{{ item.attrName }}</view>
           <view class="listn acea-row row-middle">

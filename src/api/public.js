@@ -15,6 +15,30 @@ export function wxappSessionCode(data) {
 /*
  * 小程序登陆
  * */
+export const wxappAuthLogin = (data) => {
+  return request({
+    url: '/auth/wxapp/login',
+    method: 'post',
+    data,
+    power: false
+  })
+}
+
+/*
+ * 小程序登陆
+ * */
+export const wxappReg = (data) => {
+  return request({
+    url: '/auth/wxapp/reg',
+    method: 'post',
+    data,
+    power: false
+  })
+}
+
+/*
+ * 小程序登陆
+ * */
 export function wxappAuth(data) {
   return request({
     url: '/wxapp/auth',

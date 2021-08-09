@@ -1,5 +1,89 @@
-import { tokenKey } from '@/utils/config'
+import { tokenKey, sessionCodeKey } from '@/utils/config'
 import { parseRoute, redirect } from '@/utils'
+import { wxappAuthLogin, wxappReg, wxappAuth, wxappSessionCode } from '@/api/public'
+
+export const checkSession = () => {
+  return new Promise((resolve) => uni.checkSession({
+    success() {
+      const sessionCode = uni.getStorageSync(sessionCodeKey)
+      if (!sessionCode) {
+        authSession()
+      }
+      resolve(true)
+    },
+    fail() {
+      uni.removeStorageSync(sessionCodeKey)
+      authSession()
+      resolve(true)
+    }
+  }))
+}
+
+export const login = () => {
+  return new Promise((resolve, reject) => {
+    uni.login({
+      success: (res) => {
+        resolve(res.code)
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
+
+export const authSession = async() => {
+  const code = await login()
+  wxappSessionCode({ code: code }).then(({ data }) => {
+    uni.setStorageSync(sessionCodeKey, data)
+  })
+}
+
+export const appLogin = async(spread) => {
+  const sessionCode = uni.getStorageSync(sessionCodeKey)
+  if (sessionCode.hasReg) {
+    return wxappAuthLogin({ openid: sessionCode.openid })
+  } else {
+    const { encryptedData, iv } = await userProfile()
+
+    return wxappReg({
+      sessionKey: sessionCode.session_key,
+      openid: sessionCode.openid,
+      spread: spread,
+      encryptedData: encryptedData,
+      iv: iv
+    }).then((res) => {
+      sessionCode.hasReg = true
+      uni.setStorageSync(sessionCodeKey, sessionCode)
+      return res
+    })
+  }
+}
+
+export const userProfile = () => {
+  return new Promise((resolve, reject) => uni.getUserProfile({
+    desc: '用于完善会员资料',
+    success: (res) => {
+      resolve(res)
+    },
+    fail: (err) => {
+      reject(err)
+    }
+  }))
+}
+
+export const silentLogin = (openid, spread) => {
+  return Promise.all([login(), userProfile()]).then((res) => {
+    const code = res[0]
+    const { encryptedData, iv } = res[1]
+
+    return wxappAuth({
+      code: code,
+      userData: { encryptedData, iv },
+      spread: spread
+    })
+  })
+}
 
 export function openLoginDialog() {
   const userToken = uni.getStorageSync(tokenKey)
