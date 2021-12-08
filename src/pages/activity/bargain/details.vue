@@ -188,7 +188,7 @@ import {
   getBargainStartUser
 } from '@/api/activity'
 import { postCartAdd } from '@/api/store'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 // import {} from '@libs/wechat'
 // import { isWeixin, parseQuery, handleQrCode } from '@/utils/index'
 // import { getUserInfo } from '@/api/user'
@@ -229,7 +229,7 @@ export default {
       }
     }
   },
-  computed: mapGetters(['userInfo']),
+  computed: { ...mapGetters(['userInfo']) },
   // watch: {
   //   $route: function(n) {
   //     var that = this;
@@ -242,13 +242,15 @@ export default {
     console.log('mounted options>', options)
   },
   onLoad(options) {
-    console.log('onLoad options>', options)
     const that = this
-    that.$store.dispatch('getUserInfo')
+    // that.$store.dispatch('getUserInfo')
     that.mountedStart(options)
     setTimeout(() => {
       that.loading = true
     }, 500)
+  },
+  onShow() {
+
   },
   methods: {
     mountedStart(options) {
@@ -325,7 +327,7 @@ export default {
     },
     // 获取产品详情
     getBargainDetail() {
-      var that = this
+      const that = this
       getBargainDetail(that.bargainId)
         .then(res => {
           that.$set(that, 'bargain', res.data.bargain)
@@ -342,14 +344,14 @@ export default {
     },
     // 开启砍价
     getBargainStart() {
-      var that = this
+      const that = this
       getBargainStart({ bargainId: that.bargainId })
         .then(() => {
           that.bargainPartake = that.userInfo.uid
           that.getBargainHelp()
         })
         .catch(res => {
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000
@@ -358,37 +360,35 @@ export default {
     },
     // 参与砍价
     getBargainHelp() {
-      var that = this
-      if (
-        that.surplusPrice === 0 &&
-        that.bargainPartake !== that.userInfo.uid
-      ) {
-        return wx.showToast({
+      const that = this
+      if (that.surplusPrice === 0 && that.bargainPartake !== that.userInfo.uid) {
+        debugger
+        uni.showToast({
           title: '好友已经砍价成功',
           icon: 'success',
           duration: 2000
         })
+        return
       }
-      var data = {
+      const data = {
         bargainId: that.bargainId,
         bargainUserUid: that.bargainPartake
       }
-      getBargainHelp(data)
-        .then(res => {
-          that.activeMsg = res.data.status
-          if (
-            res.data.status === 'SUCCESSFUL' &&
-            that.bargainPartake !== that.userInfo.uid
-          ) {
-            return that.$dialog.toast({ mes: '您已经砍过了' })
-          }
-          that.helpListStatus = false
-          that.page = 1
-          that.bargainHelpList = []
-          that.getBargainHelpPrice()
-        })
+      getBargainHelp(data).then(res => {
+        that.activeMsg = res.data.status
+        if (res.data.status === 'SUCCESSFUL' && that.bargainPartake !== that.userInfo.uid) {
+          debugger
+          uni.showToast({ title: '您已经砍过了' })
+          return
+        }
+        that.helpListStatus = false
+        that.page = 1
+        that.bargainHelpList = []
+        // 获取砍掉的金额
+        that.getBargainHelpPrice()
+      })
         .catch(res => {
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000
@@ -396,12 +396,9 @@ export default {
         })
     },
     // 获取砍掉的金额
-    getBargainHelpPrice: function() {
-      var that = this
-      getBargainHelpPrice({
-        bargainId: that.bargainId,
-        bargainUserUid: that.bargainPartake
-      })
+    getBargainHelpPrice() {
+      const that = this
+      getBargainHelpPrice({ bargainId: that.bargainId, bargainUserUid: that.bargainPartake })
         .then(res => {
           that.bargainHelpPrice = res.data.price
           that.getBargainHelpCount()
@@ -415,7 +412,7 @@ export default {
           }
         })
         .catch(res => {
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000
@@ -441,7 +438,7 @@ export default {
           that.bargainHelpList.push.apply(that.bargainHelpList, res.data)
         })
         .catch(res => {
-          wx.showToast({
+          uni.showToast({
             title: res.msg,
             icon: 'none',
             duration: 2000
@@ -461,24 +458,21 @@ export default {
     // },
     getBargainHelpCount() {
       const that = this
-      getBargainHelpCount({
-        bargainId: that.bargainId,
-        bargainUserUid: that.bargainPartake
+      const params = { bargainId: that.bargainId, bargainUserUid: that.bargainPartake }
+      getBargainHelpCount(params).then(res => {
+        that.userBargainStatus = res.data.status
+        that.helpCount = res.data.count
+        that.surplusPrice = res.data.price
+        that.alreadyPrice = res.data.alreadyPrice
+        that.pricePercent = res.data.pricePercent
+        that.price = (that.bargain.price - that.alreadyPrice).toFixed(2)
       })
-        .then(res => {
-          that.userBargainStatus = res.data.status
-          that.helpCount = res.data.count
-          that.surplusPrice = res.data.price
-          that.alreadyPrice = res.data.alreadyPrice
-          that.pricePercent = res.data.pricePercent
-          that.price = (that.bargain.price - that.alreadyPrice).toFixed(2)
-        })
         .catch(() => {
           that.bargainPartake = that.userInfo.uid
         })
     },
-    getBargainStartUser: function() {
-      var that = this
+    getBargainStartUser() {
+      const that = this
       getBargainStartUser({
         bargainId: that.bargainId,
         bargainUserUid: that.bargainPartake
@@ -495,7 +489,7 @@ export default {
           })
         })
     },
-    close: function() {
+    close() {
       this.active = false
     }
   },

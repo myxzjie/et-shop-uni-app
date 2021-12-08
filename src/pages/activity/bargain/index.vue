@@ -86,7 +86,6 @@ export default {
       })
     },
     goDetail(id) {
-      debugger
       uni.navigateTo({
         url: `/pages/activity/bargain/details?id=${id}&partake=0`
       })

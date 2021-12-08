@@ -60,8 +60,8 @@ export default {
   methods: {
     showTime: function() {
       const that = this
-      this.runTime()
-      setInterval(this.runTime, 1000)
+      that.runTime()
+      setInterval(that.runTime, 1000)
     },
     runTime() {
       const that = this

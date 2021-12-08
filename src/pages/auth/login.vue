@@ -150,6 +150,7 @@ export default {
         if (res.status === 200) {
           that.login('weixin')
           uni.setStorageSync(tokenKey, res.data.token)
+          that.$store.dispatch('getUserInfo', true)
           redirectTo()
         } else if (res.status === 6000) {
           that.show = true

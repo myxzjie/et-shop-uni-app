@@ -51,7 +51,7 @@ export default {
     // Recommend
   },
   props: {},
-  data: function() {
+  data() {
     return {
       now_money: 0,
       orderStatusSum: 0,

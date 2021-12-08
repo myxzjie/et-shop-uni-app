@@ -110,7 +110,7 @@ export function getBargainHelpPrice(data) {
  * @param {*} data
  */
 export function getBargainHelpCount(data) {
-  return request.post('/bargain/help/count', data)
+  return request({ url: '/bargain/help/count', method: 'POST', data })
 }
 
 /**
@@ -118,7 +118,7 @@ export function getBargainHelpCount(data) {
  * @param {*} data
  */
 export function getBargainStartUser(data) {
-  return request.post('/bargain/start/user', data)
+  return request({ url: '/bargain/start/user', method: 'POST', data })
 }
 
 /**
@@ -126,7 +126,7 @@ export function getBargainStartUser(data) {
  * @param {*} data
  */
 export function getBargainHelpList(data) {
-  return request.post('/bargain/help/list', data)
+  return request({ url: '/bargain/help/list', method: 'POST', data })
 }
 
 /**
@@ -134,7 +134,7 @@ export function getBargainHelpList(data) {
  * @param {*} data
  */
 export function getBargainPoster(data) {
-  return request.post('/bargain/poster', data)
+  return request({ url: '/bargain/poster', method: 'POST', data })
 }
 
 /**

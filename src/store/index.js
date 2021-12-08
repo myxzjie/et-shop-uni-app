@@ -47,7 +47,11 @@ const store = new Vuex.Store({
     currentColor(state) {
       return state.colorList[state.colorIndex]
     },
-    userInfo: state => state.userInfo || {}
+    userInfo: state => {
+      if (state.userInfo) return state.userInfo
+      const userInfo = uni.getStorageSync('userInfo')
+      return userInfo || {}
+    }
   },
   actions: {
     getUserInfo({ state, commit }, force) {
@@ -55,7 +59,8 @@ const store = new Vuex.Store({
         return Promise.resolve(state.userInfo)
       } else {
         return new Promise(resolve => {
-          getUserInfo().then((data) => {
+          getUserInfo().then(({ data }) => {
+            uni.setStorageSync('userInfo', data)
             commit('setUserInfo', data)
             resolve(data)
           }).catch(err => {
