@@ -28,7 +28,7 @@ export function postOrderComputed(key, data) {
  * @returns {*}
  */
 export function getOrderCoupon(price) {
-  return request.get('/coupons/order/' + (parseFloat(price) || 0))
+  return request({ url: '/coupons/order/' + (parseFloat(price) || 0) })
 }
 
 /**
@@ -62,7 +62,7 @@ export function getOrderList(data) {
  * @returns {*}
  */
 export function cancelOrder(id) {
-  return request.post('/order/cancel', { id })
+  return request({ url: '/order/cancel', method: 'POST', data: { id }})
 }
 
 /**
@@ -125,7 +125,7 @@ export function payOrder(uni, paytype, from) {
  * @returns {*}
  */
 export function orderVerific(verify_code, is_confirm) {
-  return request.post('order/order_verific', { verify_code, is_confirm })
+  return request({ url: 'order/order_verific', method: 'post', data: { verify_code, is_confirm }})
 }
 
 export function orderQrcode(params) {
@@ -133,5 +133,5 @@ export function orderQrcode(params) {
 }
 
 export function orderWriteOff(params) {
-  return request.post({ url: '/order/write-off', method: 'post', params })
+  return request({ url: '/order/write-off', method: 'post', params })
 }

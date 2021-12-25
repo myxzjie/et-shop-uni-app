@@ -383,7 +383,7 @@
 import ProductSwiper from '@/components/product/product-swiper'
 // import ProductSwiper from '@/components/shop/product-swiper'
 // import ProductWindow from '@/components/shop/product-window'
-import CartDialog from '@/pages/shop/details/components/cart-dialog'
+// import CartDialog from '@/pages/shop/details/components/cart-dialog'
 // import UserEvaluation from '@components/UserEvaluation'
 import evaluation from '@/components/evaluation/index'
 // import CouponPop from '@components/CouponPop'
@@ -410,7 +410,7 @@ export default {
   components: {
     ProductSwiper,
     // ProductWindow,
-    CartDialog,
+    // CartDialog,
     evaluation
     // CouponPop,
     // StorePoster,

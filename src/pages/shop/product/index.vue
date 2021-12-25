@@ -51,7 +51,7 @@
 
         <view class="padding-sm">
           <view class="cu-list grid no-border" :class="Switch === true ? 'col-2' : 'col-1'">
-            <view v-for="(item, index) in productList" :key="index" class="cu-item" @tap="onShopDetails">
+            <view v-for="(item, index) in productList" :key="index" class="cu-item" @tap="onShopDetails(item)">
               <view class="solid" :class="Switch === true ? '':'flex flex-wrap row-between'">
                 <view class="pictrue padding-xs">
                   <image :src="item.image" />
@@ -229,6 +229,7 @@ export default {
       that.Switch = !that.Switch
     },
     onShopDetails(item) {
+      debugger
       const url = '/pages/shop/details/index?id=' + item.id
       uni.navigateTo({
         url: url

@@ -196,11 +196,7 @@ import mixins from '@/mixins/index'
 import Loading from '@/components/loading'
 import QrCode from '@/components/order-product/qrcode'
 import { getOrderData, getOrderList, orderQrcode } from '@/api/order'
-// import {
-//   cancelOrderHandle,
-//   payOrderHandle,
-//   takeOrderHandle
-// } from '@/libs/order'
+import { cancelOrderHandle, payOrderHandle, takeOrderHandle } from '@/libs/order'
 // import Payment from '@components/Payment'
 // import { isWeixin } from '@utils'
 

@@ -1,7 +1,7 @@
 // import router from "../router";
 import store from '../store'
-import cookie from '@utils/store/cookie'
-import { isWeixin, login, getCurrentPageUrl, getCurrentPageUrlWithArgs, parseQuery, replace, handleQrCode } from '@utils'
+// import cookie from '@/utils/store/cookie'
+import { isWeixin, login, getCurrentPageUrl, getCurrentPageUrlWithArgs, parseQuery, replace, handleQrCode } from '@/utils'
 
 export default function toLogin(push, backUrl) {
   store.commit('LOGOUT')

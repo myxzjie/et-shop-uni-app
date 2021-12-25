@@ -27,7 +27,7 @@ export function getCombinationPink(id) {
  * 拼团 取消开团
  */
 export function getCombinationRemove(data) {
-  return request.post('/combination/remove', data)
+  return request({ url: '/combination/remove', method: 'POST', data })
 }
 
 /**
@@ -35,7 +35,7 @@ export function getCombinationRemove(data) {
  * @param {*} id
  */
 export function getCombinationPoster(data) {
-  return request.post('/combination/poster', data)
+  return request({ url: '/combination/poster', method: 'POST', data })
 }
 
 /**

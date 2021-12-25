@@ -92,7 +92,7 @@ export function getHomeData() {
  * @returns {*}
  */
 export function getArticleList(data) {
-  return request({ url: '/article/list/', method: 'get', data, power: false })
+  return request({ url: '/article/list', method: 'get', data, power: false })
 }
 
 /**
@@ -108,7 +108,7 @@ export function getArticleDetails(id) {
  * @returns {*}
  */
 export function getArticleBanner() {
-  return request.get('/article/banner/list', {}, { login: false })
+  return request({ url: '/article/banner/list', power: false })
 }
 
 /**
@@ -116,7 +116,7 @@ export function getArticleBanner() {
  * @returns {*}
  */
 export function getArticleCategory() {
-  return request.get('/article/category/list', {}, { login: false })
+  return request({ url: '/article/category/list', power: false })
 }
 
 /**
@@ -124,7 +124,7 @@ export function getArticleCategory() {
  * @returns {*}
  */
 export function getArticleHotList() {
-  return request.get('/article/hot/list', {}, { login: false })
+  return request({ url: '/article/hot/list', power: false })
 }
 
 /**
@@ -132,38 +132,15 @@ export function getArticleHotList() {
  * @returns {*}
  */
 export function getShare() {
-  return request.get('/share', {}, { login: false })
+  return request({ url: '/share', power: false })
 }
 
-/**
- * 获取微信sdk配置
- * @returns {*}
- */
-export function getWechatConfig() {
-  // return request.get(
-  //   "/wechat/config",
-  //   { url: document.location.href },
-  //   { login: false }
-  // );
-}
-
-/**
- * 获取微信sdk配置
- * @returns {*}
- */
-export function wechatAuth(code, spread, login_type) {
-  return request.get(
-    '/wechat/auth',
-    { code, spread, login_type },
-    { login: false }
-  )
-}
 /**
  * 获取快递公司
  * @returns {*}
  */
 export function getLogistics() {
-  return request.get('/logistics', {}, { login: false })
+  return request({ url: '/logistics', power: false })
 }
 
 /**

@@ -7,77 +7,14 @@
         {{ BaseName }}
         <text class="text-df">2.0</text>
       </view>
-      <view class="margin-top-sm">
-        <!-- <text></text> -->
-      </view>
+      <view class="margin-top-sm" />
     </view>
     <view class="padding-xl">
-      <!-- <button
-        class="cu-btn bg-green shadow lg block"
-        open-type="getUserInfo"
-        @getuserinfo="getUserInfo"
-      >微信登录</button> -->
-      <!-- <button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo">微信授权登录</button> -->
       <button
         class="cu-btn bg-green shadow lg block"
         @tap="getUserProfile"
       >授权登录</button>
     </view>
-
-    <!-- <view v-if="!hasLogin">
-      <view class="getUserInfo">
-        <text />
-        <button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo">微信授权登录</button>
-        <view class="sp-cell" />
-        <button type="default" @click="back">取消授权登录</button>
-      </view>
-    </view> -->
-
-    <!-- <van-dialog
-      use-slot
-      title="获取微信手机号"
-      :show="show"
-      async-close
-      show-cancel-button
-      z-index="50"
-      confirm-button-open-type="getPhoneNumber"
-      @close="onDialogClose"
-      @getphonenumber="getPhoneNumber"
-    />
-
-    <van-dialog
-      use-slot
-      title="请点击注册"
-      :show="register"
-      async-close
-      show-cancel-button
-      z-index="50"
-      @confirm="onSubmitRegister"
-      @close="onDialogClose"
-    >
-      <view class="uni-input-group">
-        <view class="uni-input-row">
-          <view class="uni-label">
-            <view class="lt-color">手机号</view>
-          </view>
-          <input v-model="phoneInfo.phoneNumber" type="text" placeholder="手机号">
-          <view class="uni-label">
-            <button class="btn-phone" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取微信手机</button>
-          </view>
-        </view>
-
-        <view class="uni-input-row">
-          <view class="uni-label">
-            <view class="lt-color">验证码</view>
-          </view>
-          <input v-model="code" type="text" placeholder="手机验证码">
-          <view class="uni-label">
-            <view v-if="isCountdown" @tap="sendMessge">获取验证码</view>
-            <view v-else>{{ countdown }}秒</view>
-          </view>
-        </view>
-      </view>
-    </van-dialog> -->
   </view>
 </template>
 
@@ -110,37 +47,7 @@ export default {
   computed: {
     ...mapState(['hasLogin', 'sessionKey', 'openid'])
   },
-  onLoad(options) {
-    // const that = this
-    // 调用 微信 login 获取 code
-    // uni.login({
-    //   success: (res) => {
-    //     console.log(res)
-    //     wxappSessionCode({ code: res.code }).then(({ data }) => {
-    //       that.setSessionKey(data.session_key)
-    //       that.setOpenid(data.openid)
-    //     }, err => {
-    //       console.error(err)
-    //     })
-    //     // uni.request({
-    //     //   url: '', // _self.apiServer+'member&m=codeToSession&code='+res.code,
-    //     //   success: (sessions) => {
-    //     //     console.log(sessions)
-    //     //     // session_key = sessions.data.session_key;
-    //     //   }
-    //     // })
-    //     // 获取用户信息
-    //     // uni.getUserInfo({
-    //     //   provider: 'weixin',
-    //     //   success: function(infoRes) {
-    //     //     console.log('用户昵称为：' + infoRes.userInfo.nickName)
-    //     //     uni.setStorageSync('userToken', '')
-    //     //     that.login(loginRes.body.data) // 将用户信息保存起来
-    //     //   }
-    //     // })
-    //   }
-    // })
-  },
+  // onLoad(options) {},
   methods: {
     ...mapMutations(['login', 'setSessionKey', 'setOpenid']),
     getUserProfile(e) {

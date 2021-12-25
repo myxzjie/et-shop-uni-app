@@ -17,10 +17,10 @@
         <view class="coupon-price flex flex-wrap align-center text-xxl" :class="item.isUse ? 'coupon-gray' : ''">
           ￥ <text class="price">{{ item.couponPrice }}</text>
         </view>
-        <view class="content padding-sm">
+        <view class="content padding-xs">
           <view class="condition ellipsis-line text-lg padding-xs">购物满{{ item.useMinPrice }}元可用</view>
           <view class="data flex flex-wrap align-between padding-top-sm">
-            <view v-if="item.endTime !== 0" class="padding-right">
+            <view v-if="item.endTime !== 0" class="padding-right text-gray">
               <!-- <data-format-t :data="item.startTime" />-
               <data-format-t :data="item.endTime" /> -->
               {{ item.startTime| dateFormat }} - {{ item.endTime | dateFormat }}
@@ -88,21 +88,25 @@ export default {
     !this.loading && this.getUseCoupons()
   },
   methods: {
-    getCoupon: function(id, index) {
+    getCoupon(id, index) {
       const that = this
       const list = that.couponsList
-      getCouponReceive(id)
-        .then(function(res) {
-          console.log('领取成功', res)
-          list[index].isUse = true
-          that.$dialog.toast({ mes: '领取成功' })
+      getCouponReceive(id).then((res) => {
+        list[index].isUse = true
+        uni.showToast({
+          title: '领取成功',
+          icon: 'success',
+          duration: 2000
         })
-        .catch(function(res) {
-          console.log('领取失败', res)
-          that.$dialog.toast({ mes: res.response.data.msg })
+      }).catch((res) => {
+        uni.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 2000
         })
+      })
     },
-    getUseCoupons: function() {
+    getUseCoupons() {
       const that = this
       if (that.loading) return // 阻止下次请求（false可以进行请求）；
       if (that.loadend) return // 阻止结束当前请求（false可以进行请求）；
@@ -123,11 +127,13 @@ export default {
 <style lang="scss" scoped>
 .coupon {
   .item {
+    margin-bottom: 20upx;
     .coupon-price{
       background-image: url('/static/coupon-red.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 200upx;
+      max-width: 200upx;
       color: #fff;
       font-weight: bold;
       text-align: center;
@@ -137,6 +143,7 @@ export default {
       }
     }
     .content {
+      width: calc(100% - 200upx);
       .condition {
         border-bottom: 1upx solid rgba(0, 0, 0, 0.05);
       }

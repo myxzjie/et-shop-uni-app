@@ -43,7 +43,7 @@
       <order-product :evaluate="0" :cart-info="orderGroupInfo.cartInfo" />
 
       <view class="wrap-box margin-top bg-white">
-        <view v-if="deduction === false" class="item flex flex-wrap align-between padding" @click="couponTap">
+        <view v-if="deduction === false" class="item flex flex-wrap align-between padding" @tap="couponTap">
           <view>优惠券</view>
           <view class="discount">
             {{ usableCoupon.couponTitle || "请选择" }}
@@ -187,6 +187,14 @@
       <view class="bg-red submit" @tap="createOrder">立即结算</view>
     </view>
 
+    <coupon-pop
+      v-model="showCoupon"
+      :price="orderPrice.totalPrice"
+      :checked="usableCoupon.id"
+      @couponchange="changecoupon($event)"
+      @checked="changeCoupon"
+    />
+
     <address-pop
       ref="address"
       v-model="showAddress"
@@ -203,6 +211,7 @@ import orderProduct from '@/components/order-product/index'
 // import CouponListWindow from '@components/CouponListWindow'
 import { postOrderConfirm, postOrderComputed, createOrder } from '@/api/order'
 import AddressPop from '@/components/address/address-pop'
+import CouponPop from '@/components/coupon/coupon-pop'
 import { mapGetters } from 'vuex'
 // import { weappPay } from '@libs/wechat'
 // import { isWeixin } from '@utils'
@@ -212,7 +221,7 @@ import mixins from '@/mixins/index'
 export default {
   components: {
     orderProduct,
-    // CouponListWindow,
+    CouponPop,
     AddressPop
   },
   mixins: [mixins],
@@ -476,7 +485,7 @@ export default {
         .catch((err) => {
           uni.hideLoading()
           uni.showToast({
-            title: err.response.data.msg || '创建订单失败',
+            title: err.msg || '创建订单失败',
             icon: 'none',
             duration: 2000
           })

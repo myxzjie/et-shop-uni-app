@@ -32,7 +32,7 @@ export function collectDelete(id, category) {
  * 批量收藏产品
  * */
 export function postCollectAll(data) {
-  return request.post('/collect/all', data)
+  return request({ url: '/collect/all', method: 'post', data })
 }
 
 /*
@@ -57,43 +57,11 @@ export function district(data) {
 }
 
 /**
- * 用户登录
- * @param data object 用户账号密码
- */
-export function login(data) {
-  return request.post('/login', data, { login: false })
-}
-
-/**
- * 用户手机号登录
- * @param data object 用户手机号 也只能
- */
-export function loginMobile(data) {
-  return request.post('/login/mobile', data, { login: false })
-}
-
-/**
  * 用户发送验证码
  * @param data object 用户手机号
  */
 export function registerVerify(data) {
   return request({ url: '/register/verify', method: 'POST', data, power: false })
-}
-
-/**
- * 用户手机号注册
- * @param data object 用户手机号 验证码 密码
- */
-export function register(data) {
-  return request.post('/register', data, { login: false })
-}
-
-/**
- * 用户手机号修改密码
- * @param data object 用户手机号 验证码 密码
- */
-export function registerReset(data) {
-  return request.post('/register/reset', data, { login: false })
 }
 
 /*
@@ -132,13 +100,6 @@ export function getUserInfo() {
 }
 
 /*
- * 小程序登陆
- * */
-export function wxappAuth(data) {
-  return request.post('/wxapp/auth', data, { login: false })
-}
-
-/*
  * 地址列表
  * */
 export function getAddressList(data) {
@@ -163,7 +124,7 @@ export function getAddressDefaultSet(id) {
  * 获取默认地址
  * */
 export function getAddressDefault() {
-  return request.get('/address/default')
+  return request({ url: '/address/default' })
 }
 
 /*
@@ -325,28 +286,21 @@ export function postUserEdit(data) {
  * 用户修改信息
  * */
 export function getChatRecord(to_uid, data) {
-  return request.get('user/service/record/' + to_uid, data)
+  return request({ url: 'user/service/record/' + to_uid, data })
 }
 
 /*
  * 用户修改信息
  * */
 export function serviceList() {
-  return request.get('user/service/list')
+  return request({ url: 'user/service/list' })
 }
 
 /*
  * 公众号充值
  * */
 export function rechargeWechat(data) {
-  return request.post('/recharge/wechat', data)
-}
-
-/*
- * 退出登录
- * */
-export function getLogout() {
-  return request.post('/auth/logout')
+  return request({ url: '/recharge/wechat', method: 'post', data })
 }
 
 /*
@@ -357,22 +311,16 @@ export function bindingPhone(data) {
 }
 
 /*
- * h5切换公众号登陆
- * */
-export function switchH5Login() {
-  return request.post('switch_h5', { from: 'wechat' })
-}
-/*
  * 获取推广人排行
  * */
 export function getRankList(q) {
-  return request.get('rank', q)
+  return request({ url: 'rank', q })
 }
 /*
  * 获取佣金排名
  * */
 export function getBrokerageRank(q) {
-  return request.get('brokerage_rank', q)
+  return request({ url: 'brokerage_rank', q })
 }
 
 /**
