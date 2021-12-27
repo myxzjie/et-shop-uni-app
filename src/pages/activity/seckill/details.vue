@@ -124,11 +124,11 @@
       <view class="cu-tabbar-height" />
     </scroll-view>
     <view class="cu-bar bg-white tabbar border shop foot">
-      <button class="action text-green" @tap="onCollect">
-        <view class="cuIcon-service">
+      <button class="action text-orange">
+        <view class="cuIcon-hot">
           <!-- <view class="cu-tag badge" /> -->
         </view>
-        客服
+        hot
       </button>
       <view class="bg-orange submit" @tap="tapBuy">立即购买</view>
     </view>
@@ -202,7 +202,7 @@ export default {
       this.showModal = false
     },
     mountedStart() {
-      var that = this
+      const that = this
       // that.datatime = parseInt(that.$route.query.time)
       getSeckillDetail(that.id).then(res => {
         that.$set(that, 'storeInfo', res.data.storeInfo)
@@ -219,7 +219,7 @@ export default {
         that.posterData.code = that.storeInfo.code_base
         that.setProductSelect()
         that.domStatus = true
-        that.getImageBase64()
+        // that.getImageBase64()
       })
     },
     getImageBase64() {

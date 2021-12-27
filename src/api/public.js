@@ -127,6 +127,10 @@ export function getArticleHotList() {
   return request({ url: '/article/hot/list', power: false })
 }
 
+export const saveArticleComment = (data) => {
+  return request({ url: '/article/comment', method: 'post', power: false })
+}
+
 /**
  * 分享
  * @returns {*}

@@ -7,7 +7,7 @@ const resURL = 'https://shop.cdn.dev56.com'
 if (process.env.NODE_ENV === 'development') {
   // 开发环境
   // conf.baseURL = 'http://localhost:8019/api'
-  baseURL = 'http://localhost:8019/api'
+  baseURL = 'http://localhost:8031/api'
 } else if (process.env.NODE_ENV === 'staging') {
   baseURL = 'https://api.test.dev56.com/api'
 } else if (process.env.NODE_ENV === 'production') {

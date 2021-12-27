@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="cu-modal bottom-modal" :class=" value ? 'show' : ''">
+    <view class="cu-modal bottom-modal" :class="value ? 'show' : ''">
       <view class="cu-dialog">
         <view class="cu-bar bg-white justify-end">
           <view class="content">优惠券</view>
