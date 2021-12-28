@@ -25,21 +25,15 @@
         <view class="content padding" v-html="article.content" />
       </view>
       <!-- 评论 -->
-      <view id="comment-wrap">
-        <comment />
+      <view class="comment-wrap">
+        <comment :data="commentItems" />
       </view>
-      <!--
-      <comment-item
-        style="padding-left: 68rpx;"
-        :commentChildren="items"
-        @child_up="handleCommentUp"
-        @child_down="handleCommentDown"
-        @child_reply="handleCommentInputPopupShow"/> -->
+       <view class="cu-tabbar-height" />
     </scroll-view>
 
     <view class="cu-bar tabbar input foot ">
       <view class="action">
-        <view class="comment-wrap text-gray" @tap="handleComment">写评论...</view>
+        <view class="comment text-gray" @tap="handleComment">写评论...</view>
       </view>
       <view class="action" @tap="togglePosition">
         <view class="cuIcon-mark text-gray">
@@ -58,16 +52,10 @@
 
     <view class="cu-modal bottom-modal" :class="hasModal?'show':''" @tap="hideModal">
       <view class="cu-dialog" @tap.stop="">
-        <!-- <view class="cu-bar bg-white">
-          <view class="action text-green">&nbsp</view>
-          <view class="action text-blue" @tap="hideModal">
-            <text class="cuIcon-close"/>
-          </view>
-        </view> -->
         <view class="padding-sm text-left">
-          <textarea class="comment-content " placeholder-style="color:#aaa" :focus="hasFocus" placeholder="写评论..." />
+          <textarea class="comment-content " placeholder-style="color:#aaa" placeholder="写评论..." :focus="hasFocus" v-model="comment.content" />
           <view class="cu-bar btn-group">
-            <button class="cu-btn bg-green shadow-blur round ">保存</button>
+            <button class="cu-btn bg-green shadow-blur round" @tap="onSaveArticleComment">保存</button>
           </view>
         </view>
       </view>
@@ -77,7 +65,7 @@
 
 <script>
 import moment from 'moment'
-import { getArticleDetails, saveArticleComment } from '@/api/public'
+import { getArticleDetails, saveArticleComment, getArticleComment } from '@/api/public'
 import Comment from './comment'
 export default {
   components: { Comment },
@@ -95,6 +83,10 @@ export default {
       hasFocus: false,
       positionSelect: false,
       scroll: 0,
+      comment: {
+        content: undefined
+      },
+      commentItems: [],
       items: [{
         criticImg: '',
         criticName: 'vito',
@@ -115,6 +107,13 @@ export default {
       const that = this
       getArticleDetails(that.id).then(res => {
         that.article = res.data
+        that.loadArticleComment()
+      })
+    },
+    loadArticleComment(){
+      const that = this   
+      getArticleComment(that.article.id).then(res => {
+        that.commentItems = res.data
       })
     },
     handleComment() {
@@ -127,16 +126,8 @@ export default {
       this.hasModal = false
     },
     togglePosition() {
-      // const query = uni.createSelectorQuery().in(this)
-      // query.select('#comment-wrap').boundingClientRect(data => {
-      //   //console.log('节点离页面顶部的距离为' + data.top)
-      //   uni.pageScrollTo({ duration: 100, // 过渡时间
-      //     scrollTop: data.top - this.CustomBar // 到达距离顶部的top值
-      //   })
-      // }).exec()
-
       const query = uni.createSelectorQuery().in(this)
-      query.select('#comment-wrap').boundingClientRect()
+      query.select('.comment-wrap').boundingClientRect()
       query.selectViewport().scrollOffset()
       query.exec(res => {
         if (this.positionSelect) {
@@ -154,36 +145,15 @@ export default {
             })
           }
         }
-        // if (this.positionSelect) {
-        //   this.positionSelect = false
-
-        //   // 从评论区域回到顶部
-        //   uni.createSelectorQuery().select('#comment-wrap').boundingClientRect(data => { // 目标位置的节点：类或者id
-        //     uni.createSelectorQuery().select('.article').boundingClientRect(res => { // 最外层盒子的节点：类或者id
-        //       debugger
-        //       console.log('得到布局位置信息' + JSON.stringify(data))
-        //       uni.pageScrollTo({
-        //         duration: 100, // 过渡时间
-        //         scrollTop: res.top - data.top // 返回顶部的top值
-        //       })
-        //     }).exec()
-        //   }).exec()
-        // } else {
-        //   this.positionSelect = true
-
-        //   // 从当前位置到达评论区域
-        //   uni.createSelectorQuery().select('#comment-wrap').boundingClientRect(data => { // 目标位置的节点：类或者id
-        //     uni.createSelectorQuery().select('.article').boundingClientRect(res => { // 最外层盒子的节点：类或者id
-        //       uni.pageScrollTo({
-
-        //         duration: 100, // 过渡时间
-
-        //         scrollTop: data.top - res.top // 到达距离顶部的top值
-
-        //       })
-        //     }).exec()
-        //   }).exec()
-        // }
+      })
+    },
+    onSaveArticleComment() {
+      const that = this;
+      const data = that.comment;
+      data.articleId = that.article.id
+      saveArticleComment(data).then(res => {
+        that.hideModal()
+        that.loadArticleComment()
       })
     },
     onPageScroll(e) { // 根据距离顶部距离是否显示回到顶部按钮
@@ -208,7 +178,7 @@ export default {
   }
 }
 .cu-bar {
-  .comment-wrap {
+  .comment {
     background: #eee;
     border-radius: 25upx;
     padding: 15upx;

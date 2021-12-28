@@ -3,10 +3,10 @@
     <!-- 评论组件 Component -->
     <view class="cu-bar bg-white solid-bottom margin-top">
       <view class="action"> <text class="cuIcon-title text-orange " /> 精彩评论 </view>
-      <picker class="write" :value="commentTypeIndex" :range="commentType" @change="bindPickerChange">
+      <!-- <picker class="write" :value="commentTypeIndex" :range="commentType" @change="bindPickerChange">
         {{ commentType[commentTypeIndex] }}
         <view class="icon_arrow" />
-      </picker>
+      </picker> -->
     </view>
     <!-- <view class="commentComponent extra-class"> -->
     <!-- 填写评论区域 -->
@@ -20,21 +20,21 @@
     <!-- </view> -->
     <block v-if="comments.length>0">
       <!-- 评论模块 -->
-      <block v-for="(item,index) in comments" :key="index">
+      <block v-for="(item,index) in data" :key="index">
         <view class="commentItem" catchtap="_goToReply" :data-contentid="item.id" :data-replyid="item.id" :data-battle-tag="item.displayName">
           <view class="titleWrap">
-            <image class="logo" :src="item.headPortrait||'这里替换默认图'" />
+            <image class="logo" :src="item.avatar||'这里替换默认图'" />
             <view class="authorWrap">
-              <view class="author">{{ item.displayName }}</view>
-              <view class="time">{{ item.createTime }}</view>
+              <view class="author">{{ item.nickName }}</view>
+              <view class="time">{{ item.createDate | dateFormat }}</view>
             </view>
             <view class="starWrap" catchtap="_clickLike" :data-index="index" :data-like="item.like" :data-contentid="item.id" :data-topicid="item.topicId">
-              <text class="count">{{ item.likeTotal||"" }}</text>
+              <text class="count">{{ item.praise || "" }}</text>
               <view class="workSprite icon "-item-like-star-icon-has-click-:-star-icon- />
             </view>
           </view>
           <view class="text">
-            {{ item.contentText }}
+            {{ item.content }}
           </view>
         </view>
         <!-- 评论的评论 -->
@@ -62,7 +62,21 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
+  props:{
+    data: {
+      type: Array,
+      default: () => []
+    }
+  },
+  filters: {
+    dateFormat(value) {
+      // value = value / 1000
+      return moment(value).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
   data() {
     return {
       comments: [

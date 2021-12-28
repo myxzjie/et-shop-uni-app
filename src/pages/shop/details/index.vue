@@ -9,7 +9,7 @@
       <product-swiper :img-urls="storeInfo.sliderImageArr" />
 
       <view class="bg-white padding-sm">
-        <view class="flex flex-wrap row-between row-bottom">
+        <view class="flex flex-wrap row-between row-bottom ">
           <view class="">
             <text class="text-red text-bold text-xl">￥{{ storeInfo.price }}</text>
           <!-- <text
@@ -22,8 +22,11 @@
             class="image"
           > -->
           </view>
-        <!-- 分享海报 -->
-        <!-- <view class="iconfont icon-fenxiang" @click="listenerActionSheet" /> -->
+        <!-- 分享海报 @tap="listenerActionSheet"-->
+        <view class="text-olive">
+          <button class="cu-btn round line-olive sm" open-type="share"><view class="cuIcon-forward"></view>分享</button>
+          
+        </view>
         </view>
 
         <view class="introduce margin-top">{{ storeInfo.storeName }}</view>
@@ -272,18 +275,7 @@
           :poster-data="posterData"
           @setPosterImageStatus="setPosterImageStatus"
         />
-        <ShareInfo :share-info-status="shareInfoStatus" @setShareInfoStatus="setShareInfoStatus" />
-        <view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
-          <view v-if="weixinStatus === true" class="item" @click="setShareInfoStatus">
-            <view class="iconfont icon-weixin3" />
-            <view class>发送给朋友</view>
-          </view>
-          <view class="item" @click="setPosterImageStatus">
-            <view class="iconfont icon-haibao" />
-            <view class>生成海报</view>
-          </view>
-        </view>
-        <view v-show="posters" class="mask" @touchmove.prevent @click="listenerActionClose" />
+        
         <view v-if="mapShow" class="geoPage">
           <iframe
             width="100%"
@@ -388,7 +380,6 @@ import ProductSwiper from '@/components/product/product-swiper'
 import evaluation from '@/components/evaluation/index'
 // import CouponPop from '@components/CouponPop'
 // import StorePoster from '@components/StorePoster'
-// import ShareInfo from '@components/ShareInfo'
 
 import {
   getProductDetail,
@@ -421,7 +412,6 @@ export default {
       showModal: false,
       id: 0,
       shareInfoStatus: false,
-      weixinStatus: false,
       mapShow: false,
       mapKey: '',
       posterData: {
@@ -454,7 +444,6 @@ export default {
       reply: [],
       priceName: 0,
       cartCount: 0,
-      posters: false,
       banner: [{}, {}],
       swiperRecommend: {
         pagination: {
@@ -577,10 +566,7 @@ export default {
       //   }
       // }
     },
-    setShareInfoStatus: function() {
-      this.shareInfoStatus = !this.shareInfoStatus
-      this.posters = false
-    },
+    
     shareCode: function() {
       var that = this
       getProductCode(that.id).then(res => {
@@ -599,7 +585,6 @@ export default {
           const { data } = res
           that.storeInfo = data.storeInfo
           that.attr.productAttr = data.productAttr
-          debugger
           that.productValue = data.productValue
           that.replyCount = data.replyCount
           that.replyChance = data.replyChance
@@ -905,19 +890,24 @@ export default {
       })
       // }
     },
-    listenerActionSheet: function() {
-      if (isWeixin() === true) {
-        this.weixinStatus = true
-      }
-      this.posters = true
-    },
-    listenerActionClose: function() {
-      this.posters = false
-    },
     onEvaluate(id) {
       uni.navigateTo({
         url: `/pages/shop/evaluate/index?id=${id}`
       })
+    }
+  },
+  onShareAppMessage(options) {
+    const that = this
+    const uri = `/pages/shop/details/index?id=${that.id}`
+    return {
+      title: '分享',
+      path: uri,
+      success: (res) => {
+        console.log('>>>success', res)
+      },
+      fail: (err) => {
+        console.error('>>>fail', err)
+      }
     }
   }
 }
@@ -1114,44 +1104,7 @@ export default {
 /* .product-con .product-intro .conter div {
   width: 100% !important;
 } */
-.generate-posters {
-  width: 100%;
-  height: 1.7rem;
-  background-color: #fff;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 99;
-  transform: translate3d(0, 100%, 0);
-  -webkit-transform: translate3d(0, 100%, 0);
-  -ms-transform: translate3d(0, 100%, 0);
-  -moz-transform: translate3d(0, 100%, 0);
-  -o-transform: translate3d(0, 100%, 0);
-  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
-  -moz-transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
-  -o-transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
-}
-.generate-posters.on {
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-}
-.generate-posters .item {
-  flex: 50%;
-  -webkit-flex: 50%;
-  -ms-flex: 50%;
-  text-align: center;
-}
-.generate-posters .item .iconfont {
-  font-size: 0.8rem;
-  color: #5eae72;
-}
-.generate-posters .item .iconfont.icon-haibao {
-  color: #5391f1;
-}
+
 .noscroll {
   height: 100%;
   overflow: hidden;
