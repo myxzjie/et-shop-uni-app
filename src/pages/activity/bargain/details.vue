@@ -61,11 +61,6 @@
           <!-- 帮助砍价、帮砍成功：-->
           <!--<view class='bargainSuccess'><span class='iconfont icon-xiaolian'></span>已成功帮助好友砍价</view>-->
           <view class="margin-sm text-center padding-top">
-            <!-- <view
-          v-if="bargainPartake === userInfo.uid && surplusPrice > 0"
-          class="bargainBnt"
-          @click="goPoster"
-        >邀请好友帮砍价</view> -->
             <button
               v-if="bargainPartake === userInfo.uid && surplusPrice > 0"
               class="cu-btn block round bg-gradual-orange margin-top-sm"
@@ -165,10 +160,9 @@
           <view v-else class="cutOff on">
             <view class="help font-color-red" v-text="'成功帮砍' + bargainHelpPrice + '元'" />，您也可以砍价低价拿哦，快去挑选心仪的商品吧~
           </view>
-          <!-- <view v-if="bargainPartake === userInfo.uid" class="tipBnt"  @click="goPoster">邀请好友帮砍价</view>
-      <view v-else class="tipBnt" @click="getBargainStart">我也要参与</view> -->
+
           <button v-if="bargainPartake === userInfo.uid" class="tipBnt" open-type="share">邀请好友帮砍价</button>
-          <button v-else class="tipBnt" @click="getBargainStart">我也要参与</button>
+          <button v-else class="tipBnt" @tap="getBargainStart">我也要参与</button>
         </view>
         <view class="mask" :hidden="active === false" @touchmove.prevent @click="close" />
       </view>
@@ -188,10 +182,7 @@ import {
   getBargainStartUser
 } from '@/api/activity'
 import { postCartAdd } from '@/api/store'
-import { mapGetters, mapState, mapActions } from 'vuex'
-// import {} from '@libs/wechat'
-// import { isWeixin, parseQuery, handleQrCode } from '@/utils/index'
-// import { getUserInfo } from '@/api/user'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     CountDown
@@ -230,20 +221,12 @@ export default {
     }
   },
   computed: { ...mapGetters(['userInfo']) },
-  // watch: {
-  //   $route: function(n) {
-  //     var that = this;
-  //     if (n.name === NAME) {
-  //       that.mountedStart();
-  //     }
-  //   }
-  // },
+  watch: {},
   mounted(options) {
     console.log('mounted options>', options)
   },
   onLoad(options) {
     const that = this
-    // that.$store.dispatch('getUserInfo')
     that.mountedStart(options)
     setTimeout(() => {
       that.loading = true
@@ -269,7 +252,6 @@ export default {
       } else {
         that.bargainPartake = parseInt(this.partake)
       }
-      // that.getBargainHelpCountStart()
       that.getBargainDetail()
       that.getBargainShare(0)
       if (that.bargainPartake === that.userInfo.uid) {
@@ -277,9 +259,6 @@ export default {
       } else {
         that.getBargainStartUser()
       }
-    },
-    updateTitle() {
-      // document.title = this.bargain.title || this.$route.meta.title;
     },
     goPay() {
       const that = this
@@ -300,13 +279,6 @@ export default {
           icon: 'none',
           duration: 2000
         })
-      })
-    },
-    goPoster() {
-      const that = this
-      that.getBargainShare(that.bargainId)
-      uni.navigateTo({
-        url: `/pages/activity/poster/index?id=${that.bargainId}&type=2`
       })
     },
     goList() {
@@ -331,7 +303,6 @@ export default {
       getBargainDetail(that.bargainId)
         .then(res => {
           that.$set(that, 'bargain', res.data.bargain)
-          that.updateTitle()
           that.datatime = that.bargain.stopTime
           that.getBargainHelpCount()
         }).catch(res => {
@@ -445,17 +416,6 @@ export default {
           })
         })
     },
-    // getBargainHelpCountStart: function() {
-    //   const that = this
-    //   const data = {
-    //     bargainId: that.bargainId,
-    //     bargainUserUid: that.bargainPartake
-    //   }
-    //   getBargainHelpCount(data).then((res) => {
-    //     console.log("getBargainHelpCount:",res)
-    //   }).catch(() => {
-    //   })
-    // },
     getBargainHelpCount() {
       const that = this
       const params = { bargainId: that.bargainId, bargainUserUid: that.bargainPartake }
@@ -500,10 +460,7 @@ export default {
     if ((price * 0.3) >= that.surplusPrice) {
       title = '还差[¥' + that.surplusPrice + ']即可砍价成功'
     }
-    // getUserInfo().then(res => {
-    //   const userInfo = res.data
-    //   console.log("onShareAppMessage userInfo",userInfo)
-    const uri = `/pages/activity/DargainDetails/main?id=${that.bargainId}&partake=${that.bargainPartake}`
+    const uri = `/pages/activity/bargain/details?id=${that.bargainId}&partake=${that.bargainPartake}`
 
     return {
       title: title,
@@ -515,7 +472,6 @@ export default {
         console.error('>>>fail', err)
       }
     }
-    // })
   }
 }
 </script>

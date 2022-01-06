@@ -5,9 +5,10 @@
         <view
           v-if="isBack"
           class="action border-custom"
-          :style="[{width: Custom.width+'px', height: Custom.height+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]"
+          :style="[{width: Custom.width+'px', height: (Custom.height-2)+'px','margin-left': 'calc(750rpx - '+Custom.right+'px)'}]"
         >
           <text :style="[{'line-height':Custom.height+'px'}]" class="cuIcon-back" @tap="backPage" />
+          <!-- <u-icon @click="back()" name="arrow-left" class="icon-back"></u-icon> -->
           <!-- <slot name="backText" /> -->
           <text :style="[{'line-height':Custom.height+'px'}]" class="cuIcon-homefill" @tap="homePage" />
         </view>

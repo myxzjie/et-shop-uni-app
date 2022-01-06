@@ -97,13 +97,12 @@
           </view>
         </navigator>
 
-        <navigator class="flex flex-sub flex-direction solid-right" url="/pages/me/gold/index" hover-class="none">
+        <!-- <navigator class="flex flex-sub flex-direction solid-right" url="/pages/me/gold/index" hover-class="none">
           <view class="text-xxl text-green">{{ userInfo.gold || 0 }}</view>
           <view class="margin-top-sm">
-            <!-- <text class="cuIcon-fork" />  -->
             核销金
           </view>
-        </navigator>
+        </navigator> -->
 
         <navigator class="flex flex-sub flex-direction" url="/pages/me/coupon/index" hover-class="none">
           <view class="text-xxl text-green">{{ userInfo.couponCount || 0 }}</view>

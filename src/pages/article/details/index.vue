@@ -28,7 +28,7 @@
       <view class="comment-wrap">
         <comment :data="commentItems" />
       </view>
-       <view class="cu-tabbar-height" />
+      <view class="cu-tabbar-height" />
     </scroll-view>
 
     <view class="cu-bar tabbar input foot ">
@@ -53,7 +53,7 @@
     <view class="cu-modal bottom-modal" :class="hasModal?'show':''" @tap="hideModal">
       <view class="cu-dialog" @tap.stop="">
         <view class="padding-sm text-left">
-          <textarea class="comment-content " placeholder-style="color:#aaa" placeholder="写评论..." :focus="hasFocus" v-model="comment.content" />
+          <textarea v-model="comment.content" class="comment-content " placeholder-style="color:#aaa" placeholder="写评论..." :focus="hasFocus" />
           <view class="cu-bar btn-group">
             <button class="cu-btn bg-green shadow-blur round" @tap="onSaveArticleComment">保存</button>
           </view>
@@ -110,8 +110,8 @@ export default {
         that.loadArticleComment()
       })
     },
-    loadArticleComment(){
-      const that = this   
+    loadArticleComment() {
+      const that = this
       getArticleComment(that.article.id).then(res => {
         that.commentItems = res.data
       })
@@ -148,8 +148,8 @@ export default {
       })
     },
     onSaveArticleComment() {
-      const that = this;
-      const data = that.comment;
+      const that = this
+      const data = that.comment
       data.articleId = that.article.id
       saveArticleComment(data).then(res => {
         that.hideModal()

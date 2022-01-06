@@ -22,11 +22,11 @@
             class="image"
           > -->
           </view>
-        <!-- 分享海报 @tap="listenerActionSheet"-->
-        <view class="text-olive">
-          <button class="cu-btn round line-olive sm" open-type="share"><view class="cuIcon-forward"></view>分享</button>
-          
-        </view>
+          <!-- 分享海报 @tap="listenerActionSheet"-->
+          <view class="text-olive">
+            <button class="cu-btn round line-olive sm" open-type="share"><view class="cuIcon-forward" />分享</button>
+
+          </view>
         </view>
 
         <view class="introduce margin-top">{{ storeInfo.storeName }}</view>
@@ -275,7 +275,7 @@
           :poster-data="posterData"
           @setPosterImageStatus="setPosterImageStatus"
         />
-        
+
         <view v-if="mapShow" class="geoPage">
           <iframe
             width="100%"
@@ -566,7 +566,7 @@ export default {
       //   }
       // }
     },
-    
+
     shareCode: function() {
       var that = this
       getProductCode(that.id).then(res => {
@@ -796,7 +796,7 @@ export default {
     // 购物车
     onCart() {
       uni.navigateTo({
-        url: '/pages/cart/index'
+        url: '/pages/tabbar/cart/index'
       })
     },
     // 收藏商品

@@ -216,7 +216,7 @@ export default {
     },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
-        url = '/pages/cate/index'
+        url = '/pages/tabbar/cate/index'
       } else {
         url = '/pages/search/index'
       }

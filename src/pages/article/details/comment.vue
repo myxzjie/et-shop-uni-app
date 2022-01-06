@@ -65,16 +65,16 @@
 import moment from 'moment'
 
 export default {
-  props:{
-    data: {
-      type: Array,
-      default: () => []
-    }
-  },
   filters: {
     dateFormat(value) {
       // value = value / 1000
       return moment(value).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
+  props: {
+    data: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

@@ -3,20 +3,29 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "好酒仓库"
 			}
 		},
 		{
-			"path": "pages/home/index"
+			"path": "pages/tabbar/home/index"
+		},
+		{
+			"path": "pages/tabbar/cate/index"
+		},
+		{
+			"path": "pages/tabbar/article/index"
+		},
+		{
+			"path": "pages/tabbar/cart/index"
+		},
+		{
+			"path": "pages/tabbar/me/index"
 		},
 		{
 			"path": "pages/loading/index"
 		},
 		{
 			"path": "pages/search/index"
-		},
-		{
-			"path": "pages/cate/index"
 		},
 		{
 			"path": "pages/shop/product/index"
@@ -37,9 +46,6 @@
 			"path": "pages/shop/evaluate/comment"
 		},
 		{
-			"path": "pages/cart/index"
-		},
-		{
 			"path": "pages/order/submit/index"
 		},
 		{
@@ -55,71 +61,9 @@
 			"path": "pages/auth/login"
 		},
 		{
-			"path": "pages/article/index"
-		},
-		{
 			"path": "pages/article/details/index"
 		},
-		{
-			"path": "pages/me/index"
-		},
-		{
-			"path": "pages/me/account/index"
-		},
-		{
-			"path": "pages/me/order/index"
-		},
-		{
-			"path": "pages/me/order/post-sale"
-		},
-		{
-			"path": "pages/me/coupon/index"
-		},
-		{
-			"path": "pages/me/commission/index"
-		},
-		{
-			"path": "pages/me/commission/details"
-		},
-		{
-			"path": "pages/me/commission/cash"
-		},
-		{
-			"path": "pages/me/commission/cash-record"
-		},
-		{
-			"path": "pages/me/integral/index"
-		},
-		{
-			"path": "pages/me/gold/index"
-		},
-		{
-			"path": "pages/me/gold/cash"
-		},
-		{
-			"path": "pages/me/member/index"
-		},
-		{
-			"path": "pages/me/address/index"
-		},
-		{
-			"path": "pages/me/address/edit"
-		},
-		{
-			"path": "pages/me/card/index"
-		},
-		{
-			"path": "pages/me/bargain/record"
-		},
-		{
-			"path": "pages/me/bind/phone"
-		},
-		{
-			"path": "pages/me/promoter/index"
-		},
-		{
-			"path": "pages/me/promoter/order"
-		},
+		
 		{
 			"path": "pages/collection/index"
 		},
@@ -154,6 +98,70 @@
 			"path": "pages/activity/bargain/details"
 		}
 	],
+	"subPackages": [
+		{ 
+			"root": "pages/me",
+			"pages": [
+				{
+					"path": "account/index"
+				},
+				{
+					"path": "order/index"
+				},
+				{
+					"path": "order/post-sale"
+				},
+				{
+					"path": "coupon/index"
+				},
+				{
+					"path": "commission/index"
+				},
+				{
+					"path": "commission/details"
+				},
+				{
+					"path": "commission/cash"
+				},
+				{
+					"path": "commission/cash-record"
+				},
+				{
+					"path": "integral/index"
+				},
+				{
+					"path": "gold/index"
+				},
+				{
+					"path": "gold/cash"
+				},
+				{
+					"path": "member/index"
+				},
+				{
+					"path": "address/index"
+				},
+				{
+					"path": "address/edit"
+				},
+				{
+					"path": "card/index"
+				},
+				{
+					"path": "bargain/record"
+				},
+				{
+					"path": "bind/phone"
+				},
+				{
+					"path": "promoter/index"
+				},
+				{
+					"path": "promoter/order"
+				}
+			]
+		}
+	],
 	"easycom": {
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
@@ -161,6 +169,8 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": false,
+		"onReachBottomDistance":10,
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom",
 		"usingComponents": {

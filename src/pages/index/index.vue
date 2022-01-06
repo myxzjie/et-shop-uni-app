@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import Home from '@/pages/home/index'
-import Cate from '@/pages/cate/index'
-import ArticleView from '@/pages/article/index'
-import Cart from '@/pages/cart/index'
-import Me from '@/pages/me/index'
+import Home from '@/pages/tabbar/home/index'
+import Cate from '@/pages/tabbar/cate/index'
+import ArticleView from '@/pages/tabbar/article/index'
+import Cart from '@/pages/tabbar/cart/index'
+import Me from '@/pages/tabbar/me/index'
 import TabBar from '@/components/tab-bar/index'
 import TipPop from '@/components/tip-pop'
 
