@@ -4,17 +4,18 @@
       <view slot="content">{{ BaseName }}</view>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view ref="container" class="promoter-order">
-        <view class="promoterHeader padding-sm">
-          <view class="headerCon acea-row row-between-wrapper">
-            <view>
-              <view class="name">累计推广订单</view>
-              <view class="margin-top-xs">
-                <text class="num">{{ count || 0 }}</text>单
-              </view>
-            </view>
-          </view>
+      <view class="card-wrap bg-white margin-sm">
+        <view class="assets text-cyan">累计推广订单</view>
+        <view class="money">{{ count || 0 }}单</view>
+      </view>
+
+      <view class="cu-bar bg-white solid-bottom">
+        <view class="action">
+          <text class="cuIcon-title text-green" />推广订单记录
         </view>
+      </view>
+
+      <view ref="container" class="promoter-order">
         <view class="list">
           <tips-line v-if="!list||list.length<=0" title="无内容" />
 
@@ -109,3 +110,28 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.card-wrap{
+  border-radius: 20upx;
+  padding: 40upx;
+  .assets {
+    margin-top: 50upx;
+    text-align: center;
+    color: #999;
+    font-size: 32upx;
+    letter-spacing: 2upx;
+  }
+  .money {
+    text-align: center;
+    font-size: 48upx;
+    margin: 20upx 0 40upx 0;
+    letter-spacing: 2upx;
+  }
+}
+.card-list {
+  :first-child {
+    margin-top: 0;
+  }
+}
+</style>

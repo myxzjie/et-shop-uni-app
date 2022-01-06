@@ -5,85 +5,42 @@
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view class="promoter-list">
-        <view class="header">
-          <view class="promoterHeader">
-            <view class="headerCon acea-row row-between-wrapper text-grey">
-              <view>
-                <view class="name">推广人数</view>
-                <view>
-                  <text class="num">{{ first + second || 0 }}</text>人
-                </view>
-              </view>
-              <view v-if="spreadUser !== null">
-                <view class="prom-info">
-                  <view
-                    class="prom-row"
-                  >推荐人ID: <text class="userid">{{ spreadUser.uid }}</text></view>
-                  <view
-                    class="prom-row"
-                  >昵称: <text class="account">{{ spreadUser.account }}</text></view>
-                </view>
-              </view>
-            </view>
+      <view class="card-wrap bg-white margin-sm">
+        <view class="assets text-cyan">推广人数</view>
+        <view class="money">{{ first + second || 0 }}人</view>
+
+        <view v-if="spreadUser !== null" class="cu-bar bg-white">
+          <view class="action">
+            <text>推荐人ID: </text>
+            <text class="text-black text-bold">{{ spreadUser.uid }}</text>
           </view>
+          <view class="action">
+            <text>昵称: </text>
+            <text class="text-black text-bold">{{ spreadUser.account }}</text>
+          </view>
+        </view>
+      </view>
 
-          <scroll-view scroll-x class="bg-white nav">
-            <view class="flex text-center">
-              <view
-                class="cu-item flex-sub"
-                :class="screen.grade == 0 ? 'text-cyan ' : ''"
-                @tap="checkGrade(0)"
-              >
-                金粉({{ first || 0 }})
-              </view>
-
-              <view
-                class="cu-item flex-sub"
-                :class="screen.grade == 1 ? 'text-cyan ' : ''"
-                @tap="checkGrade(1)"
-              >
-                银粉({{ second || 0 }})
-              </view>
-            </view>
-          </scroll-view>
-
-          <!-- <view class="cu-bar bg-gradual-orange search">
-            <view class="search-form round">
-              <text class="cuIcon-search" />
-              <input :adjust-position="false" type="text" placeholder="搜索图片、文章、视频" confirm-type="search" @focus="InputFocus" @blur="InputBlur"></input>
-            </view>
-            <view class="action">
-              <button class="cu-btn bg-green shadow-blur round">搜索</button>
-            </view>
-          </view> -->
-
-          <!-- <view class="nav acea-row row-around padding-sm">
+      <scroll-view scroll-x class="bg-white nav">
+        <view class="flex text-center solid-bottom">
           <view
-            class="item"
-            :class="screen.grade == 0 ? 'on' : ''"
+            class="cu-item flex-sub"
+            :class="screen.grade == 0 ? 'text-cyan ' : ''"
             @tap="checkGrade(0)"
           >
-            金粉({{ first||0 }})
+            金粉({{ first || 0 }})
           </view>
+
           <view
-            class="item"
-            :class="screen.grade == 1 ? 'on' : ''"
-            @click="checkGrade(1)"
+            class="cu-item flex-sub"
+            :class="screen.grade == 1 ? 'text-cyan ' : ''"
+            @tap="checkGrade(1)"
           >
-            银粉({{ second||0 }})
+            银粉({{ second || 0 }})
           </view>
-        </view> -->
-          <!-- <view class="search acea-row row-between-wrapper">
-          <form @submit.prevent="submitForm">
-            <view class="input">
-              <input v-model="screen.keyword" placeholder="点击搜索会员名称">
-              <span class="iconfont icon-guanbi" />
-            </view>
-          </form>
-          <view class="iconfont icon-sousuo2" />
-        </view> -->
         </view>
+      </scroll-view>
+      <view class="promoter-list">
         <view class="list">
           <view
             class="sortNav acea-row row-middle padding-sm"
@@ -181,7 +138,7 @@ export default {
     !this.loading && this.getSpreadUsers()
   },
   methods: {
-    handleScroll: function() {
+    handleScroll() {
       // var scrollTop =
       //   document.documentElement.scrollTop || document.body.scrollTop;
       // var offsetTop = document.querySelector(".header").clientHeight;
@@ -236,7 +193,7 @@ export default {
         this.getSpreadUsers()
       }
     },
-    sort: function(types) {
+    sort(types) {
       const that = this
       switch (types) {
         case 'childCount':
@@ -307,9 +264,22 @@ export default {
 }
 </script>
 
-<style>
-.prom-info .prom-row {
-  /* font-size: 0.24rem; */
-  padding: 3px 0;
+<style lang="scss" scoped>
+.card-wrap{
+  border-radius: 20upx;
+  padding: 40upx;
+  .assets {
+    margin-top: 50upx;
+    text-align: center;
+    color: #999;
+    font-size: 32upx;
+    letter-spacing: 2upx;
+  }
+  .money {
+    text-align: center;
+    font-size: 48upx;
+    margin: 20upx 0 40upx 0;
+    letter-spacing: 2upx;
+  }
 }
 </style>

@@ -5,58 +5,57 @@
       <block slot="content">{{ BaseName }}</block>
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
-      <view ref="container" class="integral-details">
-        <view class="header padding bg-cyan text-center">
-          <view class="currentScore">当前积分</view>
-          <view class="margin-top-sm text-xl">{{ info.integral }}</view>
-          <!--<view class="nav acea-row">-->
-          <!--<view class="item">-->
-          <!--<view class="num">{{ info.sum_integral }}</view>-->
-          <!--<view>累计积分</view>-->
-          <!--</view>-->
-          <!--<view class="item">-->
-          <!--<view class="num">{{ info.deduction_integral }}</view>-->
-          <!--<view>累计消费</view>-->
-          <!--</view>-->
-          <!--<view class="item">-->
-          <!--<view class="num">{{ info.today_integral }}</view>-->
-          <!--<view>今日获得</view>-->
-          <!--</view>-->
-          <!--</view>-->
+      <view class="card-wrap bg-white margin-sm">
+        <view class="assets text-cyan">当前积分</view>
+        <view class="money">{{ info.integral }}</view>
+        <!-- <view class="cu-bar bg-white">
+          <view class="action">
+            <view>累计积分</view>
+            <view class="text-black text-bold">{{ info.sum_integral || 0 }}</view>
+          </view>
+          <view class="action">
+            <view>累计消费</view>
+            <view class="text-black text-bold">{{ info.deduction_integral ||  0 }}</view>
+          </view>
+          <view class="action">
+            <view>今日获得</view>
+            <view class="text-black text-bold">{{ info.today_integral || 0 }}</view>
+          </view>
+        </view> -->
+      </view>
+
+      <view class="cu-bar bg-white solid-bottom">
+        <view class="action">
+          <text class="cuIcon-calendar text-green" />分值明细
         </view>
-        <view class="wrapper bg-white">
-          <view class="nav acea-row ">
-            <view
-              v-for="(item, navListIndex) in navList"
-              :key="navListIndex"
-              class="item acea-row row-center-wrapper padding-sm"
-              :class="current === navListIndex ? 'on' : ''"
-              @click="nav(navListIndex)"
-            >
-              <text :class="item.icon" />
-              <text class="margin-left-xs">{{ item.name }}</text>
+      </view>
+
+      <view class="card-list">
+        <view class="cu-list menu" style="font-size: 28rpx;">
+          <view v-for="(val, key) in list" :key="key" class="cu-item" style="min-height: 80rpx; padding: 0 20rpx;">
+            <view class="content padding-xs" style="line-height: 1.4em;">
+              <view class="text-gray">{{ val.title }}</view>
+              <view class="text-grey text-xs"><data-format :data="val.addTime" /></view>
+            </view>
+            <view class="action">
+              <text v-if="val.pm === 0" class="text-red text-sm">-{{ val.number }}</text>
+              <text v-else class="text-green text-sm">+{{ val.number }}</text>
             </view>
           </view>
+        </view>
+
+        <Loading :loaded="loaded" :loading="loading" />
+      </view>
+
+      <view ref="container" class="integral-details">
+        <view class="wrapper bg-white">
+
           <view class="list" :hidden="current !== 0">
             <!--<view class="tip acea-row row-middle">-->
             <!--<span class="iconfont icon-shuoming"></span-->
             <!--&gt;提示：积分数值的高低会直接影响您的会员等级-->
             <!--</view>-->
-            <view
-              v-for="(item, listIndex) in list"
-              :key="listIndex"
-              class="item acea-row row-between-wrapper padding-sm"
-            >
-              <view>
-                <view class="state">{{ item.title }}</view>
-                <view><data-format :data="item.addTime" /></view>
-              </view>
-              <view v-if="item.pm == 1" class="num text-cyan">+{{ item.number }}</view>
-              <view v-if="item.pm == 0" class="num text-red">
-                -{{ item.number }}
-              </view>
-            </view>
-          </view>
+
           <!--<view class="list2" :hidden="current !== 1">-->
           <!--<view class="item acea-row row-between-wrapper" @click="$router.push('/pages/launch/main')">-->
           <!--<view class="pictrue"><img :src="$VUE_APP_RESOURCES_URL+'/images/score.png'" /></view>-->
@@ -72,10 +71,9 @@
           <!--<view class="earn">赚积分</view>-->
           <!--</view>-->
           <!--</view>-->
+          </view>
         </view>
-        <Loading :loaded="loaded" :loading="loading" />
-      </view>
-    </scroll-view>
+      </view></scroll-view>
   </view>
 </template>
 
@@ -88,10 +86,6 @@ export default {
   },
   data() {
     return {
-      navList: [
-        { name: '分值明细', icon: 'cuIcon-calendar' }
-        // { name: "分值提升", icon: "icon-tishengfenzhi" }
-      ],
       current: 0,
       where: {
         page: 1,
@@ -116,10 +110,10 @@ export default {
     !this.loading && this.getInfo()
   },
   methods: {
-    nav: function(index) {
+    nav(index) {
       this.current = index
     },
-    getInfo: function() {
+    getInfo() {
       const that = this
       if (that.loaded == true || that.loading == true) return
       that.loading = true
@@ -137,7 +131,7 @@ export default {
         }
       )
     },
-    getIntegral: function() {
+    getIntegral() {
       const that = this
       postSignUser(that.data).then(
         res => {
@@ -156,4 +150,33 @@ export default {
   .list{
     border-top: 1upx solid #e8e8e8;
   }
+</style>
+
+<style lang="scss" scoped>
+.card-wrap{
+  border-radius: 20upx;
+  padding: 40upx;
+  .assets {
+    margin-top: 50upx;
+    text-align: center;
+    color: #999;
+    font-size: 32upx;
+    letter-spacing: 2upx;
+  }
+  .money {
+    text-align: center;
+    font-size: 48upx;
+    margin: 20upx 0 40upx 0;
+    letter-spacing: 2upx;
+  }
+  .action {
+    display: inline-block;
+    text-align: center;
+  }
+}
+.card-list {
+  :first-child {
+    margin-top: 0;
+  }
+}
 </style>

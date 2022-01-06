@@ -31,33 +31,31 @@ const aui = {
         window.attachEvent('onbeforeunload', callback, false)
       }
     }
-    uni.navigateBack({
-		    delta: 1
-    })
+    uni.navigateBack({ delta: 1 })
   },
   /** *判断字符串是否为空
 	   @param {string} str 变量
 	   @example: aui.isDefine("变量");
 	*/
   isDefine(str) {
-    if (str == null || str == '' || str == 'undefined' || str == undefined || str == 'null' || str == '(null)' || str == 'NULL' || typeof (str) === 'undefined') {
+    if (str === null || str === '' || str === 'undefined' || str === undefined || str === 'null' || str === '(null)' || str === 'NULL' || typeof (str) === 'undefined') {
       return false
     } else {
       str = str + ''
       str = str.replace(/\s/g, '')
-      if (str == '') { return false }
+      if (str === '') { return false }
       return true
     }
   },
   // 数组去重
   uniq(array) {
-	    var temp = [] // 一个新的临时数组
-	    for (var i = 0; i < array.length; i++) {
-	        if (temp.indexOf(array[i]) == -1) {
-	            temp.push(array[i])
-	        }
-	    }
-	    return temp
+    const temp = [] // 一个新的临时数组
+    for (let i = 0; i < array.length; i++) {
+      if (temp.indexOf(array[i]) === -1) {
+        temp.push(array[i])
+      }
+    }
+    return temp
   },
   // 复制到剪切板
   copy(str) {
