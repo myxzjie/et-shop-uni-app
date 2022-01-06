@@ -2,7 +2,7 @@ import { tokenKey, sessionCodeKey } from '@/utils/config'
 import { parseRoute, redirect } from '@/utils'
 import { wxappAuthLogin, wxappReg, wxappAuth, wxappSessionCode } from '@/api/public'
 
-export const checkSession = () => {
+export const checkSession = async () => {
   return new Promise((resolve) => uni.checkSession({
     success() {
       const sessionCode = uni.getStorageSync(sessionCodeKey)
@@ -32,15 +32,19 @@ export const login = () => {
   })
 }
 
-export const authSession = async() => {
+export const authSession = async () => {
   const code = await login()
-  wxappSessionCode({ code: code }).then(({ data }) => {
+  return wxappSessionCode({ code: code }).then(({ data }) => {
     uni.setStorageSync(sessionCodeKey, data)
+    return data
   })
 }
 
-export const appLogin = async(spread) => {
-  const sessionCode = uni.getStorageSync(sessionCodeKey)
+export const appLogin = async (spread) => {
+  let sessionCode = uni.getStorageSync(sessionCodeKey)
+  if( !sessionCode || sessionCode === '') { 
+    sessionCode = await authSession()
+  }
   if (sessionCode.hasReg) {
     return wxappAuthLogin({ openid: sessionCode.openid })
   } else {
