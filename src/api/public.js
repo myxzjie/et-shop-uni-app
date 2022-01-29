@@ -87,6 +87,15 @@ export function getHomeData() {
   })
 }
 
+export const getPageDataHome = () => {
+  return request({
+    url: '/page/data/home',
+    method: 'get',
+    data: { clientType: 'h5' },
+    power: false
+  })
+}
+
 /**
  * 文章列表
  * @returns {*}

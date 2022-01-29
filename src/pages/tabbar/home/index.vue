@@ -5,42 +5,48 @@
     </cu-custom>
 
     <scroll-view scroll-y class="scrollPage">
-      <view class="cu-bar search bg-white">
-        <view class="cu-avatar round bg-white">
-          <text class="text-olive cuIcon-locationfill" />
-        </view>
-        <view class="search-form round">
-          <text class="cuIcon-search" />
-          <navigator url="/pages/search/index" hover-class="none">
-            <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品">
-          </navigator>
-        </view>
-        <view class="action">
-          <text class="cuIcon-scan" />
-        </view>
-      </view>
-      <!-- @change="cardSwiper" -->
-      <swiper
-        class="card-swiper square-dot"
-        :indicator-dots="true"
-        :circular="true"
-        :autoplay="true"
-        interval="5000"
-        duration="500"
-        indicator-active-color="#0081ff"
-        indicator-color="#8799a3"
-      >
-        <swiper-item
-          v-for="(item, index) in banner"
-          :key="index"
-          :class="curSwiper == index ? 'cur' : ''"
-          @tap="onSwiper(item)"
-        >
-          <view class="swiper-item">
-            <image :src="item.pic" mode="aspectFill" />
+      <view v-for="(item,index) in pageData.list" :key="index">
+        <view v-if="item.type === 'search'" class="cu-bar search bg-white">
+          <view class="cu-avatar round bg-white">
+            <text class="text-olive cuIcon-locationfill" />
           </view>
-        </swiper-item>
-      </swiper>
+          <view class="search-form round">
+            <text class="cuIcon-search" />
+            <navigator url="/pages/search/index" hover-class="none">
+              <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品">
+            </navigator>
+          </view>
+          <view class="action">
+            <text class="cuIcon-scan" />
+          </view>
+        </view>
+
+        <view v-if="item.type === 'carousel'">
+          <swiper
+            class="card-swiper square-dot"
+            :indicator-dots="true"
+            :circular="true"
+            :autoplay="true"
+            interval="5000"
+            duration="500"
+            indicator-active-color="#0081ff"
+            indicator-color="#8799a3"
+            @change="cardSwiper"
+          >
+            <swiper-item
+              v-for="(option, idx) in item.options.list"
+              :key="idx"
+              :class="curSwiper === idx ? 'cur' : ''"
+              @tap="onSwiper(option)"
+            >
+              <view class="swiper-item">
+                <image :src="option.img" mode="aspectFill" />
+              </view>
+            </swiper-item>
+          </swiper>
+        </view>
+
+      </view>
 
       <view class="navigation cu-list grid col-4 no-border">
         <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
@@ -151,8 +157,8 @@
 
 <script>
 // import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
-// import { uniSearchBar, uniNoticeBar } from '@dcloudio/uni-ui'
-import { getHomeData } from '@/api/public'
+import { modelNavigateTo } from '@/utils'
+import { getHomeData, getPageDataHome } from '@/api/public'
 import ProductNew from '@/components/product/product-new'
 import ProductList from '@/components/product/product-list'
 import ProductPromotion from '@/components/product/product-promotion'
@@ -161,6 +167,7 @@ export default {
   components: { ProductList, ProductNew, ProductPromotion },
   data() {
     return {
+      pageData: '',
       BaseName: this.BaseName,
       CustomBar: this.CustomBar,
       curSwiper: 0,
@@ -181,8 +188,15 @@ export default {
   mounted() {
     const that = this
     that.loadHomeData()
+    that.loadPageDataHome()
   },
   methods: {
+    loadPageDataHome() {
+      const that = this
+      getPageDataHome().then(({ status, data }) => {
+        that.pageData = JSON.parse(data.pageData)
+      })
+    },
     loadHomeData() {
       const that = this
       getHomeData().then(({ status, data }) => {
@@ -205,11 +219,14 @@ export default {
       })
     },
     onSwiper(item) {
-      uni.navigateTo({
-        url: item.wxapp_url
-      })
+      console.log('>>>', item)
+      modelNavigateTo(item)
+      // uni.navigateTo({
+      //   url: item.wxapp_url
+      // })
     },
     cardSwiper(e) {
+      this.curSwiper = e.detail.current
     },
     navigationPage(item) {
       uni.navigateTo({ url: item.wxapp_url + '?isBack=true' })
