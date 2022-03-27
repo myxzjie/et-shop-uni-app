@@ -60,9 +60,8 @@ export function handleQrCode() {
 }
 
 export const modelNavigateTo = (item) => {
-  debugger
+  console.log('>>',item)
   const val = item.url
-
   switch (val.___type) {
     case 'goods':
       uni.navigateTo({
@@ -115,7 +114,7 @@ export const modelNavigateTo = (item) => {
           break
         case '收藏商品':
           uni.navigateTo({
-            url: `/pages/mine/myCollect`
+            url: `/pages/collection/index`
           })
           break
         case '我的订单':
@@ -125,22 +124,22 @@ export const modelNavigateTo = (item) => {
           break
         case '领券中心':
           uni.navigateTo({
-            url: `/pages/cart/coupon/couponCenter`
+            url: `/pages/coupon/index`
           })
           break
         case '签到':
           uni.navigateTo({
-            url: `/pages/mine/signIn`
+            url: `/pages/clockin/index`
           })
           break
         case '秒杀频道':
           uni.navigateTo({
-            url: `/pages/promotion/seckill`
+            url: `/pages/activity/seckill/index`
           })
           break
         case '拼团频道':
           uni.navigateTo({
-            url: `/pages/promotion/joinGroup`
+            url: `/pages/activity/buy-group/index`
           })
           break
         case '小程序直播':
@@ -150,7 +149,7 @@ export const modelNavigateTo = (item) => {
           break
         case '砍价':
           uni.navigateTo({
-            url: `/pages/promotion/bargain/list`
+            url: `/pages/activity/bargain/index`
           })
           break
         case '积分商城':
@@ -158,6 +157,21 @@ export const modelNavigateTo = (item) => {
             url: `/pages/promotion/point/pointList`
           })
           break
+        case '产品分类':
+          uni.navigateTo({
+            url: `/pages/cate/index`
+          })
+          break
+        case '资讯公告':
+          uni.navigateTo({
+            url: `/pages/article/index`
+          })
+          break
+        // case '优惠券':
+        //   uni.navigateTo({
+        //     url: `/pages/cate/index`
+        //   })
+        //   break
       }
 
       break

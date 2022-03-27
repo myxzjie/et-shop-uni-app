@@ -21,8 +21,11 @@
           </view>
         </view>
 
-        <view v-if="item.type === 'carousel'">
-          <swiper
+        <view class="carousel" v-if="item.type === 'carousel'">
+          <u-swiper @click="cardSwiper" interval="5000" duration="500" height="300" name="img" :list="item.options.list">
+            <u-loading slot="loading"></u-loading>
+          </u-swiper>
+          <!-- <swiper
             class="card-swiper square-dot"
             :indicator-dots="true"
             :circular="true"
@@ -43,22 +46,31 @@
                 <image :src="option.img" mode="aspectFill" />
               </view>
             </swiper-item>
-          </swiper>
+          </swiper> -->
         </view>
-
-      </view>
-
-      <view class="navigation cu-list grid col-4 no-border">
-        <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
+        <view v-if="item.type ==='navigation'" class="navigation cu-list grid col-4 no-border">
+        <view v-for="(option, idx) in item.options.list" :key="idx" class="cu-item" @tap="navigationPage(option)">
           <view class="text-red">
-            <image class="image" :src="item.pic" />
+            <image class="image" :src="option.img" />
           <!-- <view class="cu-tag badge" v-if="item.badge != 0">
             <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
           </view> -->
           </view>
+          <text>{{ option.title }}</text>
+        </view>
+        </view>
+
+
+      </view>
+
+      <!-- <view class="navigation cu-list grid col-4 no-border">
+        <view v-for="(item, index) in navigations" :key="index" class="cu-item" @tap="navigationPage(item)">
+          <view class="text-red">
+            <image class="image" :src="item.pic" />
+          </view>
           <text>{{ item.name }}</text>
         </view>
-      </view>
+      </view> -->
 
       <!-- <u-notice-bar type="error" mode="horizontal" :volume-icon="true" :more-icon="true" :close-icon="false" :list="notices" @tap="onNotice(item)"></u-notice-bar> -->
       <view class="cu-bar notification-bar">
@@ -219,7 +231,6 @@ export default {
       })
     },
     onSwiper(item) {
-      console.log('>>>', item)
       modelNavigateTo(item)
       // uni.navigateTo({
       //   url: item.wxapp_url
@@ -229,7 +240,8 @@ export default {
       this.curSwiper = e.detail.current
     },
     navigationPage(item) {
-      uni.navigateTo({ url: item.wxapp_url + '?isBack=true' })
+      modelNavigateTo(item)
+      // uni.navigateTo({ url: item.wxapp_url + '?isBack=true' })
     },
     onNavigation(url) {
       if (url === '/pages/shop/GoodsClass/main') {
@@ -269,6 +281,9 @@ export default {
   .search-form {
     margin-left: 0;
   }
+}
+.carousel {
+  padding: 12upx;
 }
 .navigation {
   .image {
