@@ -12,7 +12,7 @@
           </view>
           <view class="search-form round">
             <text class="cuIcon-search" />
-            <navigator url="/pages/search/index" hover-class="none">
+            <navigator style="width: 100%;" url="/pages/search/index" hover-class="none">
               <input type="text" confirm-type="search" :adjust-position="false" placeholder="搜索商品">
             </navigator>
           </view>
@@ -21,9 +21,9 @@
           </view>
         </view>
 
-        <view class="carousel" v-if="item.type === 'carousel'">
-          <u-swiper @click="cardSwiper" interval="5000" duration="500" height="300" name="img" :list="item.options.list">
-            <u-loading slot="loading"></u-loading>
+        <view v-if="item.type === 'carousel'" class="carousel">
+          <u-swiper interval="5000" duration="500" height="300" name="img" :list="item.options.list" @click="cardSwiper">
+            <u-loading slot="loading" />
           </u-swiper>
           <!-- <swiper
             class="card-swiper square-dot"
@@ -49,17 +49,59 @@
           </swiper> -->
         </view>
         <view v-if="item.type ==='navigation'" class="navigation cu-list grid col-4 no-border">
-        <view v-for="(option, idx) in item.options.list" :key="idx" class="cu-item" @tap="navigationPage(option)">
-          <view class="text-red">
-            <image class="image" :src="option.img" />
-          <!-- <view class="cu-tag badge" v-if="item.badge != 0">
+          <view v-for="(option, idx) in item.options.list" :key="idx" class="cu-item" @tap="navigationPage(option)">
+            <view class="text-red">
+              <image class="image" :src="option.img" />
+              <!-- <view class="cu-tag badge" v-if="item.badge != 0">
             <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
           </view> -->
+            </view>
+            <text>{{ option.title }}</text>
           </view>
-          <text>{{ option.title }}</text>
-        </view>
         </view>
 
+        <view v-if="item.type === 'product'">
+          <u-sticky>
+            <scroll-view scroll-x class="bg-gray tabs">
+              <view class="flex text-center">
+                <view
+                  v-for="(option, idx) in item.options.list[0].tabs"
+                  :key="idx"
+                  class="cu-item flex-sub "
+                  :class="tabIndex === option.___index ? 'text-cyan cur' : ''"
+                  @tap="handleTabChange(option)"
+                >
+                  <view>{{ option.title }}<text v-if="option.tag" class="text-red text-xs">{{ option.tag }}</text></view>
+                  <view class="description text-gray text-xs">{{ option.desc }}</view>
+                </view>
+              </view>
+            </scroll-view>
+          </u-sticky>
+
+          <view class="product-wrap cu-list grid col-2 no-border">
+            <view v-for="(option, idx) in list" :key="idx" class="cu-item">
+              <view class="product-content">
+                <view class="image">
+                  <u-image :src="option.image" height="350rpx" mode="aspectFit" width="100%">
+                    <u-loading slot="loading" />
+                  </u-image>
+                </view>
+                <view class="content">
+                  <view class="title"> {{ option.storeName }} </view>
+                  <view class="price-wrap flex flex-wrap align-between">
+                    <view class="flex flex-wrap">
+                      <text class="sale-price ">¥{{ option.price || 0 }}</text>
+                      <text class="raw-price text-xs margin-left-xs">￥{{ option.otPrice || 0 }}</text>
+                    </view>
+                    <view>
+                      <text class="sale-volume">已售: {{ option.sales }}{{ option.unitName }}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
 
       </view>
 
@@ -73,7 +115,7 @@
       </view> -->
 
       <!-- <u-notice-bar type="error" mode="horizontal" :volume-icon="true" :more-icon="true" :close-icon="false" :list="notices" @tap="onNotice(item)"></u-notice-bar> -->
-      <view class="cu-bar notification-bar">
+      <!-- <view class="cu-bar notification-bar">
         <view class="cu-avatar round bg-white">
           <text class="cuIcon-notificationfill text-sm text-olive" />
         </view>
@@ -97,9 +139,9 @@
             </block>
           </swiper>
         </view>
-      </view>
+      </view> -->
 
-      <view v-if="firstList.length > 0">
+      <!-- <view v-if="firstList.length > 0">
         <view class="cu-bar bg-white margin-top solid-bottom">
           <view class="action">
             首发新品
@@ -118,7 +160,6 @@
       <view v-if="bast.length > 0">
         <view class="cu-bar bg-white margin-top solid-bottom">
           <view class="action">
-            <!-- <text class="cuIcon-title text-orange "></text> -->
             精品推荐
           </view>
           <view class="action">
@@ -134,7 +175,6 @@
       <view v-if="hot.length > 0">
         <view class="cu-bar bg-white margin-top solid-bottom">
           <view class="action">
-            <!-- <text class="cuIcon-title text-orange "></text> -->
             热门榜单
             <text class="text-red text-xs">HOT~</text>
           </view>
@@ -161,7 +201,7 @@
           </view>
         </view>
         <product-promotion :list="promotion" />
-      </view>
+      </view> -->
 
     </scroll-view>
   </view>
@@ -171,12 +211,16 @@
 // import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
 import { modelNavigateTo } from '@/utils'
 import { getHomeData, getPageDataHome } from '@/api/public'
-import ProductNew from '@/components/product/product-new'
-import ProductList from '@/components/product/product-list'
-import ProductPromotion from '@/components/product/product-promotion'
+// import ProductNew from '@/components/product/product-new'
+// import ProductList from '@/components/product/product-list'
+// import ProductPromotion from '@/components/product/product-promotion'
 
 export default {
-  components: { ProductList, ProductNew, ProductPromotion },
+  components: {
+    // ProductList,
+    // ProductNew,
+    // ProductPromotion
+  },
   data() {
     return {
       pageData: '',
@@ -184,7 +228,8 @@ export default {
       CustomBar: this.CustomBar,
       curSwiper: 0,
       dotStyle: false,
-      tabInde: 0,
+      tabIndex: 0,
+      list: [],
       isSort: false,
       banner: [],
       navigations: [],
@@ -221,6 +266,7 @@ export default {
         that.firstList = data.firstList
         that.promotion = data.benefit
         that.coupon = data.couponList
+        that.handleList()
       }, err => {
         console.error(err)
       })
@@ -270,6 +316,21 @@ export default {
       uni.navigateTo({
         url: url
       })
+    },
+    handleTabChange(item) {
+      this.tabIndex = item.___index
+      this.handleList()
+    },
+    handleList() {
+      if (this.tabIndex === 0) {
+        this.list = this.firstList
+      } else if (this.tabIndex === 1) {
+        this.list = this.bast
+      } else if (this.tabIndex === 2) {
+        this.list = this.hot
+      } else if (this.tabIndex === 3) {
+        this.list = this.promotion
+      }
     }
   }
 }
@@ -324,5 +385,56 @@ export default {
       }
     }
   }
+}
+
+.tabs {
+  .cu-item {
+    height: inherit;
+    line-height: initial;
+    margin: 0 10upx;
+    padding: 20upx 20upx;
+  }
+}
+.product-wrap {
+  .cu-item {
+    .product-content{
+      margin: 0rpx 8rpx;
+      border-radius: 10rpx;
+      border: 1rpx #eee solid;
+      .image {
+        padding: 10rpx;
+      }
+      .content {
+        text-align: left;
+        padding: 8rpx;
+        .title {
+          height: 70rpx;
+          overflow: hidden;
+          display: -webkit-box;
+          text-overflow:ellipsis;
+          -webkit-line-clamp: 2;
+          /*! autoprefixer: off */
+          /*! autoprefixer: ignore next */
+          -webkit-box-orient: vertical;
+        }
+        .sale-price {
+          color: #ff5c58;
+          line-height: 2;
+        }
+        .raw-price {
+          line-height: 3;
+          font-size: 20rpx;
+          text-decoration: line-through;
+        }
+        .sale-volume{
+          text-align:right;
+          line-height: 2;
+          padding-right: 8rpx;
+        }
+      }
+    }
+
+  }
+
 }
 </style>

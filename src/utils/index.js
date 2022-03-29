@@ -60,7 +60,8 @@ export function handleQrCode() {
 }
 
 export const modelNavigateTo = (item) => {
-  console.log('>>',item)
+  console.log('>>', item)
+  debugger
   const val = item.url
   switch (val.___type) {
     case 'goods':
@@ -96,6 +97,7 @@ export const modelNavigateTo = (item) => {
       })
       break
     case 'other':
+      debugger
       switch (val.title) {
         case '首页':
           uni.switchTab({
@@ -159,12 +161,12 @@ export const modelNavigateTo = (item) => {
           break
         case '产品分类':
           uni.navigateTo({
-            url: `/pages/cate/index`
+            url: `/pages/tabbar/cate/index`
           })
           break
         case '资讯公告':
           uni.navigateTo({
-            url: `/pages/article/index`
+            url: `/pages/tabbar/article/index`
           })
           break
         // case '优惠券':

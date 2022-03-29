@@ -61,7 +61,6 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       }
       reject(data)
     }).catch(error => {
-      debugger
       const [err, res] = error
       console.error(res)
       reject(err)
