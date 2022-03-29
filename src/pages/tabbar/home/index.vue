@@ -25,83 +25,20 @@
           <u-swiper interval="5000" duration="500" height="300" name="img" :list="item.options.list" @click="cardSwiper">
             <u-loading slot="loading" />
           </u-swiper>
-          <!-- <swiper
-            class="card-swiper square-dot"
-            :indicator-dots="true"
-            :circular="true"
-            :autoplay="true"
-            interval="5000"
-            duration="500"
-            indicator-active-color="#0081ff"
-            indicator-color="#8799a3"
-            @change="cardSwiper"
-          >
-            <swiper-item
-              v-for="(option, idx) in item.options.list"
-              :key="idx"
-              :class="curSwiper === idx ? 'cur' : ''"
-              @tap="onSwiper(option)"
-            >
-              <view class="swiper-item">
-                <image :src="option.img" mode="aspectFill" />
-              </view>
-            </swiper-item>
-          </swiper> -->
         </view>
+
         <view v-if="item.type ==='navigation'" class="navigation cu-list grid col-4 no-border">
           <view v-for="(option, idx) in item.options.list" :key="idx" class="cu-item" @tap="navigationPage(option)">
             <view class="text-red">
               <image class="image" :src="option.img" />
-              <!-- <view class="cu-tag badge" v-if="item.badge != 0">
-            <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
-          </view> -->
             </view>
             <text>{{ option.title }}</text>
           </view>
         </view>
-
-        <view v-if="item.type === 'product'">
-          <u-sticky>
-            <scroll-view scroll-x class="bg-gray tabs">
-              <view class="flex text-center">
-                <view
-                  v-for="(option, idx) in item.options.list[0].tabs"
-                  :key="idx"
-                  class="cu-item flex-sub "
-                  :class="tabIndex === option.___index ? 'text-cyan cur' : ''"
-                  @tap="handleTabChange(option)"
-                >
-                  <view>{{ option.title }}<text v-if="option.tag" class="text-red text-xs">{{ option.tag }}</text></view>
-                  <view class="description text-gray text-xs">{{ option.desc }}</view>
-                </view>
-              </view>
-            </scroll-view>
-          </u-sticky>
-
-          <view class="product-wrap cu-list grid col-2 no-border">
-            <view v-for="(option, idx) in list" :key="idx" class="cu-item">
-              <view class="product-content">
-                <view class="image">
-                  <u-image :src="option.image" height="350rpx" mode="aspectFit" width="100%">
-                    <u-loading slot="loading" />
-                  </u-image>
-                </view>
-                <view class="content">
-                  <view class="title"> {{ option.storeName }} </view>
-                  <view class="price-wrap flex flex-wrap align-between">
-                    <view class="flex flex-wrap">
-                      <text class="sale-price ">¥{{ option.price || 0 }}</text>
-                      <text class="raw-price text-xs margin-left-xs">￥{{ option.otPrice || 0 }}</text>
-                    </view>
-                    <view>
-                      <text class="sale-volume">已售: {{ option.sales }}{{ option.unitName }}</text>
-                    </view>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
+        <!--方格图-->
+        <left-one-right-two v-if="item.type === 'leftOneRightTwo'" :res="item.options"></left-one-right-two>
+        
+        <product-promotion v-if="item.type === 'product'" :res="item.options" :list="list" @change="handleList"></product-promotion>
 
       </view>
 
@@ -214,12 +151,14 @@ import { getHomeData, getPageDataHome } from '@/api/public'
 // import ProductNew from '@/components/product/product-new'
 // import ProductList from '@/components/product/product-list'
 // import ProductPromotion from '@/components/product/product-promotion'
-
+import LeftOneRightTwo from '@/components/templates/tpl_left_one_right_two'
+import ProductPromotion from '@/components/templates/tpl_product_promotion'
 export default {
   components: {
+    LeftOneRightTwo,
     // ProductList,
     // ProductNew,
-    // ProductPromotion
+    ProductPromotion
   },
   data() {
     return {
@@ -266,7 +205,7 @@ export default {
         that.firstList = data.firstList
         that.promotion = data.benefit
         that.coupon = data.couponList
-        that.handleList()
+        that.handleList(this.tabIndex)
       }, err => {
         console.error(err)
       })
@@ -312,23 +251,22 @@ export default {
       }
     },
     onShopDetails(item) {
-      const url = '/pages/shop/details/index?id=' + item.id
       uni.navigateTo({
-        url: url
+        url: `/pages/shop/details/index?id=${item.id}`
       })
     },
     handleTabChange(item) {
       this.tabIndex = item.___index
       this.handleList()
     },
-    handleList() {
-      if (this.tabIndex === 0) {
+    handleList(index) {
+      if (index=== 0) {
         this.list = this.firstList
-      } else if (this.tabIndex === 1) {
+      } else if (index === 1) {
         this.list = this.bast
-      } else if (this.tabIndex === 2) {
+      } else if (index === 2) {
         this.list = this.hot
-      } else if (this.tabIndex === 3) {
+      } else if (index === 3) {
         this.list = this.promotion
       }
     }
@@ -387,54 +325,6 @@ export default {
   }
 }
 
-.tabs {
-  .cu-item {
-    height: inherit;
-    line-height: initial;
-    margin: 0 10upx;
-    padding: 20upx 20upx;
-  }
-}
-.product-wrap {
-  .cu-item {
-    .product-content{
-      margin: 0rpx 8rpx;
-      border-radius: 10rpx;
-      border: 1rpx #eee solid;
-      .image {
-        padding: 10rpx;
-      }
-      .content {
-        text-align: left;
-        padding: 8rpx;
-        .title {
-          height: 70rpx;
-          overflow: hidden;
-          display: -webkit-box;
-          text-overflow:ellipsis;
-          -webkit-line-clamp: 2;
-          /*! autoprefixer: off */
-          /*! autoprefixer: ignore next */
-          -webkit-box-orient: vertical;
-        }
-        .sale-price {
-          color: #ff5c58;
-          line-height: 2;
-        }
-        .raw-price {
-          line-height: 3;
-          font-size: 20rpx;
-          text-decoration: line-through;
-        }
-        .sale-volume{
-          text-align:right;
-          line-height: 2;
-          padding-right: 8rpx;
-        }
-      }
-    }
 
-  }
 
-}
 </style>
