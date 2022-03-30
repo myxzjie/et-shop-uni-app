@@ -24,8 +24,7 @@
             <!-- <u-image class="image" :src="option.image" height="350rpx" mode="aspectFit" width="100%" :lazy-load="true" :fade="true" duration="450">
               <u-loading slot="loading" />
             </u-image> -->
-            <image style="height: 350rpx;" mode="aspectFit" :src="option.image">
-            </image>
+            <image style="height: 350rpx;" mode="aspectFit" :src="option.image" />
           </view>
           <view class="content">
             <view class="title"> {{ option.storeName }} </view>
@@ -56,11 +55,11 @@ export default {
     list: {
       type: Array,
       default: () => []
-    },
+    }
   },
-  data () {
+  data() {
     return {
-      tabIndex: 0,
+      tabIndex: 0
     }
   },
   methods: {
@@ -69,8 +68,8 @@ export default {
     },
     handleTabChange(item) {
       this.tabIndex = item.___index
-      this.$emit("change", this.tabIndex);
-    },
+      this.$emit('change', this.tabIndex)
+    }
   }
 }
 </script>

@@ -64,10 +64,13 @@ export const modelNavigateTo = (item) => {
   debugger
   const val = item.url
   switch (val.___type) {
-    case 'goods':
+    case 'product':
       uni.navigateTo({
-        url: '/pages/product/goods?id=' + val.id + '&goodsId=' + val.goodsId
+        url: `/pages/shop/details/index?id=${val.id}`
       })
+      // uni.navigateTo({
+      //   url: '/pages/product/goods?id=' + val.id + '&goodsId=' + val.goodsId
+      // })
       break
     case 'category':
       if (val.id) {

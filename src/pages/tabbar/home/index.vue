@@ -36,9 +36,12 @@
           </view>
         </view>
         <!--方格图-->
-        <left-one-right-two v-if="item.type === 'leftOneRightTwo'" :res="item.options"></left-one-right-two>
-        
-        <product-promotion v-if="item.type === 'product'" :res="item.options" :list="list" @change="handleList"></product-promotion>
+        <flex-one v-if="item.type === 'flexOne'" :res="item.options"></flex-one>
+        <flex-two v-if="item.type === 'flexTwo'" :res="item.options"></flex-two>
+        <left-one-right-two v-if="item.type === 'leftOneRightTwo'" :res="item.options" />
+        <left-two-right-one v-if="item.type === 'leftTwoRightOne'" :res="item.options" />
+
+        <product-promotion v-if="item.type === 'product'" :res="item.options" :list="list" @change="handleList" />
 
       </view>
 
@@ -151,12 +154,17 @@ import { getHomeData, getPageDataHome } from '@/api/public'
 // import ProductNew from '@/components/product/product-new'
 // import ProductList from '@/components/product/product-list'
 // import ProductPromotion from '@/components/product/product-promotion'
+import FlexOne from '@/components/templates/tpl_flex_one'
+import FlexTwo from '@/components/templates/tpl_flex_two'
 import LeftOneRightTwo from '@/components/templates/tpl_left_one_right_two'
+import LeftTwoRightOne from '@/components/templates/tpl_left_two_right_one'
 import ProductPromotion from '@/components/templates/tpl_product_promotion'
 export default {
   components: {
+    FlexOne,
+    FlexTwo,
     LeftOneRightTwo,
-    // ProductList,
+    LeftTwoRightOne,
     // ProductNew,
     ProductPromotion
   },
@@ -260,7 +268,7 @@ export default {
       this.handleList()
     },
     handleList(index) {
-      if (index=== 0) {
+      if (index === 0) {
         this.list = this.firstList
       } else if (index === 1) {
         this.list = this.bast
@@ -324,7 +332,5 @@ export default {
     }
   }
 }
-
-
 
 </style>
