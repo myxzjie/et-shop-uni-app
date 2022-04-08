@@ -16,7 +16,7 @@
         duration="500"
       >
         <swiper-item v-for="(item, index) in banner" :key="index">
-          <image :src="item.url" mode="aspectFill" />
+          <image :src="item.pic" mode="aspectFill" />
         </swiper-item>
       </swiper>
       <view class="VerticalBox solid-top">
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { getCategory } from '@/api/store'
+import { getStoreCateBanner, getStoreCate } from '@/api/store'
 export default {
   components: {},
   data() {
@@ -99,8 +99,8 @@ export default {
       title: '加载中...',
       mask: true
     })
-
-    that.loadCategory()
+    this.loadStoreCateBanner()
+    that.loadStoreCate()
     // const list = [{}]
     // for (let i = 0; i < 26; i++) {
     //   list[i] = {}
@@ -114,9 +114,15 @@ export default {
     uni.hideLoading()
   },
   methods: {
-    loadCategory() {
+    loadStoreCateBanner(){
       const that = this
-      getCategory().then(res => {
+      getStoreCateBanner().then(res =>{
+        that.banner = res.data
+      }, err => { console.error(err) })
+    },
+    loadStoreCate() {
+      const that = this
+      getStoreCate().then(res => {
         that.list = res.data
       }, err => { console.error(err) })
     },

@@ -1,12 +1,12 @@
 <template>
   <view class="tartan">
     <div class="tartan-half" @tap="handleNavigationPage(res.list[0])">
-      <u-image width="100%" height="250rpx" class="image" :src="res.list[0].img">
+      <u-image width="100%" height="220rpx" class="image" :src="res.list[0].img">
         <u-loading slot="loading" />
       </u-image>
     </div>
-    <div class="tartan-half" @tap="handleNavigationPage(res.list[0])">
-      <u-image width="100%" height="250rpx" class="image" :src="res.list[0].img">
+    <div class="tartan-half" @tap="handleNavigationPage(res.list[1])">
+      <u-image width="100%" height="220rpx" class="image" :src="res.list[1].img">
         <u-loading slot="loading" />
       </u-image>
     </div>
@@ -40,16 +40,12 @@ export default {
   justify-content: center;
   background-size: cover;
   overflow: hidden;
+  background-color: #f7cccc;
   .tartan-half {
     width: 50%;
     padding: 5rpx;
     overflow: hidden;
-  }
-  .image {
-    // width: 100%;
-    // height: 100%;
-    // display: block;
-    // padding: 2rpx;
+    border-radius: 30rpx;
   }
 }
 </style>

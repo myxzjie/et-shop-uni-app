@@ -1,7 +1,7 @@
 <template>
   <view class="tartan">
     <div class="tartan-half" @tap="handleNavigationPage(res.list[0])">
-      <u-image width="100%" height="280rpx" class="image" :src="res.list[0].img">
+      <u-image width="100%" height="280rpx" mode="aspectFit" class="image" :src="res.list[0].img">
         <u-loading slot="loading" />
       </u-image>
     </div>
@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .tartan {
-  padding: 10rpx 18rpx;
+  padding: 10rpx 16rpx;
   margin: 8rpx 0;
   background: #fff;
   display: flex;
@@ -38,12 +38,6 @@ export default {
   .tartan-half {
     width: 100%;
     overflow: hidden;
-  }
-  .image {
-    // width: 100%;
-    // height: 100%;
-    // display: block;
-    // padding: 2rpx;
   }
 }
 </style>

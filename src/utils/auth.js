@@ -23,6 +23,7 @@ export const login = () => {
   return new Promise((resolve, reject) => {
     uni.login({
       success: (res) => {
+        debugger
         resolve(res.code)
       },
       fail: (err) => {
@@ -34,6 +35,7 @@ export const login = () => {
 
 export const authSession = async() => {
   const code = await login()
+  debugger
   return wxappSessionCode({ code: code }).then(({ data }) => {
     uni.setStorageSync(sessionCodeKey, data)
     return data

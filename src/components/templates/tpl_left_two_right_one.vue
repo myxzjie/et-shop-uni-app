@@ -1,19 +1,19 @@
 <template>
   <view class="tartan">
     <div class="tartan-half">
+      <div class="tartan-half-height" @tap="handleNavigationPage(res.list[0])">
+        <u-image width="100%" height="170rpx" class="image" :src="res.list[0].img" alt>
+          <u-loading slot="loading" />
+        </u-image>
+      </div>
       <div class="tartan-half-height" @tap="handleNavigationPage(res.list[1])">
         <u-image width="100%" height="170rpx" class="image" :src="res.list[1].img" alt>
           <u-loading slot="loading" />
         </u-image>
       </div>
-      <div class="tartan-half-height" @tap="handleNavigationPage(res.list[2])">
-        <u-image width="100%" height="170rpx" class="image" :src="res.list[2].img" alt>
-          <u-loading slot="loading" />
-        </u-image>
-      </div>
     </div>
-    <div class="tartan-half" @tap="handleNavigationPage(res.list[0])">
-      <u-image width="100%" height="340rpx" class="image" :src="res.list[0].img">
+    <div class="tartan-half" @tap="handleNavigationPage(res.list[2])">
+      <u-image width="100%" height="340rpx" class="image" :src="res.list[2].img">
         <u-loading slot="loading" />
       </u-image>
     </div>
@@ -39,8 +39,8 @@ export default {
 
 <style lang="scss" scoped>
 .tartan {
-  padding: 18rpx;
-  margin: 8rpx 0;
+  // padding: 18rpx;
+  // margin: 8rpx 0;
   background: #fff;
   display: flex;
   align-items: center;
@@ -48,11 +48,11 @@ export default {
   background-size: cover;
   overflow: hidden;
   .tartan-half {
-    height: 300rpx;
+    height: 335rpx;
     flex: 1;
     overflow: hidden;
     .tartan-half-height {
-      height: 150rpx;
+      height: 177;
       overflow: hidden;
     }
   }

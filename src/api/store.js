@@ -3,13 +3,24 @@ import request from '@/utils/request'
 /*
  * 商品分类
  * */
-export function getCategory() {
+export function getStoreCateBanner() {
   return request({
-    url: '/category',
+    url: '/store/cate/banner',
     method: 'get',
     power: false
   })
 }
+/*
+ * 商品分类
+ * */
+export function getStoreCate() {
+  return request({
+    url: '/store/cate',
+    method: 'get',
+    power: false
+  })
+}
+
 
 /*
  * 商品详情
