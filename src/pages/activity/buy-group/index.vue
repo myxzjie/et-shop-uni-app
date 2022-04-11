@@ -6,7 +6,7 @@
     </cu-custom>
     <view class="buy-group">
       <view class="banner">
-        <image src="https://shop.cdn.dev56.com/assets/images/group.png" class="image" />
+        <image mode="aspectFill" src="https://shop.cdn.dev56.com/assets/images/group.png" class="image" />
       </view>
 
       <view v-if="combinationList.length>0" class="list bg-white">
@@ -104,6 +104,9 @@ export default {
   .banner {
     max-height: 380upx;
     overflow: hidden;
+    .image{
+      width: 100%;
+    }
   }
   .item {
     border-bottom: 1upx solid #eee;

@@ -150,7 +150,7 @@
 <script>
 // import Dialog from '@/wxcomponents/@vant/weapp/dist/dialog/dialog'
 import { modelNavigateTo } from '@/utils'
-import { getHomeData, getPageDataHome } from '@/api/public'
+import { getHomeData, getPageData } from '@/api/public'
 // import ProductNew from '@/components/product/product-new'
 // import ProductList from '@/components/product/product-list'
 // import ProductPromotion from '@/components/product/product-promotion'
@@ -197,7 +197,7 @@ export default {
   methods: {
     loadPageDataHome() {
       const that = this
-      getPageDataHome().then(({ status, data }) => {
+      getPageData('home').then(({ status, data }) => {
         that.pageData = JSON.parse(data.pageData)
       })
     },

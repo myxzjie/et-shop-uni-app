@@ -18,7 +18,7 @@
     </u-sticky>
 
     <view class="product-wrap cu-list grid col-2 no-border">
-      <view v-for="(option, idx) in list" :key="idx" class="cu-item" @tap="onShopDetails(option)">
+      <view v-for="(option, idx) in list" :key="idx" class="cu-item" @tap="handleShopDetails(option)">
         <view class="product-content">
           <view class="image-wrap">
             <!-- <u-image class="image" :src="option.image" height="350rpx" mode="aspectFit" width="100%" :lazy-load="true" :fade="true" duration="450">
@@ -69,7 +69,12 @@ export default {
     handleTabChange(item) {
       this.tabIndex = item.___index
       this.$emit('change', this.tabIndex)
-    }
+    },
+    handleShopDetails(item) {
+      uni.navigateTo({
+        url: `/pages/shop/details/index?id=${item.id}`
+      })
+    },
   }
 }
 </script>

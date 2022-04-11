@@ -7,19 +7,23 @@
       </cu-custom>
     </view>
     <scroll-view scroll-y class="scrollPage">
-      <swiper
-        class="screen-swiper round-dot"
-        :indicator-dots="true"
-        :circular="true"
-        :autoplay="true"
-        interval="5000"
-        duration="500"
-      >
-        <swiper-item v-for="(item, index) in banner" :key="index">
-          <image :src="item.pic" mode="aspectFill" />
-        </swiper-item>
-      </swiper>
-      <view class="VerticalBox solid-top">
+      <view v-for="(item,index) in pageData.list" :key="index">
+        <view v-if="item.type === 'carousel'" class="carousel">
+          <swiper
+            class="screen-swiper round-dot"
+            :indicator-dots="true"
+            :circular="true"
+            :autoplay="true"
+            interval="5000"
+            duration="500"
+          >
+            <swiper-item v-for="(option, idx) in item.options.list" :key="idx">
+              <image :src="option.img" mode="aspectFill" />
+            </swiper-item>
+          </swiper>
+        </view>
+
+        <view v-if="item.type === 'cate'" class="VerticalBox solid-top">
         <scroll-view
           class="VerticalNav nav solid-right"
           scroll-y
@@ -70,17 +74,21 @@
           </view>
         </scroll-view>
       </view>
+
+      </view>
     </scroll-view>
   </view>
 </template>
 
 <script>
 import { getStoreCateBanner, getStoreCate } from '@/api/store'
+import { getPageData } from '@/api/public'
 export default {
   components: {},
   data() {
     return {
       BaseName: this.BaseName,
+      pageData: '',
       list: [],
       tabCur: 0,
       mainCur: 0,
@@ -101,19 +109,18 @@ export default {
     })
     this.loadStoreCateBanner()
     that.loadStoreCate()
-    // const list = [{}]
-    // for (let i = 0; i < 26; i++) {
-    //   list[i] = {}
-    //   list[i].name = String.fromCharCode(65 + i)
-    //   list[i].id = i
-    // }
-    // this.list = list
-    // this.listCur = list[0]
+    that.loadPageData()
   },
   onReady() {
     uni.hideLoading()
   },
   methods: {
+    loadPageData() {
+      const that = this
+      getPageData('cate').then(({ status, data }) => {
+        that.pageData = JSON.parse(data.pageData)
+      })
+    },
     loadStoreCateBanner(){
       const that = this
       getStoreCateBanner().then(res =>{

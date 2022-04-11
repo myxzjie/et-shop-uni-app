@@ -87,9 +87,9 @@ export function getHomeData() {
   })
 }
 
-export const getPageDataHome = () => {
+export const getPageData = (type) => {
   return request({
-    url: '/page/data/home',
+    url: `/page/data/${type}`,
     method: 'get',
     data: { clientType: 'h5' },
     power: false

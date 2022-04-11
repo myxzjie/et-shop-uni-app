@@ -68,9 +68,6 @@ export const modelNavigateTo = (item) => {
       uni.navigateTo({
         url: `/pages/shop/details/index?id=${val.id}`
       })
-      // uni.navigateTo({
-      //   url: '/pages/product/goods?id=' + val.id + '&goodsId=' + val.goodsId
-      // })
       break
     case 'category':
       if (val.id) {
