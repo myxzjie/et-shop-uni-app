@@ -9,7 +9,10 @@
     <scroll-view scroll-y class="scrollPage">
       <view v-for="(item,index) in pageData.list" :key="index">
         <view v-if="item.type === 'carousel'" class="carousel">
-          <swiper
+          <u-swiper interval="5000" duration="500" height="300" name="img" :list="item.options.list" mode="none">
+            <u-loading slot="loading" />
+          </u-swiper>
+          <!-- <swiper
             class="screen-swiper round-dot"
             :indicator-dots="true"
             :circular="true"
@@ -20,7 +23,7 @@
             <swiper-item v-for="(option, idx) in item.options.list" :key="idx">
               <image :src="option.img" mode="aspectFill" />
             </swiper-item>
-          </swiper>
+          </swiper> -->
         </view>
 
         <view v-if="item.type === 'cate'" class="VerticalBox solid-top">
