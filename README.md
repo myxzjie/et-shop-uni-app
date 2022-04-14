@@ -1,7 +1,16 @@
 # et-shop-uni-app
 
-![好酒仓库](docs/images/gh.png '首页')
+### 扫二维码申请【好酒仓库】体验
+![好酒仓库](docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg '好酒仓库')
+<!-- ![好酒仓库](docs/images/gh.png '首页') -->
 
+### 体验后端管理
+关注公众号发送【好酒仓库】
+后端源码需要付费，公众号咨询
+
+![好酒仓库](docs/images/gh_955550ad6334_258.jpg '好酒仓库')
+
+ 
 好酒仓库小程序，基于uni-app、colorUi等开源组件开发
 
 ```
@@ -61,14 +70,49 @@ npm run build:mp-weixin
 ```
 
 
-### 部分截图
+### 好酒仓库商城
+![好酒仓库商城](docs/images/et-shop.png)
 
-![首页](docs/images/et-home.png '首页')
+### 后台管理
 
-![购物车](docs/images/et-cart.png '购物车')
+#### 后台登录
+![后台登录](docs/images/et-system-login.png)
 
-![个人中心](docs/images/et-me.png '个人中心')
+#### 后台首页
+![后台首页](docs/images/adm-02.png)
 
+#### 商品分类
+![商品分类](docs/images/adm-03.png)
+
+#### 酒商品
+![酒商品](docs/images/adm-04.png)
+
+#### 会员
+![会员](docs/images/adm-05.png)
+
+#### 等级
+![等级](docs/images/adm-06.png)
+
+#### 等级任务
+![等级任务](docs/images/adm-07.png)
+
+#### 用户账单
+![用户账单](docs/images/adm-08.png)
+
+<!-- ![后台首页](docs/images/adm-08.png) -->
+<!-- ![后台首页](docs/images/adm-09.png) -->
+
+#### 商品评论
+![商品评论](docs/images/adm-10.png)
+
+#### 店铺装修
+![店铺装修](docs/images/adm-11.png)
+
+#### 首页装修
+![首页装修](docs/images/adm-12.png)
+
+#### 优惠卷
+![优惠卷](docs/images/adm-13.png)
 
 ### 项目信息
 
