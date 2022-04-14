@@ -1,7 +1,8 @@
 # et-shop-uni-app
 
 ### 扫二维码申请【好酒仓库】体验
-![好酒仓库](docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg '好酒仓库')
+<!-- ![好酒仓库](docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg '好酒仓库') -->
+<img src="docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg" width="300px">
 <!-- ![好酒仓库](docs/images/gh.png '首页') -->
 
 ### 体验后端管理
@@ -68,6 +69,22 @@ npm run dev:mp-weixin
 ```
 npm run build:mp-weixin
 ```
+
+### 后端使用技术框架
+
+| 核心技术 | 版本 |
+|---|---|
+| spring boot | 2.4.0 |
+| spring security | 2.4.0 |
+| quartz | 2.3.2 |
+| jpa | 2.4.0 |
+| mybatis | 3.2.x |
+| mysql | 8.0.x |
+| redis | 6.0.x |
+| minio | - |
+| aliyun oss | - |
+| vue | 2.6.x |
+| element-ui | - |
 
 
 ### 好酒仓库商城
