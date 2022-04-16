@@ -22,6 +22,7 @@ import Cart from '@/pages/tabbar/cart/index'
 import Me from '@/pages/tabbar/me/index'
 import TabBar from '@/components/tab-bar/index'
 import TipPop from '@/components/tip-pop'
+import { sceneKey } from '@/utils/config'
 
 export default {
   components: { Home, Cate, ArticleView, Cart, Me, TabBar, TipPop },
@@ -74,11 +75,31 @@ export default {
 
     }
   },
-  onLoad(option) {
+  onLoad(options) {
     const that = this
-    if (option.active) {
-      const current = parseInt(option.active)
+    const app = getApp()
+    if (options.active) {
+      const current = parseInt(options.active)
       that.changeTab(current)
+    }
+
+    // 扫小程序码进入
+    console.log('>>>:', options)
+    const scene = decodeURIComponent(options.scene)
+    debugger
+    if (scene) {
+      const params = scene.split('&')
+      const result = {}
+      params.forEach(item => {
+        const pram = item.split('=')
+        result[pram[0]] = pram[1]
+      })
+
+      app.globalData.options = result
+      uni.setStorage({
+        key: sceneKey,
+        data: result
+      })
     }
   },
   onShow() {},

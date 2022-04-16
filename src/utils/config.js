@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 const sessionCodeKey = 'session-code'
 const tokenKey = 'userToken'
 const cartCheckedKey = 'cartChecked'
+const sceneKey = 'sceneKey'
 
 // export default { conf, baseURL }
 
@@ -27,5 +28,6 @@ module.exports = {
   baseURL: baseURL,
   sessionCodeKey: sessionCodeKey,
   tokenKey: tokenKey,
-  cartCheckedKey: cartCheckedKey
+  cartCheckedKey: cartCheckedKey,
+  sceneKey: sceneKey
 }

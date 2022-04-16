@@ -36,8 +36,8 @@
           </view>
         </view>
         <!--方格图-->
-        <flex-one v-if="item.type === 'flexOne'" :res="item.options"></flex-one>
-        <flex-two v-if="item.type === 'flexTwo'" :res="item.options"></flex-two>
+        <flex-one v-if="item.type === 'flexOne'" :res="item.options" />
+        <flex-two v-if="item.type === 'flexTwo'" :res="item.options" />
         <left-one-right-two v-if="item.type === 'leftOneRightTwo'" :res="item.options" />
         <left-two-right-one v-if="item.type === 'leftTwoRightOne'" :res="item.options" />
 

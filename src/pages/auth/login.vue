@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import { tokenKey } from '@/utils/config'
+import { tokenKey, sceneKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
-import { wxappAuthLogin, wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
-import { redirectTo, appLogin, silentLogin } from '@/utils/auth'
+import { wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
+import { redirectTo, appLogin } from '@/utils/auth'
 export default {
   data() {
     return {
@@ -52,7 +52,14 @@ export default {
     ...mapMutations(['login', 'setSessionKey', 'setOpenid']),
     getUserProfile(e) {
       const that = this
-      const spread = null
+      // const app = getApp()
+      // 获取存储值
+      const params = uni.getStorageSync(sceneKey)
+      console.log('>>login:', params)
+      let spread = null
+      if (params) {
+        spread = params.spread
+      }
       appLogin(spread).then(res => {
         if (res.status === 200) {
           that.login('weixin')

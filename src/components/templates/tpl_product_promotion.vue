@@ -74,7 +74,7 @@ export default {
       uni.navigateTo({
         url: `/pages/shop/details/index?id=${item.id}`
       })
-    },
+    }
   }
 }
 </script>

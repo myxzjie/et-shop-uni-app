@@ -5,21 +5,9 @@
     </cu-custom>
     <scroll-view scroll-y class="scrollPage">
       <view class="distribution-posters">
-        <view class="slider-banner banner">
-          <swiper
-            :indicator-dots="indicatorDots"
-            :indicator-color="indicatorColor"
-            :indicator-active-color="indicatorActiveColor"
-          >
-            <block v-for="(item, infoIndex) in info" :key="infoIndex">
-              <swiper-item>
-                <image class="slide-image" :src="item.wap_poster" mode="widthFix" show-menu-by-longpress />
-              </swiper-item>
-            </block>
-          </swiper>
-        </view>
+        <u-image mode="widthFix" :src="image" />
         <view class="cu-bar btn-group margin-top">
-          <button class="cu-btn bg-green shadow-blur round lg" @tap="saveImg">
+          <button class="cu-btn bg-green shadow-blur round lg" @tap="downloadImage">
             保存海报
           </button>
         </view>
@@ -35,99 +23,61 @@ export default {
   },
   data() {
     return {
-      indicatorDots: true,
-      indicatorColor: 'transparent',
-      indicatorActiveColor: 'transparent',
-      swiperPosters: {
-        speed: 1000,
-        effect: 'coverflow',
-        slidesPerView: 'auto',
-        centeredSlides: true,
-        coverflowEffect: {
-          rotate: 0, // 旋转的角度
-          stretch: -20, // 拉伸   图片间左右的间距和密集度
-          depth: 100, // 深度   切换图片间上下的间距和密集度
-          modifier: 3, // 修正值 该值越大前面的效果越明显
-          slideShadows: false // 页面阴影效果
-        },
-        observer: true,
-        observeParents: true
-      },
-      info: {},
-      activeIndex: 0
+      BaseName: '分享海报',
+      image: '',
     }
   },
   onShow() {
-    this.getIndex()
+    this.load()
   },
   methods: {
-    getIndex() {
+    load() {
       const that = this
       getSpreadImg().then(
         res => {
-          that.info = res.data
+          that.image = res.data
         },
         err => {
-          that.$dialog.message(err.msg)
+          uni.showToast({
+            title: err.error || '请求失败',
+            icon: 'none'
+          })
         }
       )
     },
-    downloadIamge(imgsrc, name) {
-      // let image = new Image();
-      // image.setAttribute("crossOrigin", "anonymous");
-      // image.onload = function() {
-      //   // let canvas = document.createElement("canvas");
-      //   // canvas.width = image.width;
-      //   // canvas.height = image.height;
-      //   // let context = canvas.getContext("2d");
-      //   // context.drawImage(image, 0, 0, image.width, image.height);
-      //   // let url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
-      //   // let a = document.createElement("a"); // 生成一个a元素
-      //   // let event = new MouseEvent("click"); // 创建一个单击事件
-      //   // a.download = name || "photo"; // 设置图片名称
-      //   // a.href = url; // 将生成的URL设置为a.href属性
-      //   // a.dispatchEvent(event); // 触发a的单击事件
-      // };
-      // image.src = imgsrc;
-
-      var that = this
-      this.isDown = true
-      var downloadUrl = imgsrc
-
-      if (!wx.saveImageToPhotosAlbum) {
-        wx.showModal({
+    downloadImage() {
+      const that = this
+      if (!uni.saveImageToPhotosAlbum) {
+        uni.showModal({
           title: '提示',
           content:
             '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
         })
         that.openDialogVisible = true
-
         return
       }
 
       // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.writePhotosAlbum" 这个 scope
-      wx.getSetting({
+      uni.getSetting({
         success(res) {
           if (!res.authSetting['scope.writePhotosAlbum']) {
             that.openDialogVisible = true
-
             // 接口调用询问
-            wx.authorize({
+            uni.authorize({
               scope: 'scope.writePhotosAlbum',
               success() {
-                that.downloadImage(downloadUrl)
+                that.saveImgToLocal(downloadUrl)
               },
               fail() {
-                // 用户拒绝了授权
-                // 打开设置页面
-                wx.openSetting({
-                  success: function(data) {},
-                  fail: function(data) {}
+                // 用户拒绝了授权, 打开设置页面
+                uni.openSetting({
+                  success: (data) => {},
+                  fail: (data) => {}
                 })
               }
             })
           } else {
-            that.downloadImage(downloadUrl)
+            that.saveImgToLocal()
           }
         },
         fail(res) {
@@ -135,20 +85,60 @@ export default {
         }
       })
     },
-    saveImg: function() {
-      console.log(this.info[this.activeIndex].wap_poster)
-      this.downloadIamge(
-        this.info[this.activeIndex].wap_poster,
-        'poster' + this.activeIndex
-      )
+    saveImgToLocal() {
+      const that = this
+      uni.showModal({
+        title: '提示',
+        content: '确定保存到相册吗',
+        success: (res) => {
+          if (res.confirm) {
+            uni.downloadFile({
+              url: that.image, // 图片地址
+              success: (res) => {
+                if (res.statusCode !== 200) {
+                  uni.showToast({
+                    title: '保存失败',
+                    icon: 'none'
+                  })
+                  return
+                }
+                uni.saveImageToPhotosAlbum({
+                  filePath: res.tempFilePath,
+                  success: () => {
+                    uni.showToast({
+                      title: '保存成功',
+                      icon: 'none'
+                    })
+                  },
+                  fail: (err) => {
+                    console.error(err)
+                    uni.showToast({
+                      title: '保存失败',
+                      icon: 'none'
+                    })
+                  }
+                })
+              }
+            })
+          } else if (res.cancel) {
+          }
+        }
+      })
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+/* >>>page {
+   height:100vh;
+} */
 .distribution-posters {
-  height: 100%;
+  height:100vh;
+  .image {
+    width: 100%;
+    height: auto;
+  }
 }
 .banenr {
   height: 100%;

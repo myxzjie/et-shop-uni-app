@@ -4,13 +4,14 @@ import { mapState } from 'vuex'
 import Vue from 'vue'
 export default {
   globalData: {
-    isConnected: true
+    isConnected: true,
+    options: {}
   },
   computed: {
     ...mapState(['hasLogin'])
   },
-  onLaunch() {
-    console.log('App Launch')
+  onLaunch(options) {
+    console.log('App Launch', options.query)
     const that = this
     uni.getSystemInfo({
       success: (e) => {

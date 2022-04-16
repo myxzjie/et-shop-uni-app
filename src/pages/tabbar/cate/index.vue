@@ -27,56 +27,56 @@
         </view>
 
         <view v-if="item.type === 'cate'" class="VerticalBox solid-top">
-        <scroll-view
-          class="VerticalNav nav solid-right"
-          scroll-y
-          scroll-with-animation
-          :scroll-top="verticalNavTop"
-          style="height: calc(100vh - 375upx);"
-        >
-          <view
-            v-for="(item, index) in list"
-            :key="index"
-            class="cu-item"
-            :class="index == tabCur ? 'text-green cur' : ''"
-            :data-id="index"
-            @tap="onTabSelect"
+          <scroll-view
+            class="VerticalNav nav solid-right"
+            scroll-y
+            scroll-with-animation
+            :scroll-top="verticalNavTop"
+            style="height: calc(100vh - 375upx);"
           >
-            {{ item.cateName }}
-          </view>
-        </scroll-view>
-        <scroll-view
-          class="VerticalMain"
-          scroll-y
-          scroll-with-animation
-          style="height: calc(100vh - 375upx);"
-          :scroll-into-view="'main-' + mainCur"
-          @scroll="VerticalMain"
-        >
-          <view
-            v-for="(item, index) in list"
-            :id="'main-' + index"
-            :key="index"
-            class="item margin-top-sm bg-white"
-          >
-            <view class="cu-bar solid-bottom ">
-              <view class="action">
-                <text class="cuIcon-title text-green" /> {{ item.cateName }}</view>
+            <view
+              v-for="(item, index) in list"
+              :key="index"
+              class="cu-item"
+              :class="index == tabCur ? 'text-green cur' : ''"
+              :data-id="index"
+              @tap="onTabSelect"
+            >
+              {{ item.cateName }}
             </view>
-            <view class="cate cu-list grid col-3 no-border">
-              <view v-for="(item, index) in item.children" :key="index" class="cu-item" @tap="onProduct(item)">
-                <view class="pictrue text-red">
-                  <image class="image" :src="item.pic" />
-                <!-- <view class="cu-tag badge" v-if="item.badge != 0">
+          </scroll-view>
+          <scroll-view
+            class="VerticalMain"
+            scroll-y
+            scroll-with-animation
+            style="height: calc(100vh - 375upx);"
+            :scroll-into-view="'main-' + mainCur"
+            @scroll="VerticalMain"
+          >
+            <view
+              v-for="(item, index) in list"
+              :id="'main-' + index"
+              :key="index"
+              class="item margin-top-sm bg-white"
+            >
+              <view class="cu-bar solid-bottom ">
+                <view class="action">
+                  <text class="cuIcon-title text-green" /> {{ item.cateName }}</view>
+              </view>
+              <view class="cate cu-list grid col-3 no-border">
+                <view v-for="(item, index) in item.children" :key="index" class="cu-item" @tap="onProduct(item)">
+                  <view class="pictrue text-red">
+                    <image class="image" :src="item.pic" />
+                    <!-- <view class="cu-tag badge" v-if="item.badge != 0">
                       <block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
                      </view> -->
+                  </view>
+                  <text class="name text-sm">{{ item.cateName }}</text>
                 </view>
-                <text class="name text-sm">{{ item.cateName }}</text>
               </view>
             </view>
-          </view>
-        </scroll-view>
-      </view>
+          </scroll-view>
+        </view>
 
       </view>
     </scroll-view>
@@ -124,9 +124,9 @@ export default {
         that.pageData = JSON.parse(data.pageData)
       })
     },
-    loadStoreCateBanner(){
+    loadStoreCateBanner() {
       const that = this
-      getStoreCateBanner().then(res =>{
+      getStoreCateBanner().then(res => {
         that.banner = res.data
       }, err => { console.error(err) })
     },

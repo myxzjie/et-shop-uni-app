@@ -21,7 +21,6 @@ export function getStoreCate() {
   })
 }
 
-
 /*
  * 商品详情
  * */
