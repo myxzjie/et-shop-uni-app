@@ -15,14 +15,39 @@
         @tap="getUserProfile"
       >授权登录</button>
     </view>
+
+    <view class="cu-modal bottom-modal" :class="show ? 'show' : ''" @tap="hideModal">
+    <view class="cu-dialog" @tap.stop="">
+      <!-- <view class="cu-bar bg-white">
+            <view class="action text-green"></view>
+            <view class="action " @tap="hideModal">x</view>
+            </view> -->
+           
+            <view class="padding">
+              <u-form :model="form" :rules="rules" ref="uForm" :error-type="tips" label-position="left">
+                <u-form-item :border-bottom="true" label="用户名" prop="username">
+                  <u-input v-model="form.username" />
+                </u-form-item>
+                <u-form-item label="密码" prop="password">
+                  <u-input v-model="form.password" type="password" :password-icon="false"/>
+                </u-form-item>
+                <u-form-item label-position="left" label-width="120rpx" label="确认密码" prop="password2">
+                  <u-input v-model="form.password2" type="password" :password-icon="false"/>
+                </u-form-item>
+              </u-form>
+              <u-button type="success" @click="onSubmit">提交</u-button>
+            </view>
+      <view class="cu-tabbar-height" />
+    </view>
+  </view>
   </view>
 </template>
 
 <script>
-import { tokenKey, sceneKey } from '@/utils/config'
+import { tokenKey, sceneKey, sessionCodeKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
-import { wxappAuth, wxappPhone, registerVerify, register } from '@/api/public'
-import { redirectTo, appLogin } from '@/utils/auth'
+import { wxappAuth, wxappPhone, registerVerify, wxappReg } from '@/api/public'
+import { redirectTo, appLogin, userProfile } from '@/utils/auth'
 export default {
   data() {
     return {
@@ -41,7 +66,65 @@ export default {
         iv: '',
         userInfo: ''
       },
-      code: ''
+      code: '',
+      form: {
+        username: '',
+        password: '',
+        password2: ''
+      },
+      tips:['message','border-bottom'],
+      rules: {
+				username: [
+					{ 
+						required: true, 
+						message: '请输入用户名', 
+						// 可以单个或者同时写两个触发验证方式 
+						trigger: ['change','blur'],
+					},
+          {
+            trigger: ['blur'],
+            asyncValidator: (rule, value, callback) => {
+              // this.$u.post('/xxx/xxx', {name: value}).then(res => {
+              //   // 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
+              //   if(res.error) {
+              //     callback(new Error('姓名重复'));
+              //   } else {
+                  // 如果校验通过，也要执行callback()回调
+                  callback();
+                // }
+              // })
+            }
+          }
+				],
+        password: [
+					{ 
+						required: true, 
+						message: '请输入确认密码', 
+						// 可以单个或者同时写两个触发验证方式 
+						trigger: ['change','blur'],
+					},
+          { min: 4, max: 16, message: '长度在 4 到 16 个字符', trigger: 'blur' }
+				],
+        password2: [
+					{ 
+						required: true, 
+						message: '请输入确认密码', 
+						// 可以单个或者同时写两个触发验证方式 
+						trigger: ['change','blur'],
+					},
+          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' },
+          {
+            validator: (rule, value, callback) => {
+              if (value !== this.form.password) {
+                callback(new Error('两次输入密码不一致!'))
+              } else {
+                callback()
+              }
+            },
+            trigger: ['blur'],
+          },
+				]
+      }
     }
   },
   computed: {
@@ -61,6 +144,7 @@ export default {
         spread = params.spread
       }
       appLogin(spread).then(res => {
+        debugger
         if (res.status === 200) {
           that.login('weixin')
           uni.setStorageSync(tokenKey, res.data.token)
@@ -139,30 +223,44 @@ export default {
       this.show = false
       this.register = false
     },
-    onSubmitRegister(e) {
+    onSubmit(e) {
       const that = this
-      const { encryptedData, iv, userInfo } = that.userInfo
-      register({
-        encryptedData: encryptedData,
-        iv: iv,
-        openid: that.openid,
-        sessionKey: that.sessionKey,
-        code: that.code,
-        phoneNumber: that.phoneInfo.phoneNumber,
-        purePhoneNumber: that.phoneInfo.purePhoneNumber,
-        countryCode: that.phoneInfo.countryCode
-      }).then(res => {
-        if (res.status === 200) {
-          that.authLogin(encryptedData, iv, userInfo)
-        } else {
-          uni.showModal({
-            showCancel: false,
-            title: '失败提示',
-            content: res.msg
+      this.$refs.uForm.validate(valid => {
+				if (!valid) {
+					uni.showToast({
+            title: '输入有误，请核实您的信息',
+            icon: 'none',
+            duration: 2000
           })
+          return false;
+				}
+        const params = uni.getStorageSync(sceneKey)
+        console.log('>>login:', params)
+        let spread = null
+        if (params) {
+          spread = params.spread
         }
-      },
-      err => { console.error(err) })
+        let sessionCode = uni.getStorageSync(sessionCodeKey)
+        userProfile().then(({ encryptedData, iv })=>{
+          const data = that.form
+          data.openid = sessionCode.openid
+          data.sessionKey= sessionCode.session_key,
+          data.unionId= sessionCode.unionId,
+          data.spread= spread,
+          data.encryptedData= encryptedData,
+          data.iv= iv
+          wxappReg(data).then((res) => {
+            that.show = false
+            sessionCode.hasReg = true
+            uni.setStorageSync(sessionCodeKey, sessionCode)
+            that.login('weixin')
+            uni.setStorageSync(tokenKey, res.data.token)
+            that.$store.dispatch('getUserInfo', true)
+            redirectTo()
+          })
+        })
+			});
+      
     },
     sendMessge() {
       const that = this
@@ -198,7 +296,10 @@ export default {
         }
       }, 1000)
     }
-  }
+  },
+  onReady() {
+		this.$refs.uForm.setRules(this.rules);
+	}
 }
 </script>
 
@@ -350,88 +451,7 @@ export default {
   }
 }
 
-._van-dialog {
-  z-index: 99999999999;
+::v-deep .u-form-item__message{
+  text-align: right;
 }
-
-/* input group */
-.uni-input-group {
-	position: relative;
-	padding: 0;
-	border: 0;
-	background-color: #fff;
-}
-
-.uni-input-group:before {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	height: 2upx;
-	content: '';
-	transform: scaleY(.5);
-	background-color: #c8c7cc;
-}
-
-.uni-input-group:after {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	height: 2upx;
-	content: '';
-	transform: scaleY(.5);
-	background-color: #c8c7cc;
-}
-
-.uni-input-row {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	font-size:28upx;
-	padding: 22upx 30upx;
-	justify-content: space-between;
-}
-
-.uni-input-group .uni-input-row:after {
-	position: absolute;
-	right: 0upx;
-	bottom: 0;
-	left: 20upx;
-	height: 2upx;
-	content: '';
-	transform: scaleY(.5);
-	background-color: #c8c7cc;
-}
-
-.uni-input-row label {
-	line-height: 70upx;
-}
-
-.uni-label {
-	width: 210upx;
-	word-wrap: break-word;
-	word-break: break-all;
-	text-indent:20upx;
-}
-.uni-input {
-	height: 50upx;
-	padding: 15upx 25upx;
-	line-height:50upx;
-	font-size:28upx;
-	background:#FFF;
-	flex: 1;
-}
-.btn-phone{
-  font-size:28upx;
-  background-color: transparent;
-  padding-left: 0upx;
-  padding-right: 0upx;
-  text-align: left;
-}
-
-.btn-phone:after{
- border: 0upx solid transparent;
-}
-
 </style>

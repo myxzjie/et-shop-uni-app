@@ -61,7 +61,7 @@ export function handleQrCode() {
 
 export const modelNavigateTo = (item) => {
   console.log('>>', item)
-  debugger
+  // debugger
   const val = item.url
   switch (val.___type) {
     case 'product':

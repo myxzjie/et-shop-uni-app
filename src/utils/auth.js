@@ -1,6 +1,6 @@
 import { tokenKey, sessionCodeKey } from '@/utils/config'
 import { parseRoute, redirect } from '@/utils'
-import { wxappAuthLogin, wxappReg, wxappAuth, wxappSessionCode } from '@/api/public'
+import { wxappLogin, wxappReg, wxappAuth, wxappSessionCode } from '@/api/public'
 
 export const checkSession = async() => {
   return new Promise((resolve) => uni.checkSession({
@@ -23,7 +23,6 @@ export const login = () => {
   return new Promise((resolve, reject) => {
     uni.login({
       success: (res) => {
-        debugger
         resolve(res.code)
       },
       fail: (err) => {
@@ -47,22 +46,22 @@ export const appLogin = async(spread) => {
   if (!sessionCode || sessionCode === '') {
     sessionCode = await authSession()
   }
-  if (sessionCode.hasReg) {
-    return wxappAuthLogin({ openid: sessionCode.openid })
-  } else {
-    const { encryptedData, iv } = await userProfile()
-    return wxappReg({
-      sessionKey: sessionCode.session_key,
-      openid: sessionCode.openid,
-      spread: spread,
-      encryptedData: encryptedData,
-      iv: iv
-    }).then((res) => {
-      sessionCode.hasReg = true
-      uni.setStorageSync(sessionCodeKey, sessionCode)
-      return res
-    })
-  }
+  // if (sessionCode.hasReg) {
+    return wxappLogin({ openid: sessionCode.openid })
+  // } else {
+  //   const { encryptedData, iv } = await userProfile()
+  //   return wxappReg({
+  //     sessionKey: sessionCode.session_key,
+  //     openid: sessionCode.openid,
+  //     spread: spread,
+  //     encryptedData: encryptedData,
+  //     iv: iv
+  //   }).then((res) => {
+  //     sessionCode.hasReg = true
+  //     uni.setStorageSync(sessionCodeKey, sessionCode)
+  //     return res
+  //   })
+  // }
 }
 
 export const userProfile = () => {

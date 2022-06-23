@@ -86,7 +86,6 @@ export default {
     // 扫小程序码进入
     console.log('>>>:', options)
     const scene = decodeURIComponent(options.scene)
-    debugger
     if (scene) {
       const params = scene.split('&')
       const result = {}
