@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       BaseName: '分享海报',
-      image: '',
+      image: ''
     }
   },
   onShow() {

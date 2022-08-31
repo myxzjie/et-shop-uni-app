@@ -1,6 +1,36 @@
-import { tokenKey, sessionCodeKey } from '@/utils/config'
+import { sessionCodeKey } from '@/utils/config'
 import { parseRoute, redirect } from '@/utils'
-import { wxappLogin, wxappReg, wxappAuth, wxappSessionCode } from '@/api/public'
+import { wxappLogin, wxappAuth, wxappSessionCode } from '@/api/public'
+
+import storage from '@/utils/storage'
+
+// export const refresh = () => {
+//   wxappRefresh({refreshToken: storage.getRefreshToken()}).then(() => {
+//     storage.setAccessToken(res.data.accessToken)
+//     storage.setRefreshToken(res.data.refreshToken)
+
+//     // 获取新的token成功 刷新当前页面
+
+//     let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
+//     let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+//     let curParam = routes[routes.length - 1].options; //获取路由参数
+//     // 拼接参数
+//     let param = "";
+//     for (let key in curParam) {
+//       param += "&" + key + "=" + curParam[key];
+//     }
+//     // 判断当前路径
+//     if (curRoute.indexOf("pages/tabbar") == 1) {
+//       uni.switchTab({
+//         url: "/" + curRoute + param.replace("&", "?"),
+//       });
+//     }
+
+//     uni.redirectTo({
+//       url: "/" + curRoute + param.replace("&", "?"),
+//     });
+//   })
+// }
 
 export const checkSession = async() => {
   return new Promise((resolve) => uni.checkSession({
@@ -34,34 +64,33 @@ export const login = () => {
 
 export const authSession = async() => {
   const code = await login()
-  debugger
   return wxappSessionCode({ code: code }).then(({ data }) => {
-    uni.setStorageSync(sessionCodeKey, data)
+    storage.setSessionCode(data)
     return data
   })
 }
 
 export const appLogin = async(spread) => {
-  let sessionCode = uni.getStorageSync(sessionCodeKey)
+  let sessionCode = storage.getSessionCode()
   if (!sessionCode || sessionCode === '') {
     sessionCode = await authSession()
   }
-  // if (sessionCode.hasReg) {
+  if (sessionCode.hasReg) {
     return wxappLogin({ openid: sessionCode.openid })
-  // } else {
-  //   const { encryptedData, iv } = await userProfile()
-  //   return wxappReg({
-  //     sessionKey: sessionCode.session_key,
-  //     openid: sessionCode.openid,
-  //     spread: spread,
-  //     encryptedData: encryptedData,
-  //     iv: iv
-  //   }).then((res) => {
-  //     sessionCode.hasReg = true
-  //     uni.setStorageSync(sessionCodeKey, sessionCode)
-  //     return res
-  //   })
-  // }
+  } else {
+    const { encryptedData, iv } = await userProfile()
+    return wxappReg({
+      sessionKey: sessionCode.session_key,
+      openid: sessionCode.openid,
+      spread: spread,
+      encryptedData: encryptedData,
+      iv: iv
+    }).then((res) => {
+      sessionCode.hasReg = true
+      uni.setStorageSync(sessionCodeKey, sessionCode)
+      return res
+    })
+  }
 }
 
 export const userProfile = () => {
@@ -89,14 +118,6 @@ export const silentLogin = (openid, spread) => {
   })
 }
 
-export function openLoginDialog() {
-  const userToken = uni.getStorageSync(tokenKey)
-  if (!userToken) {
-    uni.navigateTo({
-      url: '/pages/auth/login'
-    })
-  }
-}
 
 // const togo = function(url,data){
 // 	url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)
@@ -153,5 +174,4 @@ export function authLoginTo() {
 //   // register: register,
 //   // loginOut: loginOut,
 //   // checkAndAuthorize: checkAndAuthorize,
-//   openLoginDialog: openLoginDialog
 // }

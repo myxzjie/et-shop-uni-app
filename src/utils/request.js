@@ -1,14 +1,15 @@
 // request
-import { baseURL, tokenKey } from '@/utils/config'
+import { baseURL } from '@/utils/config'
 import { authLoginTo } from '@/utils/auth'
+import storage from '@/utils/storage'
 
 const filter = []
 
 const request = ({ url = '', data = {}, method = 'GET', header = {}, power = true, hideLoading }) => {
   if (filter.indexOf(url) < 0) {
     // 获取用户token
-    const userToken = uni.getStorageSync(tokenKey)
-    if (!userToken && power) {
+    const accessToken = storage.getAccessToken()
+    if (!accessToken && power) {
       authLoginTo()
       // const pages = getCurrentPages() //获取加载的页面
       // debugger
@@ -21,10 +22,28 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       // uni.navigateTo({
       //   url: '/pages/auth/login'
       // })
-      return false
+      return new Promise((resolve, reject) => {
+        reject(false)
+      })
     } else {
+      if(accessToken !== ''){
+        const atob = (str) => Buffer.from(str,'base64').toString('binary')
+        // 判断如果过期时间小于我的当前时间，在请求上重新刷新token
+        if (accessToken.split(".").length <= 1) {
+          // refresh();
+          debugger
+        } else {
+          const jwtData = accessToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
+          const json = JSON.parse(atob(jwtData))
+          
+          if (json.exp < Math.round(new Date() / 1000)) {
+            // refresh();
+            debugger
+          }
+        }
+      }
       // 将设置请求头信息
-      header.Authorization = 'Bearer ' + userToken
+      header.Authorization = 'Bearer ' + accessToken
     }
   }
 
@@ -49,16 +68,16 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       if (data.status === 200) {
         return resolve(data)
       }
-      if (data.status === 6000) {
+      if (data.status >= 6000) {
         return resolve(data)
       }
       if (data.status === 401) {
         authLoginTo()
       }
       // const [error, res] = response
-      if (error) {
-        console.error(error)
-      }
+      // if (error) {
+      //   console.error(error)
+      // }
       reject(data)
     }).catch(error => {
       const [err, res] = error

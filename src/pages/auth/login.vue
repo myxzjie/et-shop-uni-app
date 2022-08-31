@@ -16,44 +16,88 @@
       >授权登录</button>
     </view>
 
-    <view class="cu-modal bottom-modal" :class="show ? 'show' : ''" @tap="hideModal">
-    <view class="cu-dialog" @tap.stop="">
-      <!-- <view class="cu-bar bg-white">
-            <view class="action text-green"></view>
-            <view class="action " @tap="hideModal">x</view>
-            </view> -->
-           
-            <view class="padding">
-              <u-form :model="form" :rules="rules" ref="uForm" :error-type="tips" label-position="left">
-                <u-form-item :border-bottom="true" label="用户名" prop="username">
-                  <u-input v-model="form.username" />
-                </u-form-item>
-                <u-form-item label="密码" prop="password">
-                  <u-input v-model="form.password" type="password" :password-icon="false"/>
-                </u-form-item>
-                <u-form-item label-position="left" label-width="120rpx" label="确认密码" prop="password2">
-                  <u-input v-model="form.password2" type="password" :password-icon="false"/>
-                </u-form-item>
-              </u-form>
-              <u-button type="success" @click="onSubmit">提交</u-button>
-            </view>
-      <view class="cu-tabbar-height" />
+    <u-modal v-model="phonePopup" :mask-close-able="true" :title="BaseName+'商城'" :show-confirm-button="false">
+      <view class="popup-warp">
+      <view class="tips">
+        为了更好地用户体验，需要您授权手机号
+      </view>
+      <button type="primary" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+        去授权
+      </button>
     </view>
-  </view>
+    </u-modal>
+
+    
+
+    <!-- <view class="cu-modal bottom-modal" :class="show ? 'show' : ''" @tap="hideModal">
+      <view class="cu-dialog" @tap.stop="">
+        <view v-show="binder" class="padding">
+          <u-form ref="uForm" :model="form" :rules="rules" :error-type="tooltip" label-position="left">
+            <u-form-item :border-bottom="true" label="用户名" prop="username">
+              <u-input v-model="form.username" />
+            </u-form-item>
+            <u-form-item label="密码" prop="password">
+              <u-input v-model="form.password" type="password" :password-icon="false" />
+            </u-form-item>
+            <u-form-item label-position="left" label-width="120rpx" label="确认密码" prop="password2">
+              <u-input v-model="form.password2" type="password" :password-icon="false" />
+            </u-form-item>
+          </u-form>
+          <u-button type="success" @click="onSubmit">提交</u-button>
+          <view>
+            <text class="binder text-blue text-right" @click="onBinder(false)">已有账号绑定</text>
+          </view>
+        </view>
+
+        <view v-show="binder === false" class="padding">
+          <u-form ref="codeForm" :model="codeForm" :rules="codeRules" :error-type="tooltip" label-position="left">
+            <u-form-item :border-bottom="true" label="用户名" prop="phone">
+              <u-input v-model="codeForm.phone" />
+            </u-form-item>
+            <u-form-item class="cell code" label-width="120" prop="code" label="验证码">
+              <div style="display:flex; width:100%;">
+                <u-input v-model="codeForm.code" maxlength="6" placeholder="请输入验证码" />
+                <u-verification-code
+                  ref="uCode"
+                  class="verification-code"
+                  keep-running
+                  unique-key="page-login"
+                  :seconds="seconds"
+                  @end="end"
+                  @start="start"
+                  @change="codeChange"
+                />
+                <view class="text-tips" @tap="getCode">{{ tips }}</view>
+
+              </div>
+            </u-form-item>
+          </u-form>
+          <u-button type="success" @click="onBinderUser">提交</u-button>
+          <view>
+            <text class="binder text-blue text-right" @click="onBinder(true)">注册账号</text></text></text>
+          </view>
+        </view>
+        <view class="cu-tabbar-height" />
+      </view>
+    </view> -->
   </view>
 </template>
 
 <script>
+import storage from '@/utils/storage'
 import { tokenKey, sceneKey, sessionCodeKey } from '@/utils/config'
 import { mapState, mapMutations } from 'vuex'
-import { wxappAuth, wxappPhone, registerVerify, wxappReg } from '@/api/public'
+import { wxappSessionCode ,wxappAuth,  wxappReg, wxappLogin } from '@/api/public'
 import { redirectTo, appLogin, userProfile } from '@/utils/auth'
 export default {
   data() {
     return {
       BaseName: this.BaseName,
       show: false,
-      register: false,
+      code: '',
+      
+      phonePopup: false,
+      binder: true,
       phoneInfo: {
         phoneNumber: '',
         purePhoneNumber: '',
@@ -64,76 +108,29 @@ export default {
       userInfo: {
         encryptedData: '',
         iv: '',
-        userInfo: ''
-      },
-      code: '',
-      form: {
-        username: '',
-        password: '',
-        password2: ''
-      },
-      tips:['message','border-bottom'],
-      rules: {
-				username: [
-					{ 
-						required: true, 
-						message: '请输入用户名', 
-						// 可以单个或者同时写两个触发验证方式 
-						trigger: ['change','blur'],
-					},
-          {
-            trigger: ['blur'],
-            asyncValidator: (rule, value, callback) => {
-              // this.$u.post('/xxx/xxx', {name: value}).then(res => {
-              //   // 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
-              //   if(res.error) {
-              //     callback(new Error('姓名重复'));
-              //   } else {
-                  // 如果校验通过，也要执行callback()回调
-                  callback();
-                // }
-              // })
-            }
-          }
-				],
-        password: [
-					{ 
-						required: true, 
-						message: '请输入确认密码', 
-						// 可以单个或者同时写两个触发验证方式 
-						trigger: ['change','blur'],
-					},
-          { min: 4, max: 16, message: '长度在 4 到 16 个字符', trigger: 'blur' }
-				],
-        password2: [
-					{ 
-						required: true, 
-						message: '请输入确认密码', 
-						// 可以单个或者同时写两个触发验证方式 
-						trigger: ['change','blur'],
-					},
-          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' },
-          {
-            validator: (rule, value, callback) => {
-              if (value !== this.form.password) {
-                callback(new Error('两次输入密码不一致!'))
-              } else {
-                callback()
-              }
-            },
-            trigger: ['blur'],
-          },
-				]
+        userInfo: '',
+        phoneCode: '',
+        openid:'',
+        sessionKey:''
       }
+      
     }
   },
   computed: {
     ...mapState(['hasLogin', 'sessionKey', 'openid'])
   },
-  // onLoad(options) {},
+  onLoad(options) {
+    let that = this;
+    //获取code
+    uni.login({
+      success: (res) => {
+        that.code = res.code
+      },
+    });
+  },
   methods: {
     ...mapMutations(['login', 'setSessionKey', 'setOpenid']),
-    getUserProfile(e) {
+    async getUserProfile(e) {
       const that = this
       // const app = getApp()
       // 获取存储值
@@ -143,23 +140,30 @@ export default {
       if (params) {
         spread = params.spread
       }
-      appLogin(spread).then(res => {
-        debugger
-        if (res.status === 200) {
+      
+      let sessionCode = storage.getSessionCode()
+      if (!sessionCode || sessionCode === '') {
+        sessionCode = await that.authSession()
+      }
+      that.userInfo.openid = sessionCode.openid
+      that.userInfo.sessionKey = sessionCode.session_key
+      if (sessionCode.hasReg) {
+         wxappLogin({ openid: sessionCode.openid }).then(res =>{
+          if (res.status === 200) {
           that.login('weixin')
-          uni.setStorageSync(tokenKey, res.data.token)
+          storage.setAccessToken(res.data.accessToken);
+          storage.setRefreshToken(res.data.refreshToken);
+          // uni.setStorageSync(tokenKey, res.data.token)
           that.$store.dispatch('getUserInfo', true)
           redirectTo()
-        } else if (res.status === 6000) {
-          that.show = true
-          return
-        } else if (res.status === 6002) {
-          that.register = true
-          that.userInfo = { encryptedData, iv, userInfo }
-          return
-        }
-      },
-      err => {
+          } else{
+            uni.showToast({
+              title: '登录错误',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+         },err => {
         console.error(err)
         uni.showToast({
           title: '登录错误',
@@ -167,26 +171,42 @@ export default {
           duration: 2000
         })
       })
+      } else {
+        const {encryptedData,iv} = await userProfile()
+        that.userInfo.encryptedData = encryptedData
+        that.userInfo.iv = iv
+        that.phonePopup = true
+      }
+      
     },
-    getUserInfo(e) {
+    async authSession() {
       const that = this
-      // 数据
-      const { encryptedData, iv, userInfo } = e.mp.detail
       debugger
-      that.authLogin(encryptedData, iv, userInfo)
+      return wxappSessionCode({ code: that.code }).then(({ data }) => {
+        storage.setSessionCode(data)
+        return data
+      })
     },
     getPhoneNumber(e) {
       const that = this
-      const { encryptedData, iv } = e.mp.detail
-      wxappPhone({
-        encryptedData: encryptedData,
-        iv: iv,
-        openid: that.openid,
-        sessionKey: that.sessionKey,
-        code: '1212'
-      }).then(res => {
-        that.phoneInfo = res.data
-      }, err => { console.error(err) })
+      that.userInfo.phoneCode = e.mp.detail.code
+      wxappReg(that.userInfo).then((res) => {
+        storage.removeSessionCode()
+        if (res.status === 200) {
+          that.login('weixin')
+          storage.setAccessToken(res.data.accessToken)
+          storage.setRefreshToken(res.data.refreshToken)
+          that.$store.dispatch('getUserInfo', true)
+          redirectTo()
+        } else {
+          uni.showToast({
+          title: '登录错误',
+          icon: 'none',
+          duration: 2000
+        })
+        }
+      })
+      
     },
     authLogin(encryptedData, iv, userInfo) {
       const that = this
@@ -206,9 +226,10 @@ export default {
                 } else if (res.status === 6000) {
                   that.show = true
                   return
-                } else if (res.status === 6002) {
-                  that.register = true
-                  that.userInfo = { encryptedData, iv, userInfo }
+                } else if (res.status === 6001) {
+                  that.show = true
+                  that.binder = true
+                  // that.userInfo = { encryptedData, iv, userInfo }
                   return
                 }
               }, err => {
@@ -219,36 +240,133 @@ export default {
         }
       })
     },
-    onDialogClose(e) {
-      this.show = false
-      this.register = false
+    onBinder(binder) {
+      this.binder = binder
     },
-    onSubmit(e) {
+    codeChange(text) {
+      this.tips = text
+    },
+    getCode() {
       const that = this
-      this.$refs.uForm.validate(valid => {
-				if (!valid) {
-					uni.showToast({
+      if (that.tips == '重新获取') {
+        // this.codeFlag = true
+
+        uni.showLoading({
+          title: '加载中'
+        })
+        setTimeout(() => {
+          // that.$refs.verification.hide()
+          uni.hideLoading()
+        }, 2000)
+      }
+
+      if (!this.$u.test.mobile(that.codeForm.phone)) {
+        uni.showToast({
+          title: '请输入正确手机号',
+          icon: 'none'
+        })
+
+        return false
+      }
+      // if (!this.flage) {
+      //   this.$refs.verification.error()
+      //   return false
+      // }
+      if (this.$refs.uCode.canGetCode) {
+        // 向后端请求验证码
+        uni.showLoading({
+          title: '正在获取验证码'
+        })
+        registerVerify({ phone: that.codeForm.phone, type: 'binder' }).then(res => {
+          uni.hideLoading()
+          debugger
+          if (res.status === 200) {
+            that.$refs.uCode.start()
+          } else {
+            uni.showModal({
+              showCancel: false,
+              title: '提示',
+              content: res.data
+            })
+          }
+        }, err => { console.error(err) })
+
+        // const res = sendMobile(this.codeForm.mobile)
+
+        // 这里此提示会被this.start()方法中的提示覆盖
+        // if (res.data.success) {
+        //   this.$refs.uCode.start()
+        // } else {
+        //   uni.showToast({
+        //     title: res.data.message,
+        //     duration: 2000,
+        //     icon: 'none'
+        //   })
+        //   this.flage = false
+        // }
+      } else {
+        this.$u.toast('请倒计时结束后再发送')
+      }
+    },
+    start() {},
+    end() {},
+    onBinderUser() {
+      const that = this
+      this.$refs.codeForm.validate(valid => {
+        if (!valid) {
+          uni.showToast({
             title: '输入有误，请核实您的信息',
             icon: 'none',
             duration: 2000
           })
-          return false;
-				}
+          return false
+        }
+        const sessionCode = storage.getSessionCode()
+        const data = that.codeForm
+        data.openid = sessionCode.openid
+        binderUser(data).then(res => {
+          that.show = false
+          sessionCode.hasReg = true
+          uni.setStorageSync(sessionCodeKey, sessionCode)
+          that.login('weixin')
+          uni.setStorageSync(tokenKey, res.data.token)
+          that.$store.dispatch('getUserInfo', true)
+          redirectTo()
+        }, err => {
+          uni.showToast({
+            title: error.msg,
+            icon: 'none',
+            duration: 2000
+          })
+        })
+      })
+    },
+    onSubmit(e) {
+      const that = this
+      this.$refs.uForm.validate(valid => {
+        if (!valid) {
+          uni.showToast({
+            title: '输入有误，请核实您的信息',
+            icon: 'none',
+            duration: 2000
+          })
+          return false
+        }
         const params = uni.getStorageSync(sceneKey)
         console.log('>>login:', params)
         let spread = null
         if (params) {
           spread = params.spread
         }
-        let sessionCode = uni.getStorageSync(sessionCodeKey)
-        userProfile().then(({ encryptedData, iv })=>{
+        const sessionCode = uni.getStorageSync(sessionCodeKey)
+        userProfile().then(({ encryptedData, iv }) => {
           const data = that.form
           data.openid = sessionCode.openid
-          data.sessionKey= sessionCode.session_key,
-          data.unionId= sessionCode.unionId,
-          data.spread= spread,
-          data.encryptedData= encryptedData,
-          data.iv= iv
+          data.sessionKey = sessionCode.session_key,
+          data.unionId = sessionCode.unionId,
+          data.spread = spread,
+          data.encryptedData = encryptedData,
+          data.iv = iv
           wxappReg(data).then((res) => {
             that.show = false
             sessionCode.hasReg = true
@@ -259,8 +377,7 @@ export default {
             redirectTo()
           })
         })
-			});
-      
+      })
     },
     sendMessge() {
       const that = this
@@ -298,8 +415,9 @@ export default {
     }
   },
   onReady() {
-		this.$refs.uForm.setRules(this.rules);
-	}
+    // this.$refs.uForm.setRules(this.rules)
+    // this.$refs.codeForm.setRules(this.codeRules)
+  }
 }
 </script>
 
@@ -453,5 +571,33 @@ export default {
 
 ::v-deep .u-form-item__message{
   text-align: right;
+}
+.binder {
+  margin-top:10upx;
+  float: right;
+}
+.verification-code,
+.text-tips {
+  width: 200upx;
+}
+
+.popup-warp{
+  padding: 20rpx;
+  .tips {
+    margin: 20rpx 48rpx;
+  }
+}
+// .tips {
+//   width: 80%;
+//   text-align: left;
+//   margin: 6% 10%;
+//   margin-top: 48rpx;
+//   line-height: 1.75;
+// }
+
+.register {
+  // color: $weChat-color !important;
+  // border: none !important;
+  // background: #fff !important;
 }
 </style>

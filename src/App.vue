@@ -107,7 +107,7 @@ export default {
   onShow() {
     console.log('App Show')
     // const that = this
-    // auth.openLoginDialog()
+    // 判断手机号
   },
   onHide() {
     console.log('App Hide')

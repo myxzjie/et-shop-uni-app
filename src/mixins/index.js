@@ -23,7 +23,6 @@ export default {
       })
     },
     sendCode() {
-      debugger
       const that = this
       if (that.disabled) return
       that.disabled = true

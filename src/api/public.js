@@ -36,6 +36,15 @@ export const wxappReg = (data) => {
   })
 }
 
+// export function wxappRefresh(data) {
+//   return request({
+//     url: '/auth/wxapp/refresh',
+//     method: 'post',
+//     data,
+//     power: false
+//   })
+// }
+
 export function wxappPhone(data) {
   return request({
     url: '/wxapp/phone',
