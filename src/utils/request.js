@@ -1,6 +1,6 @@
 // request
 import { baseURL } from '@/utils/config'
-import { authLoginTo } from '@/utils/auth'
+import { authLoginTo, refresh } from '@/utils/auth'
 import storage from '@/utils/storage'
 
 const filter = []
@@ -30,14 +30,14 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
         const atob = (str) => Buffer.from(str,'base64').toString('binary')
         // 判断如果过期时间小于我的当前时间，在请求上重新刷新token
         if (accessToken.split(".").length <= 1) {
-          // refresh();
+          refresh()
           debugger
         } else {
           const jwtData = accessToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
           const json = JSON.parse(atob(jwtData))
           
           if (json.exp < Math.round(new Date() / 1000)) {
-            // refresh();
+            refresh()
             debugger
           }
         }

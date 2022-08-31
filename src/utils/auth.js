@@ -1,36 +1,36 @@
 import { sessionCodeKey } from '@/utils/config'
 import { parseRoute, redirect } from '@/utils'
-import { wxappLogin, wxappAuth, wxappSessionCode } from '@/api/public'
+import { wxappLogin, wxappAuth, wxappSessionCode, wxappRefresh } from '@/api/public'
 
 import storage from '@/utils/storage'
 
-// export const refresh = () => {
-//   wxappRefresh({refreshToken: storage.getRefreshToken()}).then(() => {
-//     storage.setAccessToken(res.data.accessToken)
-//     storage.setRefreshToken(res.data.refreshToken)
+export const refresh = () => {
+  wxappRefresh({refreshToken: storage.getRefreshToken()}).then(() => {
+    storage.setAccessToken(res.data.accessToken)
+    storage.setRefreshToken(res.data.refreshToken)
 
-//     // 获取新的token成功 刷新当前页面
+    // 获取新的token成功 刷新当前页面
 
-//     let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-//     let curRoute = routes[routes.length - 1].route; //获取当前页面路由
-//     let curParam = routes[routes.length - 1].options; //获取路由参数
-//     // 拼接参数
-//     let param = "";
-//     for (let key in curParam) {
-//       param += "&" + key + "=" + curParam[key];
-//     }
-//     // 判断当前路径
-//     if (curRoute.indexOf("pages/tabbar") == 1) {
-//       uni.switchTab({
-//         url: "/" + curRoute + param.replace("&", "?"),
-//       });
-//     }
+    let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
+    let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+    let curParam = routes[routes.length - 1].options; //获取路由参数
+    // 拼接参数
+    let param = "";
+    for (let key in curParam) {
+      param += "&" + key + "=" + curParam[key];
+    }
+    // 判断当前路径
+    if (curRoute.indexOf("pages/tabbar") == 1) {
+      uni.switchTab({
+        url: "/" + curRoute + param.replace("&", "?"),
+      });
+    }
 
-//     uni.redirectTo({
-//       url: "/" + curRoute + param.replace("&", "?"),
-//     });
-//   })
-// }
+    uni.redirectTo({
+      url: "/" + curRoute + param.replace("&", "?"),
+    });
+  })
+}
 
 export const checkSession = async() => {
   return new Promise((resolve) => uni.checkSession({
