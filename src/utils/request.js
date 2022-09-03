@@ -5,10 +5,10 @@ import storage from '@/utils/storage'
 
 const filter = []
 
-const request = ({ url = '', data = {}, method = 'GET', header = {}, power = true, hideLoading }) => {
+const request = async ({ url = '', data = {}, method = 'GET', header = {}, power = true, hideLoading }) => {
   if (filter.indexOf(url) < 0) {
     // 获取用户token
-    const accessToken = storage.getAccessToken()
+    let accessToken = storage.getAccessToken()
     if (!accessToken && power) {
       authLoginTo()
       // const pages = getCurrentPages() //获取加载的页面
@@ -25,20 +25,24 @@ const request = ({ url = '', data = {}, method = 'GET', header = {}, power = tru
       return new Promise((resolve, reject) => {
         reject(false)
       })
+      // return false
     } else {
-      if(accessToken !== ''){
+      // if(power === false){
+      //   accessToken = ''
+      // }
+      if(accessToken !== '' && url !== '/auth/wxapp/refresh'){
         const atob = (str) => Buffer.from(str,'base64').toString('binary')
         // 判断如果过期时间小于我的当前时间，在请求上重新刷新token
         if (accessToken.split(".").length <= 1) {
-          refresh()
-          debugger
+          // refresh()
+          authLoginTo()
         } else {
           const jwtData = accessToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
           const json = JSON.parse(atob(jwtData))
           
-          if (json.exp < Math.round(new Date() / 1000)) {
+          if ((json.exp - 60 * 10) < Math.round(new Date() / 1000)) {
             refresh()
-            debugger
+            // authLoginTo()
           }
         }
       }

@@ -85,7 +85,9 @@ export default {
       that.userInfo.sessionKey = sessionCode.session_key
       if (sessionCode.hasReg) {
          wxappLogin({ openid: sessionCode.openid }).then(res =>{
+          debugger
           if (res.status === 200) {
+         
           that.login('weixin')
           storage.setAccessToken(res.data.accessToken);
           storage.setRefreshToken(res.data.refreshToken);

@@ -8,10 +8,10 @@ export default {
     options: {}
   },
   computed: {
-    ...mapState(['hasLogin'])
+   // ...mapState(['hasLogin'])
   },
   onLaunch(options) {
-    console.log('App Launch', options.query)
+    // console.log('App Launch', options.query)
     const that = this
     uni.getSystemInfo({
       success: (e) => {
@@ -105,12 +105,12 @@ export default {
     checkSession()
   },
   onShow() {
-    console.log('App Show')
+    // console.log('App Show')
     // const that = this
     // 判断手机号
   },
   onHide() {
-    console.log('App Hide')
+    // console.log('App Hide')
   }
 }
 </script>
