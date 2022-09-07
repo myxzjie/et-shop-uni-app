@@ -5,16 +5,21 @@ import { wxappLogin, wxappAuth, wxappSessionCode, wxappRefresh } from '@/api/pub
 import storage from '@/utils/storage'
 
 export const refresh = () => {
-  const data = { refreshToken: storage.getRefreshToken()}
   debugger
+  const data = { refreshToken: storage.getRefreshToken()}
   if(data.refreshToken === ''){
     authLoginTo()
+    return false
   } else {
-  debugger
-    wxappRefresh(data).then((res) => {
-      debugger
+   wxappRefresh(data).then((res) => {
+    if(res.code === 200){
       storage.setAccessToken(res.data.accessToken)
       storage.setRefreshToken(res.data.refreshToken)
+      // return res.data
+    } else{
+      //authLoginTo()
+      //return false
+    }
 
       // // 获取新的token成功 刷新当前页面
 
@@ -36,6 +41,10 @@ export const refresh = () => {
       // uni.redirectTo({
       //   url: "/" + curRoute + param.replace("&", "?"),
       // });
+    },error =>{
+      console.log(error)
+      // authLoginTo()
+      // return false
     })
   }
 }
@@ -133,13 +142,12 @@ export const userProfile = () => {
 // }
 
 export function redirectTo(params = {}) {
-  debugger
   const pages = getCurrentPages() // 获取加载的页面
   const currentPage = pages[pages.length - 1] // 获取当前页面的对象
   const options = currentPage.options // 如果要获取url中所带的参数可以查看options
   params = Object.assign(params, options)
   const url = '/' + redirect(params)
-  if(url.indexOf('/pages/auth/login') !== -1){
+  if(url.indexOf('/pages/auth/login') !== -1|| url.length<=1){
     url = 'pages/index/index'
   }
   // uni.reLaunch({ url: url })

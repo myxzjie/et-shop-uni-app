@@ -8,7 +8,10 @@ const filter = []
 const request = async ({ url = '', data = {}, method = 'GET', header = {}, power = true, hideLoading }) => {
   if (filter.indexOf(url) < 0) {
     // 获取用户token
-    let accessToken = storage.getAccessToken()
+    let accessToken = ''
+    if(power) {
+      accessToken = storage.getAccessToken()
+    }
     if (!accessToken && power) {
       authLoginTo()
       // const pages = getCurrentPages() //获取加载的页面
@@ -41,11 +44,14 @@ const request = async ({ url = '', data = {}, method = 'GET', header = {}, power
           const json = JSON.parse(atob(jwtData))
           
           if ((json.exp - 60 * 10) < Math.round(new Date() / 1000)) {
+            // const res = await refresh()
+            // accessToken = res.accessToken
             refresh()
             // authLoginTo()
           }
         }
       }
+     
       // 将设置请求头信息
       header.Authorization = 'Bearer ' + accessToken
     }
