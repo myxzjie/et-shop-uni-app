@@ -1,0 +1,179 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "好酒仓库"
+			}
+		},
+		{
+			"path": "pages/tabbar/home/index"
+		},
+		{
+			"path": "pages/tabbar/cate/index"
+		},
+		{
+			"path": "pages/tabbar/article/index"
+		},
+		{
+			"path": "pages/tabbar/cart/index"
+		},
+		{
+			"path": "pages/tabbar/me/index"
+		},
+		{
+			"path": "pages/loading/index"
+		},
+		{
+			"path": "pages/search/index"
+		},
+		{
+			"path": "pages/shop/product/index"
+		},
+		{
+			"path": "pages/shop/product/sales"
+		},
+		{
+			"path": "pages/shop/promotion/index"
+		},
+		{
+			"path": "pages/shop/details/index"
+		},
+		{
+			"path": "pages/shop/evaluate/index"
+		},
+		{
+			"path": "pages/shop/evaluate/comment"
+		},
+		{
+			"path": "pages/order/submit/index"
+		},
+		{
+			"path": "pages/order/details/index"
+		},
+		{
+			"path": "pages/order/refund/index"
+		},
+		{
+			"path": "pages/order/delivery/index"
+		},
+		{
+			"path": "pages/auth/login"
+		},
+		{
+			"path": "pages/article/details/index"
+		},
+		
+		{
+			"path": "pages/collection/index"
+		},
+		{
+			"path": "pages/coupon/index"
+		},
+		{
+			"path": "pages/clockin/index"
+		},
+		{
+			"path": "pages/clockin/details"
+		},
+		{
+			"path": "pages/activity/buy-group/index"
+		},
+		{
+			"path": "pages/activity/buy-group/details"
+		},
+		{
+			"path": "pages/activity/buy-group/rule"
+		},
+		{
+			"path": "pages/activity/seckill/index"
+		},
+		{
+			"path": "pages/activity/seckill/details"
+		},
+		{
+			"path": "pages/activity/bargain/index"
+		},
+		{
+			"path": "pages/activity/bargain/details"
+		}
+	],
+	"subPackages": [
+		{ 
+			"root": "pages/me",
+			"pages": [
+				{
+					"path": "account/index"
+				},
+				{
+					"path": "order/index"
+				},
+				{
+					"path": "order/post-sale"
+				},
+				{
+					"path": "coupon/index"
+				},
+				{
+					"path": "commission/index"
+				},
+				{
+					"path": "commission/details"
+				},
+				{
+					"path": "commission/cash"
+				},
+				{
+					"path": "commission/cash-record"
+				},
+				{
+					"path": "integral/index"
+				},
+				{
+					"path": "gold/index"
+				},
+				{
+					"path": "gold/cash"
+				},
+				{
+					"path": "member/index"
+				},
+				{
+					"path": "address/index"
+				},
+				{
+					"path": "address/edit"
+				},
+				{
+					"path": "card/index"
+				},
+				{
+					"path": "bargain/record"
+				},
+				{
+					"path": "bind/phone"
+				},
+				{
+					"path": "promoter/index"
+				},
+				{
+					"path": "promoter/order"
+				}
+			]
+		}
+	],
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": false,
+		"onReachBottomDistance":10,
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom",
+		"usingComponents": {
+		}
+	}
+}

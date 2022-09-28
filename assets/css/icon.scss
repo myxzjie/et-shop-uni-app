@@ -1,0 +1,67 @@
+
+@font-face {
+  font-family: 'svg-icon';  /* Project id 2522398 */
+  src: url('//at.alicdn.com/t/font_2522398_fbe3nf1m41n.woff2?t=1620264621063') format('woff2'),
+       url('//at.alicdn.com/t/font_2522398_fbe3nf1m41n.woff?t=1620264621063') format('woff'),
+       url('//at.alicdn.com/t/font_2522398_fbe3nf1m41n.ttf?t=1620264621063') format('truetype');
+}
+
+@keyframes svg-icon-spin {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+
+.svg-icon-spin {
+	-webkit-animation: svg-icon-spin 2s infinite linear;
+	animation: svg-icon-spin 2s infinite linear;
+	display: inline-block;
+}
+
+.svg-icon-pulse {
+	-webkit-animation: svg-icon-spin 1s infinite steps(8);
+	animation: svg-icon-spin 1s infinite steps(8);
+	display: inline-block;
+}
+
+[class*="svg-icon-"] {
+  font-family: "svg-icon" !important;
+	font-size: 24upx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.svg-icon {
+	&-home {
+		&:before {
+			content: "\e60e";
+		}
+	}
+	&-me {
+		&:before {
+			content: "\e622";
+		}
+	}
+	&-cate {
+		&:before {
+			content: "\e601";
+		}
+	}
+	&-discover {
+		&:before {
+			content: "\e7dd";
+		}
+	}
+	&-cart {
+		&:before {
+			content: "\e604";
+		}
+	}
+}
