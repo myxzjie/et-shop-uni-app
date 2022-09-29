@@ -25,7 +25,7 @@ export function getStoreCate() {
  * 商品详情
  * */
 export function getProductDetail(id) {
-  return request({ url: '/product/detail/' + id, power: false })
+  return request({ url: '/product/detail/' + id })
 }
 
 /*

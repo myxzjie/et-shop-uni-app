@@ -1,15 +1,113 @@
 <script>
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
+import Vue from 'vue'
+import { checkSession } from '@/utils/auth'
+export default {
+	globalData: {
+		isConnected: true,
+		options: {}
+	},
+	computed: {
+	},
+	onLaunch: function() {
+		const that = this
+		uni.getSystemInfo({
+		  success: (e) => {
+			// #ifndef MP
+			Vue.prototype.StatusBar = e.statusBarHeight
+			if (e.platform === 'android') {
+			  Vue.prototype.CustomBar = e.statusBarHeight + 50
+			} else {
+			  Vue.prototype.CustomBar = e.statusBarHeight + 45
+			}
+			// #endif
+			// #ifdef MP-WEIXIN || MP-QQ
+			Vue.prototype.StatusBar = e.statusBarHeight
+			const custom = wx.getMenuButtonBoundingClientRect()
+			Vue.prototype.Custom = custom
+			Vue.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight
+			// #endif
+			// #ifdef MP-ALIPAY
+			Vue.prototype.StatusBar = e.statusBarHeight
+			Vue.prototype.CustomBar = e.statusBarHeight + e.titleBarHeight
+			// #endif
+			Vue.prototype.BaseName = '好酒仓库'
+		  }
+		})
+		
+		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO	|| MP-QQ
+		// 检测新版本
+		const updateManager = uni.getUpdateManager()
+		updateManager.onCheckForUpdate(res => {
+		  // 请求完新版本信息的回调
+		  // console.log(res.hasUpdate);
+		})
+		updateManager.onUpdateReady(res => {
+		  uni.showModal({
+			title: '更新提示',
+			content: '新版本已经准备好，是否重启应用？',
+			success(res) {
+			  if (res.confirm) {
+				// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+				updateManager.applyUpdate()
+			  }
+			}
+		  })
+		})
+		updateManager.onUpdateFailed(res => {
+		  // 新的版本下载失败
+		  uni.showModal({
+			title: '已经有新版本了哟~',
+			content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
+			showCancel: false
+		  })
+		})
+		// #endif
+		
+		/**
+		 * 初次加载判断网络情况
+		 * 无网络状态下根据实际情况进行调整
+		 */
+		uni.getNetworkType({
+		  success(res) {
+			const networkType = res.networkType
+			if (networkType === 'none') {
+			  that.globalData.isConnected = false
+			  uni.showToast({
+				title: '当前无网络',
+				icon: 'loading',
+				duration: 2000
+			  })
+			}
+		  }
+		})
+	
+		/**
+		 * 监听网络状态变化
+		 * 可根据业务需求进行调整
+		 */
+		uni.onNetworkStatusChange(res => {
+		  if (!res.isConnected) {
+			that.globalData.isConnected = false
+			uni.showToast({
+			  title: '网络已断开',
+			  icon: 'loading',
+			  duration: 2000
+			})
+		  } else {
+			that.globalData.isConnected = true
+			uni.hideToast()
+		  }
+		})
+	
+		checkSession()
+	},
+	onShow: function() {
+		// console.log('App Show')
+	},
+	onHide: function() {
+		// console.log('App Hide')
 	}
+}
 </script>
 <style lang='scss'>
   @import "@/assets/css/base.css";
