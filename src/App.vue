@@ -1,6 +1,5 @@
 <script>
 import { checkSession } from '@/utils/auth'
-import { mapState } from 'vuex'
 import Vue from 'vue'
 export default {
   globalData: {
@@ -8,7 +7,7 @@ export default {
     options: {}
   },
   computed: {
-   // ...mapState(['hasLogin'])
+    // ...mapState(['hasLogin'])
   },
   onLaunch(options) {
     // console.log('App Launch', options.query)
