@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Hello world!</title>
+    <style type="text/css">
+    #container{
+        /*地图(容器)显示大小*/
+        width:1200px;
+        height:400px;
+    }
+    </style>
+    <!--引入Javascript API GL，参数说明参见下文-->
+    <script src="https://map.qq.com/api/gljs?v=1.exp&key=TJCBZ-AK2CU-FBCVM-2WHNT-OC6GZ-QSFN6"></script>
+    <script>
+        //地图初始化函数，本例取名为init，开发者可根据实际情况定义
+        function initMap() {
+            //定义地图中心点坐标 
+            // 27.251829,120.033562
+            var center = new TMap.LatLng(40.007978,116.332782)
+            //定义map变量，调用 TMap.Map() 构造函数创建地图
+            var map = new TMap.Map(document.getElementById('container'), {
+                center: center,//设置地图中心点坐标
+                zoom: 15,   //设置地图缩放级别
+                // pitch: 43.5,  //设置俯仰角
+                rotation: 45,    //设置地图旋转角度
+                maxZoom: 16
+            });
+
+            //初始化imageTileLayer
+            var imageTileLayer = new TMap.ImageTileLayer({
+                getTileUrl: function (x, y, z) {
+                  console.log(">>:",x, y, z)
+                  //拼接瓦片URL
+                  // 
+                  var url='http://127.0.0.1:5500/public/map/tilelayer/' + z + '/' + x + '_' + y +'.png' ;
+                  if(x === 26972&& y === 12404 && z === 15){
+                  //  url = "https://lbsyun.baidu.com/jsdemo/demo/tiles/16/tile12645_4724.png"
+                   url = "http://127.0.0.1:5500/public/map/tilelayer/16/tile12645_4725.png"
+                  }
+           
+                    
+
+                  return url;
+                },
+                tileSize: 256,  //瓦片像素尺寸
+                minZoom: 14,    //显示自定义瓦片的最小级别
+                maxZoom: 16,    //显示自定义瓦片的最大级别
+                visible: true,  //是否可见
+                zIndex: 5000,   //层级高度（z轴）
+                opacity: 0.95,   //图层透明度：1不透明，0为全透明
+                map: map,       //设置图层显示到哪个地图实例中
+            });
+
+
+            //创建并初始化MultiMarker
+            var markerLayer = new TMap.MultiMarker({
+                map: map,  //指定地图容器
+                //样式定义
+                styles: {
+                    //创建一个styleId为"myStyle"的样式（styles的子属性名即为styleId）
+                    "myStyle": new TMap.MarkerStyle({ 
+                        "width": 25,  // 点标记样式宽度（像素）
+                        "height": 35, // 点标记样式高度（像素）
+                        "src": 'tilelayer/0/0_0.png',  //图片路径
+                        //焦点在图片中的像素位置，一般大头针类似形式的图片以针尖位置做为焦点，圆形点以圆心位置为焦点
+                        "anchor": { x: 16, y: 32 }  
+                    }) 
+                },
+                //点标记数据数组
+                geometries: [{
+                    "id": "1",   //点标记唯一标识，后续如果有删除、修改位置等操作，都需要此id
+                    "styleId": 'myStyle',  //指定样式id
+                    "position": new TMap.LatLng(39.954104, 116.357503),  //点标记坐标位置
+                    "properties": {//自定义属性
+                        "title": "marker1"
+                    }
+                }, {//第二个点标记
+                    "id": "2",
+                    "styleId": 'marker',
+                    "position": new TMap.LatLng(39.994104, 116.287503),
+                    "properties": {
+                        "title": "marker2"
+                    }
+                }
+                ]
+            });
+            markerLayer.on("click", function(event){
+              debugger
+            })
+        }
+
+        
+        
+    </script>
+</head>
+<!-- 页面载入后，调用init函数 -->
+<body onload="initMap()">
+    <!-- 定义地图显示容器 -->
+    <div id="container"></div>
+</body>
+</html>
