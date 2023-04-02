@@ -144,6 +144,7 @@
       </view> -->
 
     </scroll-view>
+	
   </view>
 </template>
 
@@ -332,5 +333,6 @@ export default {
     }
   }
 }
+
 
 </style>

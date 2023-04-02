@@ -2,7 +2,7 @@
 
 ### 扫二维码申请【好酒仓库】体验
 <!-- ![好酒仓库](docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg '好酒仓库') -->
-<img src="docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg" width="300px">
+<img src="docs/images/gh_bc4d7a4152a3_258.jpg" width="300px">
 <!-- ![好酒仓库](docs/images/gh.png '首页') -->
 
 ### 体验后端管理

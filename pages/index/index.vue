@@ -6,6 +6,22 @@
     <article-view v-else-if="active === 3" />
     <cart v-else-if="active === 4" />
     <me v-else-if="active === 5" />
+	
+	<view class="tool-sidebar tool-right">
+	  <view
+	    class="tool-sidebar-item"
+	    @tap="handleLocatinList"
+	  >
+		<view style="">
+			<!-- cuIcon-service -->
+			<button class="bg-gradual-olive" 
+			style="width: 64px; border-radius: 50px;font-size: 20rpx;" open-type="contact">
+			源码咨询
+			</button>
+		</view>
+	    
+	  </view>
+	</view>
 
     <view class="cu-tabbar-height" />
 
@@ -120,4 +136,52 @@ export default {
 .container{
   background-color: #fff;
 }
+
+.tool-sidebar {
+	position: fixed;
+	bottom: 450rpx;
+	// right: 10px;
+	z-index: 10;
+	width: 100rpx;
+	padding-top: 10rpx;
+	&.tool-left {
+		left: 21rpx;
+	}
+	&.tool-right {
+		right: 1rpx;
+	}
+	
+	&-item {
+		display: flex;
+		margin-bottom: 5rpx;
+		text-align: center;
+		justify-content: center;
+		[class*="svg-icon-"] {
+			padding: 10rpx;
+			border-radius: 50%;
+			font-size: 40rpx;
+			color: var(--cyan);
+			background: var(--white);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 48rpx;
+			height: 48rpx;
+		}
+		
+	}
+}
+// ::v-deep .tool-sidebar-item {
+// 	.u-icon {
+// 		padding: 10rpx;
+// 		border-radius: 50%;
+// 		background: rgba(255, 255, 255, 1); 
+// 	}
+// 	.u-icon__icon {
+// 		color: #1cbbb4 !important;
+// 		&:hover {
+// 			color: #1cbbb4 !important;
+// 		}
+// 	}
+// }
 </style>
