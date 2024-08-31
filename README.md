@@ -1,5 +1,8 @@
-# et-shop-uni-app
+# 好酒仓库
 
+### 体验地址
+[H5端 https://shop.dev56.com](https://shop.dev56.com/)]
+[管理端 https://shop.dev56.com/adm](https://shop.dev56.com/adm)]
 ### 扫二维码申请【好酒仓库】体验
 <!-- ![好酒仓库](docs/images/oGq8x5SrZb01qrjvHMYE6yGmB9O8.jpg '好酒仓库') -->
 <img src="docs/images/gh_bc4d7a4152a3_258.jpg" width="300px">
@@ -23,6 +26,14 @@
 
 [github https://github.com/myxzjie/et-shop-uni-app.git](https://github.com/myxzjie/et-shop-uni-app.git)
 
+### 项目信息
+
+1.  作者：vito
+3.  微信: myxzjie
+
+### 交流群
+1.  QQ: 513961835
+2.  QQ群: 203498970
 
 ### 项目状态
 1. 好酒仓库小程序-持续更新
